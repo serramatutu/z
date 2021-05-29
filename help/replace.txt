@@ -1,0 +1,37 @@
+z replace
+
+summary:
+    find occurrences of a pattern/substring and replace them with a substring
+
+usage:
+    z replace <string-or-pattern> [<replace-string>] [<occurrence-range>]
+
+parameters:
+    <string-or-pattern> mandatory
+        the string or regular expression pattern to be matched. Patterns are enclosed with //.
+
+    <replace-string> optional. default is ""
+        the string that will replace the matches
+
+    <occurrence-range> optional. default is ":"
+        the half-open match index range where replacement will occur.
+        if range end is negative, counts in reverse order beginning from the last.
+
+examples:
+    # splitting by ":" (a.k.a replacing ":" by "\n")
+    z replace : \n
+
+    # removing all ":"
+    z replace :
+
+    # replacing all alphabetical characters with "0"
+    z replace /[A-z]/ 0
+
+    # replacing all but first "0" with "zero"
+    z replace 0 "zero" 1:
+
+    # replacing all but first and last "1" with "one"
+    z replace 0 "zero" 1:-1
+
+    # removing the first "."
+    z replace . "" 0:1

@@ -1,0 +1,20 @@
+z
+streams made easy
+
+usage:
+    z <command> <...args> [_ <command> ...]
+
+commands:
+    help:             the instructions you're reading at the moment
+    help <command>    get help about a specific z command
+
+examples:
+    # splitting a string by ":"
+    z replace : \n
+
+    # removing all ":" from a string
+    z replace :
+
+    # geting the length of an md5 hash:
+    z hash md5 _ length
+
