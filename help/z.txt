@@ -8,6 +8,10 @@ commands:
     help:             the instructions you're reading at the moment
     help <command>    get help about a specific z command
 
+    hash              hash a string according to an algorithm
+    length            measure the length of a string
+    replace           find occurrences of a pattern/substring and replace them with a substring
+
 examples:
     # splitting a string by ":"
     z replace : \n

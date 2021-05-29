@@ -1,0 +1,7 @@
+z length
+
+summary:
+    measure the length of a string
+
+usage:
+    z length

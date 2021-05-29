@@ -1,0 +1,21 @@
+z hash
+
+summary:
+    hash a string according to an algorithm
+
+usage:
+    z hash <algorithm>
+
+parameters:
+    <algorithm> mandatory. must be one of (md5, sha1, sha256)
+        which algorithm to use for hashing.
+
+examples:
+    # hash a string with md5
+    z hash md5
+
+    # hash a string with sha1
+    z hash sha1
+
+    # hash a string with sha256
+    z hash sha256
