@@ -75,6 +75,7 @@ echo -n "hashme" | z hash md5 _ length
 z was designed with the following principles in mind
 1. **SIMPLE INTERFACE**. All z commands must have obvious names and perform clear, well-defined operations. Any user should be able to understand what their command chain does without referring to any documentation.
 2. **EASY INSTALLATION**. All z releases must export a single lightweight binary. Installing it should be as simple as downloading the binary and including it in the `$PATH`. Want to uninstall? Just delete it.
+3. **NO EXTERNAL DEPENDENCIES**. z must only depend on the Go core library functionality.
 
 ## Command reference
 
