@@ -5,41 +5,30 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/alexflint/go-arg"
-	"github.com/serramatutu/z/help"
+	"github.com/serramatutu/z/internal/commands"
 )
 
-type ZArgs struct {
-	Length *LengthArgs `arg:"subcommand:length"`
+type Config struct {
+	Err      error
+	Commands *[]commands.Command
 }
 
-func (ZArgs) Description() string {
-	return help.Help["z"]
-}
-
-// TODO: _ separator for piping
-func parseArgs() *ZArgs {
-	var args ZArgs
-
-	p := arg.MustParse(&args)
-	if p.Subcommand() == nil {
-		p.Fail(help.Help["z"])
+func (config Config) Execute(str string) (string, error) {
+	var err error
+	for _, command := range *config.Commands {
+		str, err = command.Execute(str)
+		if err != nil {
+			return "", err
+		}
 	}
-
-	return &args
-}
-
-func execSingleLine(args *ZArgs, line string) (string, error) {
-	switch {
-	case args.Length != nil:
-		return Length(line)
-	}
-
-	return "", nil
+	return str, nil
 }
 
 func Z(r io.Reader) error {
-	args := parseArgs()
+	config := parseArgs()
+	if config.Err != nil {
+		return config.Err
+	}
 
 	reader := bufio.NewReader(r)
 	for {
@@ -50,7 +39,7 @@ func Z(r io.Reader) error {
 		}
 
 		var output string
-		output, err = execSingleLine(args, line)
+		output, err = config.Execute(line)
 		if err != nil {
 			return err
 		}

@@ -25,4 +25,8 @@ func init() {
 		rawContents, _ := content.ReadFile(file.Name())
 		Help[name] = string(rawContents)
 	}
+
+	// Help command help page is the same as "z"
+	rawContents, _ := content.ReadFile("z")
+	Help["help"] = string(rawContents)
 }

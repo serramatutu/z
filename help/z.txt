@@ -1,5 +1,4 @@
-z
-streams made easy
+z, streams made easy
 
 usage:
     z <command> <...args> [_ <command> ...]

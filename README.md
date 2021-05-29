@@ -27,7 +27,7 @@ echo -n "hexme" | od -A n -t x1
 echo -n 6865786d65 | xxd -r -p
 
 # get length of string
-echo "lengthme" | wc -c
+echo -n "lengthme" | wc -c
 ```
 
 I asked myself: what if we had an intuitive and consistent way of doing all that?
@@ -62,7 +62,7 @@ echo -n "hexme" | z encode hex
 echo -n "hexme" | z decode hex
 
 # get length of string
-echo "lengthme" | z length
+echo -n "lengthme" | z length
 ```
 
 Need to pipe multiple z's? There's a shorter way of doing it:
