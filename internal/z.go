@@ -18,14 +18,15 @@ func (ZArgs) Description() string {
 }
 
 // TODO: _ separator for piping
-func parseArgs() (*ZArgs, error) {
+func parseArgs() *ZArgs {
 	var args ZArgs
 
-	if err := arg.Parse(&args); err != nil {
-		return nil, err
+	p := arg.MustParse(&args)
+	if p.Subcommand() == nil {
+		p.Fail(help.Help["z"])
 	}
 
-	return &args, nil
+	return &args
 }
 
 func execSingleLine(args *ZArgs, line string) (string, error) {
@@ -37,29 +38,27 @@ func execSingleLine(args *ZArgs, line string) (string, error) {
 	return "", nil
 }
 
-func Z(r io.Reader) (error) {
-	args, err := parseArgs()
-
-	if err != nil {
-		return err
-	}
+func Z(r io.Reader) error {
+	args := parseArgs()
 
 	reader := bufio.NewReader(r)
-	var line string
 	for {
-		line, err = reader.ReadString('\n')
-		if err != nil && err != io.EOF  {
-			break
+		line, err := reader.ReadString('\n')
+		isEof := err == io.EOF
+		if err != nil && !isEof {
+			return err
 		}
 
 		var output string
 		output, err = execSingleLine(args, line)
 		if err != nil {
-			break
+			return err
 		}
 
 		fmt.Println(output)
-	}
 
-	return err
+		if isEof {
+			return nil
+		}
+	}
 }

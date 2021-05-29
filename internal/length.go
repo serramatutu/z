@@ -7,7 +7,7 @@ import (
 	"github.com/serramatutu/z/help"
 )
 
-type LengthArgs struct{
+type LengthArgs struct {
 }
 
 func (LengthArgs) Description() string {
