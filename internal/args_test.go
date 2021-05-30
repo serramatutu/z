@@ -110,7 +110,7 @@ func TestParseArgsNoCommand(t *testing.T) {
 	args := []string{"z"}
 	config := parseArgs(args)
 
-	if config.Err != nil {
+	if config.Err == nil {
 		t.Errorf("Expected 'ArgumentErr' but got nil")
 		return
 	}
