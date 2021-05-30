@@ -26,8 +26,8 @@ func (Length) HelpFile() string {
 	return "length"
 }
 
-func (Length) Execute(in string) (string, error) {
-	return fmt.Sprint(len(in)), nil
+func (Length) Execute(in []byte) ([]byte, error) {
+	return []byte(fmt.Sprint(len(in))), nil
 }
 
 func ParseLength(args []string) Length {

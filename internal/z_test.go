@@ -8,14 +8,14 @@ import (
 
 func TestWriteLength(t *testing.T) {
 	args := []string{"z", "length"}
-	in := strings.NewReader("1234\n12345\n123456\n1234567")
+	in := strings.NewReader("1234\n\n")
 
 	var out bytes.Buffer
 	Z(args, in, &out)
 
-	expected := "5\n6\n7\n7"
+	expected := []byte("6")
 
-	if out.String() != expected {
+	if !bytes.Equal(out.Bytes(), []byte("6")) {
 		t.Errorf("Expected '%s' as Z output but got '%s'", expected, out.String())
 	}
 }

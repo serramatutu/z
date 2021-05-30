@@ -1,10 +1,9 @@
 package internal
 
 import (
-	"bufio"
 	"container/list"
-	"fmt"
 	"io"
+	"io/ioutil"
 
 	"github.com/serramatutu/z/internal/commands"
 )
@@ -14,16 +13,16 @@ type Config struct {
 	Commands *list.List
 }
 
-func (config Config) Execute(str string) (string, error) {
+func (config Config) Execute(bytes []byte) ([]byte, error) {
 	var err error
 	for e := config.Commands.Front(); e != nil; e = e.Next() {
 		command := e.Value.(commands.Command)
-		str, err = command.Execute(str)
+		bytes, err = command.Execute(bytes)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 	}
-	return str, nil
+	return bytes, nil
 }
 
 func Z(args []string, r io.Reader, w io.Writer) error {
@@ -32,26 +31,18 @@ func Z(args []string, r io.Reader, w io.Writer) error {
 		return config.Err
 	}
 
-	reader := bufio.NewReader(r)
-	for {
-		line, err := reader.ReadString('\n')
-		isEof := err == io.EOF
-		if err != nil && !isEof {
-			return err
-		}
-
-		var output string
-		output, err = config.Execute(line)
-		if err != nil {
-			return err
-		}
-
-		w.Write([]byte(fmt.Sprint(output)))
-
-		if isEof {
-			return nil
-		}
-
-		w.Write([]byte("\n"))
+	contents, err := ioutil.ReadAll(r)
+	if err != nil {
+		return err
 	}
+
+	var output []byte
+	output, err = config.Execute(contents)
+	if err != nil {
+		return err
+	}
+
+	w.Write(output)
+
+	return nil
 }

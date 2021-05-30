@@ -20,6 +20,6 @@ func (Invalid) HelpFile() string {
 	return "z"
 }
 
-func (Invalid) Execute(str string) (string, error) {
-	return "", nil
+func (Invalid) Execute(in []byte) ([]byte, error) {
+	return nil, nil
 }

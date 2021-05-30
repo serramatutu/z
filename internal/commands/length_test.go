@@ -1,15 +1,18 @@
 package commands
 
-import "testing"
+import (
+	"bytes"
+	"testing"
+)
 
 func TestLengthExecute(t *testing.T) {
 	l := Length{}
-	result, err := l.Execute("1234")
+	result, err := l.Execute([]byte("1234"))
 	if err != nil {
 		t.Errorf("Length.Execute should never return error")
 	}
 
-	if result != "4" {
+	if !bytes.Equal(result, []byte("4")) {
 		t.Errorf("Length.Execute result is wrong")
 	}
 }

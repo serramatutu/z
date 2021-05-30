@@ -25,8 +25,8 @@ func (h Help) HelpFile() string {
 	return "z"
 }
 
-func (Help) Execute(in string) (string, error) {
-	return "", nil
+func (Help) Execute(in []byte) ([]byte, error) {
+	return nil, nil
 }
 
 func ParseHelp(args []string) Help {
