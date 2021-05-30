@@ -17,7 +17,6 @@ func TestExecuteMapOnlyMapCommands(t *testing.T) {
 	result, lastRan, err := executeMap([]byte("abcde"), commandsList.Front())
 	if err != nil {
 		t.Errorf("Unexpected error for executeMap")
-		return
 	}
 
 	expected := []byte("5")
@@ -39,13 +38,11 @@ func TestExecuteMapWithSplitCommand(t *testing.T) {
 	result, lastRan, err := executeMap([]byte("abcde"), commandsList.Front())
 	if err != nil {
 		t.Errorf("Unexpected error for executeMap")
-		return
 	}
 
 	expected := []byte("5")
 	if !bytes.Equal(result, []byte("5")) {
 		t.Errorf("Expected '%s' as executeMap output but got '%s'", expected, result)
-		return
 	}
 
 	if lastRan != commandsList.Front() {
