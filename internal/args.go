@@ -2,12 +2,23 @@ package internal
 
 import (
 	"container/list"
-	"errors"
 	"fmt"
 
 	"github.com/serramatutu/z/help"
 	"github.com/serramatutu/z/internal/commands"
 )
+
+type ArgumentErr struct {
+	ErrText  string
+	HelpText string
+}
+
+func (err ArgumentErr) Error() string {
+	if err.ErrText != "" {
+		return fmt.Sprintf("error: %s\n\n%s", err.ErrText, err.HelpText)
+	}
+	return err.HelpText
+}
 
 func parseCommand(args []string) commands.Command {
 	var cmd commands.Command = commands.Invalid{CommandName: args[0]}
@@ -20,13 +31,6 @@ func parseCommand(args []string) commands.Command {
 	}
 
 	return cmd
-}
-
-func createError(errText, helpText string) error {
-	if errText != "" {
-		return fmt.Errorf("error: %s\n\n%s", errText, helpText)
-	}
-	return errors.New(helpText)
 }
 
 // TODO: optimize append
@@ -55,7 +59,10 @@ func parseArgs(args []string) Config {
 			cmd := parseCommand(args[lastUnderscore+1 : actualIndex])
 			if cmd.Err() != nil {
 				return Config{
-					Err: createError(cmd.Err().Error(), help.Help[cmd.Name()]),
+					Err: ArgumentErr{
+						ErrText:  cmd.Err().Error(),
+						HelpText: help.Help[cmd.HelpFile()],
+					},
 				}
 			}
 
@@ -68,7 +75,10 @@ func parseArgs(args []string) Config {
 		cmd := parseCommand(args[lastUnderscore+1:])
 		if cmd.Err() != nil {
 			return Config{
-				Err: createError(cmd.Err().Error(), help.Help[cmd.HelpFile()]),
+				Err: ArgumentErr{
+					ErrText:  cmd.Err().Error(),
+					HelpText: help.Help[cmd.HelpFile()],
+				},
 			}
 		}
 
@@ -77,7 +87,10 @@ func parseArgs(args []string) Config {
 
 	if commandsList.Len() == 0 {
 		return Config{
-			Err: createError("no subcommand was given", help.Help["z"]),
+			Err: ArgumentErr{
+				ErrText:  "no subcommand was given",
+				HelpText: help.Help["z"],
+			},
 		}
 	}
 
