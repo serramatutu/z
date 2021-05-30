@@ -10,7 +10,7 @@ type Length struct {
 
 func (l Length) Err() error {
 	if l.arg != "" {
-		return InvalidPositionalArgumentError{
+		return InvalidPositionalArgumentErr{
 			ArgumentName: l.arg,
 		}
 	}

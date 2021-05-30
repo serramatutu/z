@@ -4,7 +4,6 @@ import (
 	"container/list"
 	"errors"
 	"fmt"
-	"os"
 
 	"github.com/serramatutu/z/help"
 	"github.com/serramatutu/z/internal/commands"
@@ -31,45 +30,59 @@ func createError(errText, helpText string) error {
 }
 
 // TODO: optimize append
-func parseArgs() Config {
-	commands := list.New()
+func parseArgs(args []string) Config {
+	commandsList := list.New()
+
+	// cannot have underscore at tail
+	if len(args) > 1 && args[len(args)-1] == "_" {
+		return Config{
+			Err: commands.InvalidPipeErr{},
+		}
+	}
+
 	lastUnderscore := 0
-	for i, arg := range os.Args {
+	for i, arg := range args[1:] {
+		actualIndex := i + 1
+
 		if arg == "_" {
-			cmd := parseCommand(os.Args[lastUnderscore+1 : i])
-			if cmd.Err() != nil {
+			// two consecutive underscores
+			if lastUnderscore == actualIndex-1 {
 				return Config{
-					Err:      createError(cmd.Err().Error(), help.Help[cmd.Name()]),
-					Commands: nil,
+					Err: commands.InvalidPipeErr{},
 				}
 			}
 
-			commands.PushBack(cmd)
-			lastUnderscore = i
+			cmd := parseCommand(args[lastUnderscore+1 : actualIndex])
+			if cmd.Err() != nil {
+				return Config{
+					Err: createError(cmd.Err().Error(), help.Help[cmd.Name()]),
+				}
+			}
+
+			commandsList.PushBack(cmd)
+			lastUnderscore = actualIndex
 		}
 	}
 
-	if lastUnderscore < len(os.Args) && len(os.Args) > 1 {
-		cmd := parseCommand(os.Args[lastUnderscore+1 : len(os.Args)])
+	if lastUnderscore < len(args) && len(args) > 1 {
+		cmd := parseCommand(args[lastUnderscore+1:])
 		if cmd.Err() != nil {
 			return Config{
-				Err:      createError(cmd.Err().Error(), help.Help[cmd.HelpFile()]),
-				Commands: nil,
+				Err: createError(cmd.Err().Error(), help.Help[cmd.HelpFile()]),
 			}
 		}
 
-		commands.PushBack(cmd)
+		commandsList.PushBack(cmd)
 	}
 
-	if commands.Len() == 0 {
+	if commandsList.Len() == 0 {
 		return Config{
-			Err:      createError("no subcommand was given", help.Help["z"]),
-			Commands: nil,
+			Err: createError("no subcommand was given", help.Help["z"]),
 		}
 	}
 
 	return Config{
 		Err:      nil,
-		Commands: commands,
+		Commands: commandsList,
 	}
 }

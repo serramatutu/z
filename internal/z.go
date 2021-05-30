@@ -26,8 +26,8 @@ func (config Config) Execute(str string) (string, error) {
 	return str, nil
 }
 
-func Z(r io.Reader, w io.Writer) error {
-	config := parseArgs()
+func Z(args []string, r io.Reader, w io.Writer) error {
+	config := parseArgs(args)
 	if config.Err != nil {
 		return config.Err
 	}
