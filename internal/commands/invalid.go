@@ -9,11 +9,15 @@ type Invalid struct {
 }
 
 func (i Invalid) Err() error {
-	return fmt.Errorf("Invalid command '%s'", i.CommandName)
+	return fmt.Errorf("invalid command '%s'", i.CommandName)
 }
 
 func (i Invalid) Name() string {
 	return i.CommandName
+}
+
+func (Invalid) HelpFile() string {
+	return "z"
 }
 
 func (Invalid) Execute(str string) (string, error) {

@@ -22,6 +22,10 @@ func (Length) Name() string {
 	return "length"
 }
 
+func (Length) HelpFile() string {
+	return "length"
+}
+
 func (Length) Execute(in string) (string, error) {
 	return fmt.Sprint(len(in)), nil
 }

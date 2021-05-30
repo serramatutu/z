@@ -15,6 +15,8 @@ func parseCommand(args []string) commands.Command {
 	switch args[0] {
 	case "length":
 		cmd = commands.ParseLength(args[1:])
+	case "help":
+		cmd = commands.ParseHelp(args[1:])
 	}
 
 	return cmd
@@ -33,7 +35,7 @@ func parseArgs() Config {
 	lastUnderscore := 0
 	for i, arg := range os.Args {
 		if arg == "_" {
-			cmd := parseCommand(os.Args[lastUnderscore+1 : i-1])
+			cmd := parseCommand(os.Args[lastUnderscore+1 : i])
 			if cmd.Err() != nil {
 				return Config{
 					Err:      createError(cmd.Err().Error(), help.Help[cmd.Name()]),
@@ -47,7 +49,15 @@ func parseArgs() Config {
 	}
 
 	if lastUnderscore < len(os.Args) {
+		cmd := parseCommand(os.Args[lastUnderscore+1 : len(os.Args)])
+		if cmd.Err() != nil {
+			return Config{
+				Err:      createError(cmd.Err().Error(), help.Help[cmd.HelpFile()]),
+				Commands: nil,
+			}
+		}
 
+		commands = append(commands, cmd)
 	}
 
 	if len(commands) == 0 {

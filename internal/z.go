@@ -24,7 +24,7 @@ func (config Config) Execute(str string) (string, error) {
 	return str, nil
 }
 
-func Z(r io.Reader) error {
+func Z(r io.Reader, w io.Writer) error {
 	config := parseArgs()
 	if config.Err != nil {
 		return config.Err
@@ -44,7 +44,7 @@ func Z(r io.Reader) error {
 			return err
 		}
 
-		fmt.Println(output)
+		w.Write([]byte(fmt.Sprintln(output)))
 
 		if isEof {
 			return nil
