@@ -19,7 +19,10 @@ func (h Help) Name() string {
 }
 
 func (h Help) HelpFile() string {
-	return h.CommandName
+	if _, ok := help.Help[h.CommandName]; ok {
+		return h.CommandName
+	}
+	return "z"
 }
 
 func (Help) Execute(in string) (string, error) {
@@ -29,9 +32,7 @@ func (Help) Execute(in string) (string, error) {
 func ParseHelp(args []string) Help {
 	commandName := "z"
 	if len(args) > 0 {
-		if _, ok := help.Help[args[0]]; ok {
-			commandName = args[0]
-		}
+		commandName = args[0]
 	}
 
 	return Help{
