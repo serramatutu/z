@@ -50,7 +50,7 @@ func TestParseArgsSingleCommand(t *testing.T) {
 	switch command.(type) {
 	case commands.Length:
 	default:
-		t.Errorf("Expected Length command but got %s", reflect.TypeOf(command))
+		t.Errorf("Expected 'Length' command but got %s", reflect.TypeOf(command))
 	}
 }
 
@@ -73,7 +73,7 @@ func TestParseArgsChainedCommands(t *testing.T) {
 		switch command.(type) {
 		case commands.Length:
 		default:
-			t.Errorf("Expected Length command but got %s", reflect.TypeOf(command))
+			t.Errorf("Expected 'Length' command but got %s", reflect.TypeOf(command))
 		}
 	}
 }
