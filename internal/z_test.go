@@ -78,6 +78,19 @@ func TestExecuteSplitNested(t *testing.T) {
 	}
 }
 
+func TestExecuteSplitMissingJoin(t *testing.T) {
+	commandsList := list.New()
+	commandsList.PushBack(commands.Split{
+		Separator: []byte(":"),
+	})
+	commandsList.PushBack(commands.Length{})
+
+	_, _, err := executeSplit([]byte("a:a:a"), commandsList.Front())
+	if err == nil {
+		t.Errorf("Expected 'ExtraSplitErr' when join is missing but got nil")
+	}
+}
+
 func TestExecuteMapOnlyMapCommands(t *testing.T) {
 	commandsList := list.New()
 	commandsList.PushBack(commands.Length{})
@@ -116,6 +129,20 @@ func TestExecuteMapWithSplitCommand(t *testing.T) {
 
 	if lastRan != stop {
 		t.Errorf("Expected executeMap to stop at last available MapCommand")
+	}
+}
+
+func TestExecuteExtraJoin(t *testing.T) {
+	config := Config{
+		Err:      nil,
+		Commands: list.New(),
+	}
+	config.Commands.PushBack(commands.Length{})
+	config.Commands.PushBack(commands.Join{})
+
+	_, err := config.Execute([]byte("abcde"))
+	if err == nil {
+		t.Errorf("Expected 'ExtraJoinErr' when join is missing but got nil")
 	}
 }
 
