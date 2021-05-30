@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	err := internal.Z(os.Stdin)
+	err := internal.Z(os.Args, os.Stdin, os.Stdout)
 	if err != nil {
 		print(err.Error())
 		os.Exit(1)
