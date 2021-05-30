@@ -46,10 +46,12 @@ func Z(args []string, r io.Reader, w io.Writer) error {
 			return err
 		}
 
-		w.Write([]byte(fmt.Sprintln(output)))
+		w.Write([]byte(fmt.Sprint(output)))
 
 		if isEof {
 			return nil
 		}
+
+		w.Write([]byte("\n"))
 	}
 }

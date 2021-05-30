@@ -33,7 +33,6 @@ func parseCommand(args []string) commands.Command {
 	return cmd
 }
 
-// TODO: optimize append
 func parseArgs(args []string) Config {
 	commandsList := list.New()
 

@@ -31,7 +31,7 @@ examples:
     z replace 0 "zero" 1:
 
     # replacing all but first and last "1" with "one"
-    z replace 0 "zero" 1:-1
+    z replace 1 "one" 1:-1
 
     # removing the first "."
     z replace . "" 0:1
