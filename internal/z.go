@@ -44,7 +44,7 @@ func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, err
 		return nil, start, err
 	}
 
-	for e := start; e != nil; e = e.Next() {
+	for e := start.Next(); e != nil; e = e.Next() {
 		switch e.Value.(type) {
 		case commands.JoinCommand:
 			command := e.Value.(commands.JoinCommand)
@@ -54,14 +54,24 @@ func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, err
 			}
 			return bytes, e, nil
 
-		case commands.MapCommand:
-			bytes, e, err = executeMap(bytes, e)
-			if err != nil {
-				return nil, e, err
+		case commands.SplitCommand:
+			for i := 0; i < len(splitBytes); i++ {
+				splitBytes[i], lastRan, err = executeSplit(splitBytes[i], e)
+				if err != nil {
+					return nil, e, err
+				}
 			}
-		}
+			e = lastRan
 
-		lastRan = e
+		case commands.MapCommand:
+			for i := 0; i < len(splitBytes); i++ {
+				splitBytes[i], lastRan, err = executeMap(splitBytes[i], e)
+				if err != nil {
+					return nil, e, err
+				}
+			}
+			e = lastRan
+		}
 	}
 
 	// finished without finding closing join

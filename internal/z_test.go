@@ -9,29 +9,98 @@ import (
 	"github.com/serramatutu/z/internal/commands"
 )
 
+func TestExecuteSplitWithoutCommands(t *testing.T) {
+	commandsList := list.New()
+	commandsList.PushBack(commands.Split{})
+	stop := commandsList.PushBack(commands.Join{})
+	commandsList.PushBack(commands.Join{})
+
+	result, lastRan, err := executeSplit([]byte("abcde"), commandsList.Front())
+	if err != nil {
+		t.Errorf("Unexpected error for executeSplit")
+	}
+
+	expected := []byte("abcde")
+	if !bytes.Equal(result, expected) {
+		t.Errorf("Expected '%s' as executeSplit output but got '%s'", expected, result)
+	}
+
+	if lastRan != stop {
+		t.Errorf("Expected executeSplit to consume exactly one join")
+	}
+}
+
+func TestExecuteSplitWithCommands(t *testing.T) {
+	commandsList := list.New()
+	commandsList.PushBack(commands.Split{})
+	commandsList.PushBack(commands.Length{})
+	stop := commandsList.PushBack(commands.Join{})
+
+	result, lastRan, err := executeSplit([]byte("abcde"), commandsList.Front())
+	if err != nil {
+		t.Errorf("Unexpected error for executeSplit")
+	}
+
+	expected := []byte("11111")
+	if !bytes.Equal(result, expected) {
+		t.Errorf("Expected '%s' as executeSplit output but got '%s'", expected, result)
+	}
+
+	if lastRan != stop {
+		t.Errorf("Expected executeSplit to consume exactly one join")
+	}
+}
+
+func TestExecuteSplitNested(t *testing.T) {
+	commandsList := list.New()
+	commandsList.PushBack(commands.Split{
+		Separator: []byte(":"),
+	})
+	commandsList.PushBack(commands.Split{
+		Separator: []byte("b"),
+	})
+	commandsList.PushBack(commands.Length{})
+	commandsList.PushBack(commands.Join{})
+	stop := commandsList.PushBack(commands.Join{})
+
+	result, lastRan, err := executeSplit([]byte("aba:aba:aba"), commandsList.Front())
+	if err != nil {
+		t.Errorf("Unexpected error for executeSplit")
+	}
+
+	expected := []byte("111111") // 6 'a' of length 1
+	if !bytes.Equal(result, expected) {
+		t.Errorf("Expected '%s' as executeSplit output but got '%s'", expected, result)
+	}
+
+	if lastRan != stop {
+		t.Errorf("Expected executeSplit to consume exactly two joins")
+	}
+}
+
 func TestExecuteMapOnlyMapCommands(t *testing.T) {
 	commandsList := list.New()
 	commandsList.PushBack(commands.Length{})
-	commandsList.PushBack(commands.Length{})
+	stop := commandsList.PushBack(commands.Length{})
 
 	result, lastRan, err := executeMap([]byte("abcde"), commandsList.Front())
 	if err != nil {
 		t.Errorf("Unexpected error for executeMap")
 	}
 
-	expected := []byte("5")
-	if !bytes.Equal(result, []byte("1")) {
+	expected := []byte("1")
+	if !bytes.Equal(result, expected) {
 		t.Errorf("Expected '%s' as executeMap output but got '%s'", expected, result)
 	}
 
-	if lastRan != commandsList.Back() {
-		t.Errorf("Expected executeMap to run until end of list")
+	if lastRan != stop {
+		t.Errorf("Expected executeMap to stop at last available MapCommand")
 	}
 }
 
 func TestExecuteMapWithSplitCommand(t *testing.T) {
 	commandsList := list.New()
-	commandsList.PushBack(commands.Length{})
+	stop := commandsList.PushBack(commands.Length{})
 	commandsList.PushBack(commands.Split{})
 	commandsList.PushBack(commands.Length{})
 
@@ -41,12 +110,12 @@ func TestExecuteMapWithSplitCommand(t *testing.T) {
 	}
 
 	expected := []byte("5")
-	if !bytes.Equal(result, []byte("5")) {
+	if !bytes.Equal(result, expected) {
 		t.Errorf("Expected '%s' as executeMap output but got '%s'", expected, result)
 	}
 
-	if lastRan != commandsList.Front() {
-		t.Errorf("Expected executeMap to run until last map command")
+	if lastRan != stop {
+		t.Errorf("Expected executeMap to stop at last available MapCommand")
 	}
 }
 
