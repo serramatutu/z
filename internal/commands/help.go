@@ -30,7 +30,7 @@ func (Help) Execute(in string) (string, error) {
 }
 
 func ParseHelp(args []string) Help {
-	commandName := "z"
+	var commandName string
 	if len(args) > 0 {
 		commandName = args[0]
 	}
