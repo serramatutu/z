@@ -132,7 +132,7 @@ func TestExecuteMapWithSplitCommand(t *testing.T) {
 	}
 }
 
-func TestExecuteExtraJoin(t *testing.T) {
+func TestConfigExecuteExtraJoin(t *testing.T) {
 	config := Config{
 		Err:      nil,
 		Commands: list.New(),
@@ -143,6 +143,28 @@ func TestExecuteExtraJoin(t *testing.T) {
 	_, err := config.Execute([]byte("abcde"))
 	if err == nil {
 		t.Errorf("Expected 'ExtraJoinErr' when join is missing but got nil")
+	}
+}
+
+func TestConfigExecuteOk(t *testing.T) {
+	config := Config{
+		Err:      nil,
+		Commands: list.New(),
+	}
+	config.Commands.PushBack(commands.Split{
+		Separator: []byte(":"),
+	})
+	config.Commands.PushBack(commands.Length{})
+	config.Commands.PushBack(commands.Join{})
+
+	result, err := config.Execute([]byte("a:aa:a"))
+	if err != nil {
+		t.Errorf("Unexpected error for Config.Execute")
+	}
+
+	expected := []byte("121")
+	if !bytes.Equal(result, expected) {
+		t.Errorf("Expected '%s' as Config.Execute output but got '%s'", expected, result)
 	}
 }
 
