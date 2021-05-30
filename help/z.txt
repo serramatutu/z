@@ -20,4 +20,3 @@ examples:
 
     # geting the length of an md5 hash:
     z hash md5 _ length
-
