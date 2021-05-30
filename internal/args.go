@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"container/list"
 	"errors"
 	"fmt"
 	"os"
@@ -31,7 +32,7 @@ func createError(errText, helpText string) error {
 
 // TODO: optimize append
 func parseArgs() Config {
-	commands := make([]commands.Command, 0, 10)
+	commands := list.New()
 	lastUnderscore := 0
 	for i, arg := range os.Args {
 		if arg == "_" {
@@ -43,7 +44,7 @@ func parseArgs() Config {
 				}
 			}
 
-			commands = append(commands, cmd)
+			commands.PushBack(cmd)
 			lastUnderscore = i
 		}
 	}
@@ -57,10 +58,10 @@ func parseArgs() Config {
 			}
 		}
 
-		commands = append(commands, cmd)
+		commands.PushBack(cmd)
 	}
 
-	if len(commands) == 0 {
+	if commands.Len() == 0 {
 		return Config{
 			Err:      createError("no subcommand was given", help.Help["z"]),
 			Commands: nil,
@@ -69,6 +70,6 @@ func parseArgs() Config {
 
 	return Config{
 		Err:      nil,
-		Commands: &commands,
+		Commands: commands,
 	}
 }

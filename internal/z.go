@@ -2,6 +2,7 @@ package internal
 
 import (
 	"bufio"
+	"container/list"
 	"fmt"
 	"io"
 
@@ -10,12 +11,13 @@ import (
 
 type Config struct {
 	Err      error
-	Commands *[]commands.Command
+	Commands *list.List
 }
 
 func (config Config) Execute(str string) (string, error) {
 	var err error
-	for _, command := range *config.Commands {
+	for e := config.Commands.Front(); e != nil; e = e.Next() {
+		command := e.Value.(commands.Command)
 		str, err = command.Execute(str)
 		if err != nil {
 			return "", err
