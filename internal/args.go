@@ -28,6 +28,8 @@ func parseCommand(args []string) commands.Command {
 		cmd = commands.ParseLength(args[1:])
 	case "help":
 		cmd = commands.ParseHelp(args[1:])
+	case "split":
+		cmd = commands.ParseSplit(args[1:])
 	}
 
 	return cmd
