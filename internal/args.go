@@ -48,7 +48,7 @@ func parseArgs() Config {
 		}
 	}
 
-	if lastUnderscore < len(os.Args) {
+	if lastUnderscore < len(os.Args) && len(os.Args) > 1 {
 		cmd := parseCommand(os.Args[lastUnderscore+1 : len(os.Args)])
 		if cmd.Err() != nil {
 			return Config{

@@ -9,7 +9,7 @@ import (
 func main() {
 	err := internal.Z(os.Stdin, os.Stdout)
 	if err != nil {
-		print(err.Error(), "\n")
+		print(err.Error())
 		os.Exit(1)
 	}
 }
