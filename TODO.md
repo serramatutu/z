@@ -13,3 +13,4 @@
 - environment configuration (zfile)
   - implicit joins
 - version
+- benchmarks

@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -68,8 +67,6 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 	}
 
 	out = append(out, in[allLocations[end][1]:]...)
-
-	fmt.Printf("matches: %v, start: %v, end: %v\n", len(allLocations), start, end)
 
 	return out, nil
 }
