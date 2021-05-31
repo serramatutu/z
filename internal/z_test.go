@@ -3,10 +3,12 @@ package internal
 import (
 	"bytes"
 	"container/list"
+	"regexp"
 	"strings"
 	"testing"
 
 	"github.com/serramatutu/z/internal/commands"
+	"github.com/serramatutu/z/internal/config"
 )
 
 func TestExecuteSplitWithoutCommands(t *testing.T) {
@@ -15,7 +17,7 @@ func TestExecuteSplitWithoutCommands(t *testing.T) {
 	stop := commandsList.PushBack(commands.Join{})
 	commandsList.PushBack(commands.Join{})
 
-	result, lastRan, err := executeSplit([]byte("abcde"), commandsList.Front())
+	result, lastRan, err := executeSplit([]byte("a\nb\nc\nd\ne"), commandsList.Front())
 	if err != nil {
 		t.Errorf("Unexpected error for executeSplit")
 	}
@@ -36,7 +38,7 @@ func TestExecuteSplitWithCommands(t *testing.T) {
 	commandsList.PushBack(commands.Length{})
 	stop := commandsList.PushBack(commands.Join{})
 
-	result, lastRan, err := executeSplit([]byte("abcde"), commandsList.Front())
+	result, lastRan, err := executeSplit([]byte("a\nb\nc\nd\ne"), commandsList.Front())
 	if err != nil {
 		t.Errorf("Unexpected error for executeSplit")
 	}
@@ -53,11 +55,13 @@ func TestExecuteSplitWithCommands(t *testing.T) {
 
 func TestExecuteSplitNested(t *testing.T) {
 	commandsList := list.New()
+	sep, _ := regexp.Compile(":")
 	commandsList.PushBack(commands.Split{
-		Separator: []byte(":"),
+		Separator: sep,
 	})
+	sep, _ = regexp.Compile("b")
 	commandsList.PushBack(commands.Split{
-		Separator: []byte("b"),
+		Separator: sep,
 	})
 	commandsList.PushBack(commands.Length{})
 	commandsList.PushBack(commands.Join{})
@@ -80,8 +84,9 @@ func TestExecuteSplitNested(t *testing.T) {
 
 func TestExecuteSplitImplicitJoin(t *testing.T) {
 	commandsList := list.New()
+	sep, _ := regexp.Compile(":")
 	commandsList.PushBack(commands.Split{
-		Separator: []byte(":"),
+		Separator: sep,
 	})
 	stop := commandsList.PushBack(commands.Length{})
 
@@ -142,38 +147,39 @@ func TestExecuteMapWithSplitCommand(t *testing.T) {
 }
 
 func TestConfigExecuteExtraJoin(t *testing.T) {
-	config := Config{
+	c := config.Config{
 		Err:      nil,
 		Commands: list.New(),
 	}
-	config.Commands.PushBack(commands.Length{})
-	config.Commands.PushBack(commands.Join{})
+	c.Commands.PushBack(commands.Length{})
+	c.Commands.PushBack(commands.Join{})
 
-	_, err := config.Execute([]byte("abcde"))
+	_, err := executeConfig(c, []byte("abcde"))
 	if err == nil {
 		t.Errorf("Expected 'ExtraJoinErr' when join is missing but got nil")
 	}
 }
 
 func TestConfigExecuteOk(t *testing.T) {
-	config := Config{
+	c := config.Config{
 		Err:      nil,
 		Commands: list.New(),
 	}
-	config.Commands.PushBack(commands.Split{
-		Separator: []byte(":"),
+	sep, _ := regexp.Compile(":")
+	c.Commands.PushBack(commands.Split{
+		Separator: sep,
 	})
-	config.Commands.PushBack(commands.Length{})
-	config.Commands.PushBack(commands.Join{})
+	c.Commands.PushBack(commands.Length{})
+	c.Commands.PushBack(commands.Join{})
 
-	result, err := config.Execute([]byte("a:aa:a"))
+	result, err := executeConfig(c, []byte("a:aa:a"))
 	if err != nil {
-		t.Errorf("Unexpected error for Config.Execute")
+		t.Errorf("Unexpected error for config.Config.Execute")
 	}
 
 	expected := []byte("121")
 	if !bytes.Equal(result, expected) {
-		t.Errorf("Expected '%s' as Config.Execute output but got '%s'", expected, result)
+		t.Errorf("Expected '%s' as config.Config.Execute output but got '%s'", expected, result)
 	}
 }
 

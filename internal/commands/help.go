@@ -10,8 +10,8 @@ type Help struct {
 	CommandName string
 }
 
-func (l Help) Err() error {
-	return errors.New("")
+func (h Help) Err() error {
+	return errors.New(help.Help[h.HelpFile()])
 }
 
 func (h Help) Name() string {
@@ -27,15 +27,4 @@ func (h Help) HelpFile() string {
 
 func (Help) Execute(in []byte) ([]byte, error) {
 	return nil, nil
-}
-
-func ParseHelp(args []string) Help {
-	var commandName string
-	if len(args) > 0 {
-		commandName = args[0]
-	}
-
-	return Help{
-		CommandName: commandName,
-	}
 }

@@ -1,4 +1,4 @@
-package internal
+package argparse
 
 import (
 	"reflect"
@@ -11,10 +11,11 @@ import (
 var commandTypeMap = map[string]interface{}{
 	"invalid": commands.Invalid{},
 
-	"help":   commands.Help{},
-	"length": commands.Length{},
-	"split":  commands.Split{},
-	"join":   commands.Join{},
+	"help":    commands.Help{},
+	"length":  commands.Length{},
+	"split":   commands.Split{},
+	"join":    commands.Join{},
+	"replace": commands.Replace{},
 }
 
 func TestParseCommandTypes(t *testing.T) {
@@ -36,7 +37,7 @@ func TestParseCommandTypes(t *testing.T) {
 
 func TestParseArgsSingleCommand(t *testing.T) {
 	args := []string{"z", "length"}
-	config := parseArgs(args)
+	config := ParseArgs(args)
 
 	if config.Commands == nil {
 		t.Errorf("Expected command list of size 1 but got nil")
@@ -52,13 +53,13 @@ func TestParseArgsSingleCommand(t *testing.T) {
 	switch command.(type) {
 	case commands.Length:
 	default:
-		t.Errorf("Expected 'Length' command but got %s", reflect.TypeOf(command))
+		t.Errorf("Expected 'commands.Length' command but got %s", reflect.TypeOf(command))
 	}
 }
 
 func TestParseArgsChainedCommands(t *testing.T) {
 	args := []string{"z", "length", "_", "length"}
-	config := parseArgs(args)
+	config := ParseArgs(args)
 
 	if config.Commands == nil {
 		t.Errorf("Expected command list of size 2 but got nil")
@@ -75,7 +76,7 @@ func TestParseArgsChainedCommands(t *testing.T) {
 		switch command.(type) {
 		case commands.Length:
 		default:
-			t.Errorf("Expected 'Length' command but got %s", reflect.TypeOf(command))
+			t.Errorf("Expected 'commands.Length' command but got %s", reflect.TypeOf(command))
 		}
 	}
 }
@@ -88,11 +89,11 @@ func TestParseArgsInvalidPipeChain(t *testing.T) {
 		{"z", "length", "_", "_", "length"},
 	}
 
-	expectedType := reflect.TypeOf(commands.InvalidPipeErr{})
+	expectedType := reflect.TypeOf(InvalidPipeErr{})
 
 	for _, args := range invalidChains {
 		t.Run(strings.Join(args, ","), func(t *testing.T) {
-			config := parseArgs(args)
+			config := ParseArgs(args)
 
 			if config.Commands != nil {
 				t.Errorf("Expected nil command list of size but got pointer")
@@ -110,7 +111,7 @@ func TestParseArgsInvalidPipeChain(t *testing.T) {
 
 func TestParseArgsNoCommand(t *testing.T) {
 	args := []string{"z"}
-	config := parseArgs(args)
+	config := ParseArgs(args)
 
 	if config.Err == nil {
 		t.Errorf("Expected 'ArgumentErr' but got nil")

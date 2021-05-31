@@ -1,23 +1,17 @@
 package commands
 
 import (
-	"bytes"
+	"regexp"
 )
 
 type Split struct {
-	extraArg string
+	err error
 
-	Separator []byte
+	Separator *regexp.Regexp
 }
 
 func (s Split) Err() error {
-	if s.extraArg != "" {
-		return InvalidPositionalArgumentErr{
-			ArgumentName: s.extraArg,
-		}
-	}
-
-	return nil
+	return s.err
 }
 
 func (Split) Name() string {
@@ -29,25 +23,23 @@ func (Split) HelpFile() string {
 }
 
 func (s Split) Execute(in []byte) ([][]byte, error) {
-	return bytes.Split(in, s.Separator), nil
-}
-
-func ParseSplit(args []string) Split {
-	extraArg := ""
-	var sep []byte
-
-	switch len(args) {
-	case 0:
-		sep = []byte("\n")
-	case 1:
-		sep = []byte(args[0])
-	default:
-		extraArg = args[1]
-		sep = nil
+	sep := s.Separator
+	if sep == nil {
+		sep = regexp.MustCompile("\n")
 	}
 
+	split := sep.Split(string(in), -1)
+	out := make([][]byte, len(split))
+	for i, val := range split {
+		out[i] = []byte(val)
+	}
+
+	return out, nil
+}
+
+func NewSplit(err error, separator *regexp.Regexp) Split {
 	return Split{
-		extraArg:  extraArg,
-		Separator: sep,
+		err:       err,
+		Separator: separator,
 	}
 }

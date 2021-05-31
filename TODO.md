@@ -1,22 +1,16 @@
 # TODO
 - hash
 - replace
+- count
 - match
-- stream: consume in chunks until separator
-- usage section in readme 
-  - split
-  - join
-  - streams
-- parameter treatment
-  - enclosing strings (":" = :)
-    - implementation
-    - tests
-    - docs
-  - patterns (regex)
-    - split
-    - replace
-    - implementation
-    - tests
-    - docs
+- sort
+- unique
+- trim
+- stream
+- parenthesis for parallel execution
+  - `((length) (hash md5 _ length)) _ join ,` print `length,lengthofmd5`
+  - inner parenthesis are entrypoints from STDIN
 - environment configuration (zfile)
   - implicit joins
+- version
+- benchmarks
