@@ -28,7 +28,7 @@ func ParseLength(args []string) Length {
 	var err error
 	if len(args) > 0 {
 		err = ExtraPositionalArgumentErr{
-			ArgumentName: args[0],
+			ArgumentValue: args[0],
 		}
 	}
 

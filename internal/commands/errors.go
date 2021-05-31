@@ -14,11 +14,20 @@ func (err MissingPositionalArgumentsErr) Error() string {
 }
 
 type ExtraPositionalArgumentErr struct {
-	ArgumentName string
+	ArgumentValue string
 }
 
 func (err ExtraPositionalArgumentErr) Error() string {
-	return fmt.Sprintf("extra argument '%s'", err.ArgumentName)
+	return fmt.Sprintf("extra argument '%s'", err.ArgumentValue)
+}
+
+type InvalidPositionalArgumentErr struct {
+	ArgumentName  string
+	ArgumentValue string
+}
+
+func (err InvalidPositionalArgumentErr) Error() string {
+	return fmt.Sprintf("invalid value '%s' for %s", err.ArgumentName, err.ArgumentValue)
 }
 
 type InvalidPipeErr struct {

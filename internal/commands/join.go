@@ -37,7 +37,7 @@ func ParseJoin(args []string) Join {
 		sep = []byte(args[0])
 	default:
 		err = ExtraPositionalArgumentErr{
-			ArgumentName: args[1],
+			ArgumentValue: args[1],
 		}
 		sep = nil
 	}
