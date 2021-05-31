@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -27,9 +28,13 @@ func (Replace) HelpFile() string {
 	return "replace"
 }
 
+// FIXME
 func (r Replace) Execute(in []byte) ([]byte, error) {
-	if r.RangeStart == 0 && r.RangeEnd == 0 {
-		return r.Target.ReplaceAll(in, r.Replacement), nil
+	if r.RangeStart == r.RangeEnd {
+		if r.RangeStart == 0 {
+			return r.Target.ReplaceAll(in, r.Replacement), nil
+		}
+		return in, nil
 	}
 
 	// Replace manually
@@ -49,7 +54,9 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 		end = len(allLocations) - 1 + r.RangeEnd
 	}
 
-	if start >= end {
+	fmt.Printf("start: %v, end: %v, matches: %v\n", start, end, len(allLocations))
+
+	if start > end {
 		return in, nil
 	}
 
@@ -57,15 +64,14 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 	out := make([]byte, len(in))
 	copy(out[:allLocations[start][0]], in[:allLocations[start][0]])
 	replacementBytes := []byte(r.Replacement)
-	for i := start; i < len(allLocations)-1-end; i++ {
+	for i := start; i < end; i++ {
 		out = append(out, replacementBytes...)
 
 		currLocation := allLocations[i][1]
 		nextLocation := allLocations[i+1][0]
-
 		out = append(out, in[currLocation:nextLocation]...)
 	}
-
+	out = append(out, replacementBytes...)
 	out = append(out, in[allLocations[end][1]:]...)
 
 	return out, nil
