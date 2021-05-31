@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"fmt"
+	"errors"
 	"regexp"
 	// "github.com/serramatutu/z/internal/argparse"
 )
@@ -29,6 +29,10 @@ func (Replace) HelpFile() string {
 
 // FIXME
 func (r Replace) Execute(in []byte) ([]byte, error) {
+	if r.Target == nil {
+		return nil, errors.New("Replace target cannot be nil")
+	}
+
 	if r.RangeStart == 0 && r.RangeEnd == 0 {
 		return r.Target.ReplaceAll(in, r.Replacement), nil
 	}
@@ -43,30 +47,32 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 
 	allLocations := r.Target.FindAllIndex(in, -1)
 	start := len(in)
-	end := 0
+	last := 0
 
 	if len(allLocations) > r.RangeStart {
 		start = r.RangeStart
 	}
 
-	switch {
-	case r.RangeEnd == 0:
-		end = len(allLocations) - 1
-	case r.RangeEnd < 0:
-		end = len(allLocations) - 1 + r.RangeEnd
+	if r.RangeEnd > 0 {
+		if r.RangeEnd >= len(allLocations) {
+			last = len(allLocations) - 1
+		} else {
+			last = r.RangeEnd - 1
+		}
+	} else {
+		last = len(allLocations) - 1 + r.RangeEnd
 	}
 
-	fmt.Printf("start: %v, end: %v, matches: %v\n", start, end, len(allLocations))
-
-	if start > end {
+	if start > last {
 		copy(out, in)
 		return out, nil
 	}
 
 	// TODO: optimize
-	copy(out[:allLocations[start][0]], in[:allLocations[start][0]])
+	out = out[:allLocations[start][0]]
+	copy(out, in[:allLocations[start][0]])
 	replacementBytes := []byte(r.Replacement)
-	for i := start; i < end; i++ {
+	for i := start; i < last; i++ {
 		out = append(out, replacementBytes...)
 
 		currLocation := allLocations[i][1]
@@ -74,7 +80,7 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 		out = append(out, in[currLocation:nextLocation]...)
 	}
 	out = append(out, replacementBytes...)
-	out = append(out, in[allLocations[end][1]:]...)
+	out = append(out, in[allLocations[last][1]:]...)
 
 	return out, nil
 }
