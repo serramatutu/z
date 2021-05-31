@@ -5,19 +5,13 @@ import (
 )
 
 type Join struct {
-	extraArg string
+	err error
 
 	Separator []byte
 }
 
 func (j Join) Err() error {
-	if j.extraArg != "" {
-		return InvalidPositionalArgumentErr{
-			ArgumentName: j.extraArg,
-		}
-	}
-
-	return nil
+	return j.err
 }
 
 func (Join) Name() string {
@@ -33,7 +27,7 @@ func (j Join) Execute(in [][]byte) ([]byte, error) {
 }
 
 func ParseJoin(args []string) Join {
-	extraArg := ""
+	var err error
 	var sep []byte
 
 	switch len(args) {
@@ -42,12 +36,14 @@ func ParseJoin(args []string) Join {
 	case 1:
 		sep = []byte(args[0])
 	default:
-		extraArg = args[1]
+		err = ExtraPositionalArgumentErr{
+			ArgumentName: args[1],
+		}
 		sep = nil
 	}
 
 	return Join{
-		extraArg:  extraArg,
+		err:       err,
 		Separator: sep,
 	}
 }

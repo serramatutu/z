@@ -11,10 +11,11 @@ import (
 var commandTypeMap = map[string]interface{}{
 	"invalid": commands.Invalid{},
 
-	"help":   commands.Help{},
-	"length": commands.Length{},
-	"split":  commands.Split{},
-	"join":   commands.Join{},
+	"help":    commands.Help{},
+	"length":  commands.Length{},
+	"split":   commands.Split{},
+	"join":    commands.Join{},
+	"replace": commands.Replace{},
 }
 
 func TestParseCommandTypes(t *testing.T) {

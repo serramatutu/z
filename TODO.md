@@ -1,7 +1,10 @@
 # TODO
 - hash
 - replace
+- count
 - match
+- sort
+- unique
 - stream
 - parenthesis for parallel execution
   - `((length) (hash md5 _ length)) _ join ,` print `length,lengthofmd5`
@@ -11,3 +14,4 @@
   - patterns (regex)
 - environment configuration (zfile)
   - implicit joins
+- version

@@ -2,14 +2,23 @@ package commands
 
 import (
 	"fmt"
+	"strings"
 )
 
-type InvalidPositionalArgumentErr struct {
+type MissingPositionalArgumentsErr struct {
+	ArgumentNames []string
+}
+
+func (err MissingPositionalArgumentsErr) Error() string {
+	return fmt.Sprintf("missing positional arguments %s", strings.Join(err.ArgumentNames, ", "))
+}
+
+type ExtraPositionalArgumentErr struct {
 	ArgumentName string
 }
 
-func (err InvalidPositionalArgumentErr) Error() string {
-	return fmt.Sprintf("invalid argument '%s'", err.ArgumentName)
+func (err ExtraPositionalArgumentErr) Error() string {
+	return fmt.Sprintf("extra argument '%s'", err.ArgumentName)
 }
 
 type InvalidPipeErr struct {

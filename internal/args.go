@@ -24,14 +24,16 @@ func parseCommand(args []string) commands.Command {
 	var cmd commands.Command = commands.Invalid{CommandName: args[0]}
 
 	switch args[0] {
-	case "length":
-		cmd = commands.ParseLength(args[1:])
 	case "help":
 		cmd = commands.ParseHelp(args[1:])
-	case "split":
-		cmd = commands.ParseSplit(args[1:])
 	case "join":
 		cmd = commands.ParseJoin(args[1:])
+	case "length":
+		cmd = commands.ParseLength(args[1:])
+	case "split":
+		cmd = commands.ParseSplit(args[1:])
+	case "replace":
+		cmd = commands.ParseReplace(args[1:])
 	}
 
 	return cmd

@@ -11,11 +11,11 @@ commands:
     join              join an array of strings into a string
     length            measure the length of a string
     split             split a string into an array of strings
-    replace           find occurrences of a pattern/substring and replace them with a substring
+    replace           find occurrences of a pattern/substring and replace them with a string
 
 examples:
     # removing all ":" from a string
-    z replace :
+    z replace : ""
 
     # getting the length of an md5 hash:
     z hash md5 _ length

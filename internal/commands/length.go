@@ -5,17 +5,11 @@ import (
 )
 
 type Length struct {
-	arg string
+	err error
 }
 
 func (l Length) Err() error {
-	if l.arg != "" {
-		return InvalidPositionalArgumentErr{
-			ArgumentName: l.arg,
-		}
-	}
-
-	return nil
+	return l.err
 }
 
 func (Length) Name() string {
@@ -31,11 +25,14 @@ func (Length) Execute(in []byte) ([]byte, error) {
 }
 
 func ParseLength(args []string) Length {
+	var err error
 	if len(args) > 0 {
-		return Length{
-			arg: args[0],
+		err = ExtraPositionalArgumentErr{
+			ArgumentName: args[0],
 		}
 	}
 
-	return Length{}
+	return Length{
+		err: err,
+	}
 }

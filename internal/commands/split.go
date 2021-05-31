@@ -5,19 +5,13 @@ import (
 )
 
 type Split struct {
-	extraArg string
+	err error
 
 	Separator []byte
 }
 
 func (s Split) Err() error {
-	if s.extraArg != "" {
-		return InvalidPositionalArgumentErr{
-			ArgumentName: s.extraArg,
-		}
-	}
-
-	return nil
+	return s.err
 }
 
 func (Split) Name() string {
@@ -33,7 +27,7 @@ func (s Split) Execute(in []byte) ([][]byte, error) {
 }
 
 func ParseSplit(args []string) Split {
-	extraArg := ""
+	var err error
 	var sep []byte
 
 	switch len(args) {
@@ -42,12 +36,14 @@ func ParseSplit(args []string) Split {
 	case 1:
 		sep = []byte(args[0])
 	default:
-		extraArg = args[1]
+		err = ExtraPositionalArgumentErr{
+			ArgumentName: args[1],
+		}
 		sep = nil
 	}
 
 	return Split{
-		extraArg:  extraArg,
+		err:       err,
 		Separator: sep,
 	}
 }
