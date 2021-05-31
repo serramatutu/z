@@ -1,0 +1,25 @@
+z join
+
+summary:
+    join an array of strings into a string
+
+    "join" commands are used anywhere after a "split" command.
+        1. transform input contents into array with "split"
+        2. map the array elements using other commands such as "hash", "replace" or "length"
+        3. join the array back into a string implicitly with "\n" or using "join"
+
+    split arrays with no closing join are implicitly joined with "\n"
+
+usage:
+    z join [<delimiter>]
+
+parameters:
+    <delimiter> optional. default is "\n"
+        the string to be used as delimiter.
+
+examples:
+    # get the lengths of all lines in a file and join them with "\n" (implicit join)
+    z split _ length
+
+    # get the lengths of all lines in a file and join them with ","
+    z split _ length _ join ,

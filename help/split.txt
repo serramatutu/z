@@ -3,7 +3,7 @@ z split
 summary:
     split a string into an array of strings
 
-    usually, split is used together with other commands in the following order
+    "split" is used together with other commands in the following order
         1. transform input contents into array with "split"
         2. map the array elements using other commands such as "hash", "replace" or "length"
         3. join the array back into a string implicitly with "\n" or using "join"
