@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -28,7 +29,49 @@ func (Replace) HelpFile() string {
 }
 
 func (r Replace) Execute(in []byte) ([]byte, error) {
-	return r.Target.ReplaceAll(in, r.Replacement), nil
+	if r.RangeStart == 0 && r.RangeEnd == 0 {
+		return r.Target.ReplaceAll(in, r.Replacement), nil
+	}
+
+	// Replace manually
+
+	allLocations := r.Target.FindAllIndex(in, -1)
+	start := len(in)
+	end := 0
+
+	if len(allLocations) > r.RangeStart {
+		start = r.RangeStart
+	}
+
+	switch {
+	case r.RangeEnd == 0:
+		end = len(allLocations) - 1
+	case r.RangeEnd < 0:
+		end = len(allLocations) - 1 + r.RangeEnd
+	}
+
+	if start >= end {
+		return in, nil
+	}
+
+	// TODO: optimize
+	out := make([]byte, len(in))
+	copy(out[:allLocations[start][0]], in[:allLocations[start][0]])
+	replacementBytes := []byte(r.Replacement)
+	for i := start; i < len(allLocations)-1-end; i++ {
+		out = append(out, replacementBytes...)
+
+		currLocation := allLocations[i][1]
+		nextLocation := allLocations[i+1][0]
+
+		out = append(out, in[currLocation:nextLocation]...)
+	}
+
+	out = append(out, in[allLocations[end][1]:]...)
+
+	fmt.Printf("matches: %v, start: %v, end: %v\n", len(allLocations), start, end)
+
+	return out, nil
 }
 
 func ParseReplace(args []string) Replace {
@@ -59,19 +102,23 @@ func ParseReplace(args []string) Replace {
 		}
 
 		var range64 int64
-		range64, err = strconv.ParseInt(splitRange[0], 10, 0)
-		if err != nil {
-			err = invalidRangeErr
-			break
+		if splitRange[0] != "" {
+			range64, err = strconv.ParseInt(splitRange[0], 10, 0)
+			if err != nil {
+				err = invalidRangeErr
+				break
+			}
+			rangeStart = int(range64)
 		}
-		rangeStart = int(range64)
 
-		range64, err = strconv.ParseInt(splitRange[1], 10, 0)
-		if err != nil {
-			err = invalidRangeErr
-			break
+		if splitRange[1] != "" {
+			range64, err = strconv.ParseInt(splitRange[1], 10, 0)
+			if err != nil {
+				err = invalidRangeErr
+				break
+			}
+			rangeEnd = int(range64)
 		}
-		rangeEnd = int(range64)
 
 		fallthrough
 	case 2:

@@ -5,13 +5,11 @@
 - match
 - sort
 - unique
+- trim
 - stream
 - parenthesis for parallel execution
   - `((length) (hash md5 _ length)) _ join ,` print `length,lengthofmd5`
   - inner parenthesis are entrypoints from STDIN
-- parameter treatment
-  - enclosing strings (":" = :)
-  - patterns (regex)
 - environment configuration (zfile)
   - implicit joins
 - version
