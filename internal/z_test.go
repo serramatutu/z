@@ -83,7 +83,7 @@ func TestExecuteSplitImplicitJoin(t *testing.T) {
 	commandsList.PushBack(commands.Split{
 		Separator: []byte(":"),
 	})
-	commandsList.PushBack(commands.Length{})
+	stop := commandsList.PushBack(commands.Length{})
 
 	result, lastRan, err := executeSplit([]byte("a:a:a"), commandsList.Front())
 	if err != nil {
@@ -95,8 +95,8 @@ func TestExecuteSplitImplicitJoin(t *testing.T) {
 		t.Errorf("Expected '%s' as executeSplit output but got '%s'", expected, result)
 	}
 
-	if lastRan != nil {
-		t.Errorf("Expected executeSplit to run implicit joins")
+	if lastRan != stop {
+		t.Errorf("Expected executeSplit to stop at last known command")
 	}
 }
 

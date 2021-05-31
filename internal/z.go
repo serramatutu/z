@@ -88,11 +88,13 @@ func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, err
 	// TODO: disallow implicit joins
 	// return nil, lastRan, commands.ExtraSplitErr{}
 
+	// in this case, return the last _known_ command that was ran
+	// (implicit joins are unknown to the config)
 	bytes, err = implicitJoin.Execute(splitBytes)
 	if err != nil {
-		return nil, nil, err
+		return nil, lastRan, err
 	}
-	return bytes, nil, nil
+	return bytes, lastRan, nil
 }
 
 func (config Config) Execute(bytes []byte) ([]byte, error) {
