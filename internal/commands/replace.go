@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -11,7 +10,7 @@ type Replace struct {
 	err error
 
 	Target      *regexp.Regexp
-	Replacement string
+	Replacement []byte
 	RangeStart  int
 	RangeEnd    int
 }
@@ -28,14 +27,14 @@ func (Replace) HelpFile() string {
 	return "replace"
 }
 
-func (Replace) Execute(in []byte) ([]byte, error) {
-	return []byte(fmt.Sprint(len(in))), nil
+func (r Replace) Execute(in []byte) ([]byte, error) {
+	return r.Target.ReplaceAll(in, r.Replacement), nil
 }
 
 func ParseReplace(args []string) Replace {
 	var err error
 	var target *regexp.Regexp
-	var replacement string
+	var replacement []byte
 	var rangeStart, rangeEnd int
 
 	switch len(args) {
@@ -83,7 +82,7 @@ func ParseReplace(args []string) Replace {
 				ArgumentValue: args[0],
 			}
 		}
-		replacement = args[1]
+		replacement = []byte(args[1])
 	default:
 		err = ExtraPositionalArgumentErr{
 			ArgumentValue: args[3],
