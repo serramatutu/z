@@ -6,7 +6,7 @@ summary:
     "split" is used together with other commands in the following order
         1. transform input contents into array with "split"
         2. map the array elements using other commands such as "hash", "replace" or "length"
-        3. join the array back into a string implicitly with "\n" or using "join"
+        3. join the array back into a string by concatenating its entries implicitly or by using "join"
 
 usage:
     z split [<delimiter>]
@@ -22,10 +22,10 @@ examples:
     # splitting by whitespace character groups
     z split /(\s)+/
 
-    # get the length of all strings between ":"
+    # get the lengths of all strings between ":" and concatenate them
     z split : _ length
 
-    # get the md5 of every line in a file and join them by "\n"
+    # get the md5 of every line in a file and concatenate them
     z split _ hash md5
 
     # get the md5 the whole file (notice how the absence of "split" changes behavior)
