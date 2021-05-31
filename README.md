@@ -1,6 +1,6 @@
 
 # z
-streams made easy
+pipes and streams made easy
 
 ## What is z?
 z is a Linux stream processor written in Go that aims to be easy and intuitive to work with.
@@ -11,7 +11,7 @@ Whenever I worked with linux streams (especially string manipulation), I noticed
 Here are just some examples about how convoluted some of these are:
 
 ```
-# splitting a string by ":"
+# replacing ":" by "\n"
 echo -n "split:me" | sed 's/:/\n/g'
 echo -n "split:me" | tr ':' $'\n'
 
@@ -47,7 +47,7 @@ _* Want to uninstall? Just delete the binary and remove it from your `$PATH`._
 ## Using z
 z was invented to be intuitive. Here are some usage examples:
 ```
-# splitting a string by ":"
+# replacing ":" by "\n"
 echo -n "split:me" | z replace : \n
 
 # hashing 
@@ -65,11 +65,16 @@ echo -n "hexme" | z decode hex
 echo -n "lengthme" | z length
 ```
 
-Need to pipe multiple z's? There's a shorter way of doing it:
+Need to pipe multiple z's? Save yourself some typing:
 ```
-# get the length of an md5 hash
+# with pipes
+echo -n "hashme" | z hash md5 | z length
+
+# with z command chaining
 echo -n "hashme" | z hash md5 _ length
 ```
+
+_* (both have the exact same behavior)_
 
 ## Design principles
 z was designed with the following principles in mind

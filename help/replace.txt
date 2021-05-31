@@ -18,7 +18,7 @@ parameters:
         if range end is negative, counts in reverse order beginning from the last.
 
 examples:
-    # splitting by ":" (a.k.a replacing ":" by "\n")
+    # replacing ":" by "\n"
     z replace : \n
 
     # removing all ":"

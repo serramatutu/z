@@ -1,0 +1,22 @@
+# TODO
+- hash
+- replace
+- stream: consume in chunks until separator
+- join docs
+- usage section in readme 
+  - split
+  - join
+  - streams
+- parameter treatment
+  - enclosing strings (":" = :)
+    - implementation
+    - tests
+    - docs
+  - patterns (regex)
+    - split
+    - replace
+    - implementation
+    - tests
+    - docs
+- environment configuration (zfile)
+  - implicit joins

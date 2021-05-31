@@ -1,4 +1,4 @@
-z, streams made easy
+z, pipes and streams made easy
 
 usage:
     z <command> <...args> [_ <command> ...]
@@ -8,15 +8,17 @@ commands:
     help <command>    get help about a specific z command
 
     hash              hash a string according to an algorithm
+    join              join an array of strings into a string
     length            measure the length of a string
+    split             split a string into an array of strings
     replace           find occurrences of a pattern/substring and replace them with a substring
 
 examples:
-    # splitting a string by ":"
-    z replace : \n
-
     # removing all ":" from a string
     z replace :
 
-    # geting the length of an md5 hash:
+    # getting the length of an md5 hash:
     z hash md5 _ length
+
+    # calculating md5 hash of things between ":"
+    z split : _ hash md5 _ join \n

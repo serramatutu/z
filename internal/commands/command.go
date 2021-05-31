@@ -4,5 +4,16 @@ type Command interface {
 	Err() error
 	Name() string
 	HelpFile() string
-	Execute(string) (string, error)
+}
+
+type MapCommand interface {
+	Execute([]byte) ([]byte, error)
+}
+
+type SplitCommand interface {
+	Execute([]byte) ([][]byte, error)
+}
+
+type JoinCommand interface {
+	Execute([][]byte) ([]byte, error)
 }
