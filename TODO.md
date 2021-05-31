@@ -1,8 +1,8 @@
 # TODO
 - hash
 - replace
+- match
 - stream: consume in chunks until separator
-- join docs
 - usage section in readme 
   - split
   - join

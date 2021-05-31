@@ -3,10 +3,10 @@
 pipes and streams made easy
 
 ## What is z?
-z is a Linux stream processor written in Go that aims to be easy and intuitive to work with.
+z is a unix stream processor written in [Go](https://golang.org/) that aims to be easy and intuitive to work with.
 
 ## Why z?
-Whenever I worked with linux streams (especially string manipulation), I noticed I kept having to read extensive documentation about many different programs with unintuitive names and interfaces. Sometimes I also found myself reading through Stack Overflow posts that explain how to perform the most simple of tasks.
+Whenever I worked with unix streams (especially string manipulation), I noticed I kept having to read extensive documentation about many different programs with unintuitive names and interfaces. Sometimes I also found myself reading through Stack Overflow posts that explain how to perform the most simple of tasks.
 
 Here are just some examples about how convoluted some of these are:
 
@@ -42,30 +42,29 @@ z is pretty easy to install:
 
 That's it! You're all set!
 
-_* Want to uninstall? Just delete the binary and remove it from your `$PATH`._
+You can also compile z from source by cloning this repository and running `make build`. This will produce a z binary file inside the `bin/` folder. If you're doing this, make sure you have [Go](https://golang.org/) installed.
 
-## Using z
-z was invented to be intuitive. Here are some usage examples:
+## Usage
+z is built to have an easy and intuitive interface without giving up on functionality.
+
+### Basic usage
+z commands are executed on input given through the standard input stream (aka STDIN), and their outputs are written to the standard output stream (aka STDOUT)
 ```
-# replacing ":" by "\n"
-echo -n "split:me" | z replace : \n
-
-# hashing 
-echo -n "hashme" | z hash md5
-echo -n "hashme" | z hash sha1
-echo -n "hashme" | z hash sha256
-
-# encode to hex
-echo -n "hexme" | z encode hex
-
-# decode from hex
-echo -n "hexme" | z decode hex
-
-# get length of string
-echo -n "lengthme" | z length
+# prints the length of STDIN contents
+z length
 ```
 
-Need to pipe multiple z's? Save yourself some typing:
+For this reason, you can stream file contents or pipe program outputs into z:
+```
+# hashes the contents of "hashme.txt" and prints it
+z hash md5 < hashme.txt
+
+# writes "bye world!" to "byeworld.txt"
+echo -n "hello world!" | z replace hello bye > byeworld.txt
+```
+
+### Command chaining
+It is possible to chain z commands without having to use OS pipes:
 ```
 # with pipes
 echo -n "hashme" | z hash md5 | z length
@@ -74,7 +73,75 @@ echo -n "hashme" | z hash md5 | z length
 echo -n "hashme" | z hash md5 _ length
 ```
 
-_* (both have the exact same behavior)_
+Both approaches have the exact same behavior. However, there are some advantages to chaining commands instead of piping:
+1. `split` and `join` commands only work with command chaining
+2. Information stays inside z without having to travel to the OS and back. This should only make a difference for very large files or performance-sensitive applications though.
+3. Only having to type `_` instead of `| z`
+
+### Splits and joins
+z's input is always interpreted as a byte array or a string. However, there may be the need for splitting it into an array of strings and mapping operations onto the array elements. The z way of approaching this is via `split` and `join`:
+1. `split` the inputs by a delimiter
+2. map every split element using normal z commands such as `length`, `hash` or `replace`
+3. implicitly concatenate them back into a string or `join` them with a delimiter
+
+Here are some examples:
+```
+# getting the length of every line in infile.txt and writing that to outfile.txt's lines
+# (split's default delimiter is "\n")
+z split _ length _ join \n < infile.txt > outfile.txt
+
+# print the md5 hashes of "a", "b" and "c", separated by ","
+echo -n "a:b:c" | z split : _ hash md5 _ join ,
+
+# print the concatenated lengths of "one", "two" and "three" implicitly
+echo -n "one,two,three" | z split , _ length
+
+# print the concatenated lengths of "one", "two" and "three" explicitly
+echo -n "one,two,three" | z split , _ length _ join ""
+```
+
+Without splits and joins, the operations would have very different results:
+```
+# getting the length of infile.txt's content and writing that to outfile.txt
+# (split's default delimiter is "\n")
+z length < infile.txt > outfile.txt
+
+# print the md5 hash of "a:b:c"
+echo -n "a:b:c" | z hash md5
+
+# print the length of "one,two,three"
+echo -n "one,two,three" | z split , _ length
+```
+
+The `match` command also returns an array of strings. Joining is done in exactly the same fashion as `split`:
+
+```
+# finding all occurrences of "findme!" in file.txt and printing them, separated by commas
+z match findme! _ join , < file.txt
+```
+
+To better understand how `split`, `match` and `join` work, refer to our [help files](./help/) or run `z help <split,match,join>`.
+
+### Consuming from ever growing, endless streams
+By default, z reads from its input until it reaches the end (EOF). However, there are some use cases where there's no expected end, such as tailing rotating log files. z approaches this by providing a `stream <delimiter>` command, which makes it consume in chunks separated by `<delimiter>`.
+
+Here's an example:
+```
+# follows the tail of a mylogfile.log, printing all occurrences of pattern "findme=[A-z]+ "
+tail -f mylogfile.log | z stream \n _ match /findme=[A-z]+ /
+```
+
+As the default delimiter for `stream` is `\n`, we can ommit it:
+```
+# follows the tail of a mylogfile.log, printing all occurrences of pattern "findme=[A-z]+ "
+tail -f mylogfile.log | z stream _ match /findme=[A-z]+ /
+```
+
+### Command reference
+
+Check out our [help files](./help/).
+
+If you already have z installed, avoid referring to this repo by running `z help`.
 
 ## Design principles
 z was designed with the following principles in mind
@@ -82,8 +149,8 @@ z was designed with the following principles in mind
 2. **EASY INSTALLATION**. All z releases must export a single lightweight binary. Installing it should be as simple as downloading the binary and including it in the `$PATH`. Want to uninstall? Just delete it.
 3. **NO EXTERNAL DEPENDENCIES**. z must only depend on the Go core library functionality.
 
-## Command reference
 
-Check out our [help files](./help/).
+## NOTICE! Z IS STILL A WORK IN PROGRESS 
+z is still under development and many of its features are not implemented yet. Check out development progress [here](./TODO.md).
 
-If you already have z installed, avoid referring to this repo by running `z help`.
+For this reason, z is still not stable and may change a lot in the upcoming weeks/months. **DO NOT USE IT FOR SERIOUS APPLICATIONS**
