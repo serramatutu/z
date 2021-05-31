@@ -78,16 +78,25 @@ func TestExecuteSplitNested(t *testing.T) {
 	}
 }
 
-func TestExecuteSplitMissingJoin(t *testing.T) {
+func TestExecuteSplitImplicitJoin(t *testing.T) {
 	commandsList := list.New()
 	commandsList.PushBack(commands.Split{
 		Separator: []byte(":"),
 	})
 	commandsList.PushBack(commands.Length{})
 
-	_, _, err := executeSplit([]byte("a:a:a"), commandsList.Front())
-	if err == nil {
-		t.Errorf("Expected 'ExtraSplitErr' when join is missing but got nil")
+	result, lastRan, err := executeSplit([]byte("a:a:a"), commandsList.Front())
+	if err != nil {
+		t.Errorf("Unexpected error for executeSplit")
+	}
+
+	expected := []byte("111")
+	if !bytes.Equal(result, expected) {
+		t.Errorf("Expected '%s' as executeSplit output but got '%s'", expected, result)
+	}
+
+	if lastRan != nil {
+		t.Errorf("Expected executeSplit to run implicit joins")
 	}
 }
 

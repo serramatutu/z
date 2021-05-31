@@ -8,3 +8,5 @@
   - split
   - join
   - streams
+- environment configuration (zfile)
+  - implicit joins

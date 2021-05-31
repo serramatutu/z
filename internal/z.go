@@ -13,6 +13,13 @@ type Config struct {
 	Commands *list.List
 }
 
+func NewConfig(err error, commands *list.List) Config {
+	return Config{
+		Err:      err,
+		Commands: commands,
+	}
+}
+
 func executeMap(bytes []byte, start *list.Element) ([]byte, *list.Element, error) {
 	var lastRan *list.Element
 	var err error
@@ -33,6 +40,10 @@ func executeMap(bytes []byte, start *list.Element) ([]byte, *list.Element, error
 	}
 
 	return bytes, lastRan, nil
+}
+
+var implicitJoin commands.JoinCommand = commands.Join{
+	Separator: []byte(""),
 }
 
 func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, error) {
@@ -74,8 +85,14 @@ func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, err
 		}
 	}
 
-	// finished without finding closing join
-	return nil, lastRan, commands.ExtraSplitErr{}
+	// TODO: disallow implicit joins
+	// return nil, lastRan, commands.ExtraSplitErr{}
+
+	bytes, err = implicitJoin.Execute(splitBytes)
+	if err != nil {
+		return nil, nil, err
+	}
+	return bytes, nil, nil
 }
 
 func (config Config) Execute(bytes []byte) ([]byte, error) {
