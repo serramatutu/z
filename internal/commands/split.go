@@ -23,7 +23,12 @@ func (Split) HelpFile() string {
 }
 
 func (s Split) Execute(in []byte) ([][]byte, error) {
-	split := s.Separator.Split(string(in), -1)
+	sep := s.Separator
+	if sep == nil {
+		sep = regexp.MustCompile("\n")
+	}
+
+	split := sep.Split(string(in), -1)
 	out := make([][]byte, len(split))
 	for i, val := range split {
 		out[i] = []byte(val)
@@ -32,30 +37,9 @@ func (s Split) Execute(in []byte) ([][]byte, error) {
 	return out, nil
 }
 
-func ParseSplit(args []string) Split {
-	var err error
-	var sep *regexp.Regexp
-
-	switch len(args) {
-	case 0:
-		sep, _ = regexp.Compile("\n")
-	case 1:
-		sep, err = regexp.Compile(args[0])
-		if err != nil {
-			err = InvalidPositionalArgumentErr{
-				ArgumentName:  "pattern",
-				ArgumentValue: args[0],
-			}
-		}
-	default:
-		err = ExtraPositionalArgumentErr{
-			ArgumentValue: args[1],
-		}
-		sep = nil
-	}
-
+func NewSplit(err error, separator *regexp.Regexp) Split {
 	return Split{
 		err:       err,
-		Separator: sep,
+		Separator: separator,
 	}
 }

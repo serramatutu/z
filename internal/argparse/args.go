@@ -1,10 +1,11 @@
-package internal
+package argparse
 
 import (
 	"container/list"
 	"fmt"
 
 	"github.com/serramatutu/z/internal/commands"
+	"github.com/serramatutu/z/internal/config"
 )
 
 type ArgumentErr struct {
@@ -30,27 +31,27 @@ func parseCommand(args []string) commands.Command {
 
 	switch args[0] {
 	case "help":
-		cmd = commands.ParseHelp(args[1:])
+		cmd = ParseHelp(args[1:])
 	case "join":
-		cmd = commands.ParseJoin(args[1:])
+		cmd = ParseJoin(args[1:])
 	case "length":
-		cmd = commands.ParseLength(args[1:])
+		cmd = ParseLength(args[1:])
 	case "split":
-		cmd = commands.ParseSplit(args[1:])
+		cmd = ParseSplit(args[1:])
 	case "replace":
-		cmd = commands.ParseReplace(args[1:])
+		cmd = ParseReplace(args[1:])
 	}
 
 	return cmd
 }
 
-func parseArgs(args []string) Config {
+func ParseArgs(args []string) config.Config {
 	commandsList := list.New()
 
 	// cannot have underscore at tail
 	if len(args) > 1 && args[len(args)-1] == "_" {
-		return Config{
-			Err: commands.InvalidPipeErr{},
+		return config.Config{
+			Err: InvalidPipeErr{},
 		}
 	}
 
@@ -61,14 +62,14 @@ func parseArgs(args []string) Config {
 		if arg == "_" {
 			// two consecutive underscores
 			if lastUnderscore == actualIndex-1 {
-				return Config{
-					Err: commands.InvalidPipeErr{},
+				return config.Config{
+					Err: InvalidPipeErr{},
 				}
 			}
 
 			cmd := parseCommand(args[lastUnderscore+1 : actualIndex])
 			if cmd.Err() != nil {
-				return Config{
+				return config.Config{
 					Err: ArgumentErr{
 						ErrText:     cmd.Err().Error(),
 						CommandName: cmd.Name(),
@@ -84,7 +85,7 @@ func parseArgs(args []string) Config {
 	if lastUnderscore < len(args) && len(args) > 1 {
 		cmd := parseCommand(args[lastUnderscore+1:])
 		if cmd.Err() != nil {
-			return Config{
+			return config.Config{
 				Err: ArgumentErr{
 					ErrText:     cmd.Err().Error(),
 					CommandName: cmd.Name(),
@@ -96,7 +97,7 @@ func parseArgs(args []string) Config {
 	}
 
 	if commandsList.Len() == 0 {
-		return Config{
+		return config.Config{
 			Err: ArgumentErr{
 				ErrText:     "no subcommand was given",
 				CommandName: "z",
@@ -104,7 +105,7 @@ func parseArgs(args []string) Config {
 		}
 	}
 
-	return Config{
+	return config.Config{
 		Err:      nil,
 		Commands: commandsList,
 	}

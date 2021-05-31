@@ -3,8 +3,7 @@ package commands
 import (
 	"fmt"
 	"regexp"
-	"strconv"
-	"strings"
+	// "github.com/serramatutu/z/internal/argparse"
 )
 
 type Replace struct {
@@ -80,71 +79,9 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 	return out, nil
 }
 
-func ParseReplace(args []string) Replace {
-	var err error
-	var target *regexp.Regexp
-	var replacement []byte
-	var rangeStart, rangeEnd int
-
-	switch len(args) {
-	case 0:
-		err = MissingPositionalArgumentsErr{
-			ArgumentNames: []string{"pattern", "replace-string"},
-		}
-	case 1:
-		err = MissingPositionalArgumentsErr{
-			ArgumentNames: []string{"replace-string"},
-		}
-	case 3:
-		invalidRangeErr := InvalidPositionalArgumentErr{
-			ArgumentName:  "occurrence-range",
-			ArgumentValue: args[2],
-		}
-
-		splitRange := strings.Split(args[2], ":")
-		if len(splitRange) != 2 {
-			err = invalidRangeErr
-			break
-		}
-
-		var range64 int64
-		if splitRange[0] != "" {
-			range64, err = strconv.ParseInt(splitRange[0], 10, 0)
-			if err != nil {
-				err = invalidRangeErr
-				break
-			}
-			rangeStart = int(range64)
-		}
-
-		if splitRange[1] != "" {
-			range64, err = strconv.ParseInt(splitRange[1], 10, 0)
-			if err != nil {
-				err = invalidRangeErr
-				break
-			}
-			rangeEnd = int(range64)
-		}
-
-		fallthrough
-	case 2:
-		target, err = regexp.Compile(args[0])
-		if err != nil {
-			err = InvalidPositionalArgumentErr{
-				ArgumentName:  "pattern",
-				ArgumentValue: args[0],
-			}
-		}
-		replacement = []byte(args[1])
-	default:
-		err = ExtraPositionalArgumentErr{
-			ArgumentValue: args[3],
-		}
-	}
-
+func NewReplace(err error, target *regexp.Regexp, replacement []byte, rangeStart, rangeEnd int) Replace {
 	return Replace{
-		err: err,
-
+		err:         err,
 		Target:      target,
 		Replacement: replacement,
 		RangeStart:  rangeStart,

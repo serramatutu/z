@@ -5,20 +5,10 @@ import (
 	"io"
 	"io/ioutil"
 
+	"github.com/serramatutu/z/internal/argparse"
 	"github.com/serramatutu/z/internal/commands"
+	"github.com/serramatutu/z/internal/config"
 )
-
-type Config struct {
-	Err      error
-	Commands *list.List
-}
-
-func NewConfig(err error, commands *list.List) Config {
-	return Config{
-		Err:      err,
-		Commands: commands,
-	}
-}
 
 func executeMap(bytes []byte, start *list.Element) ([]byte, *list.Element, error) {
 	var lastRan *list.Element
@@ -97,13 +87,13 @@ func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, err
 	return bytes, lastRan, nil
 }
 
-func (config Config) Execute(bytes []byte) ([]byte, error) {
+func executeConfig(c config.Config, bytes []byte) ([]byte, error) {
 	var err error
 
-	for e := config.Commands.Front(); e != nil; e = e.Next() {
+	for e := c.Commands.Front(); e != nil; e = e.Next() {
 		switch e.Value.(type) {
 		case commands.JoinCommand:
-			return nil, commands.ExtraJoinErr{}
+			return nil, argparse.ExtraJoinErr{}
 		case commands.MapCommand:
 			bytes, e, err = executeMap(bytes, e)
 			if err != nil {
@@ -121,10 +111,10 @@ func (config Config) Execute(bytes []byte) ([]byte, error) {
 	return bytes, nil
 }
 
-func Z(args []string, r io.Reader, w io.Writer) error {
-	config := parseArgs(args)
-	if config.Err != nil {
-		return config.Err
+func Z(zArgs []string, r io.Reader, w io.Writer) error {
+	c := argparse.ParseArgs(zArgs)
+	if c.Err != nil {
+		return c.Err
 	}
 
 	contents, err := ioutil.ReadAll(r)
@@ -133,7 +123,7 @@ func Z(args []string, r io.Reader, w io.Writer) error {
 	}
 
 	var output []byte
-	output, err = config.Execute(contents)
+	output, err = executeConfig(c, contents)
 	if err != nil {
 		return err
 	}

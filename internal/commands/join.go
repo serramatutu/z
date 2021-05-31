@@ -23,27 +23,17 @@ func (Join) HelpFile() string {
 }
 
 func (j Join) Execute(in [][]byte) ([]byte, error) {
-	return bytes.Join(in, j.Separator), nil
-}
-
-func ParseJoin(args []string) Join {
-	var err error
-	var sep []byte
-
-	switch len(args) {
-	case 0:
+	sep := j.Separator
+	if sep == nil {
 		sep = []byte("")
-	case 1:
-		sep = []byte(args[0])
-	default:
-		err = ExtraPositionalArgumentErr{
-			ArgumentValue: args[1],
-		}
-		sep = nil
 	}
 
+	return bytes.Join(in, sep), nil
+}
+
+func NewJoin(err error, separator []byte) Join {
 	return Join{
 		err:       err,
-		Separator: sep,
+		Separator: separator,
 	}
 }

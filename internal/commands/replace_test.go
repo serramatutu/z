@@ -1,3 +1,3 @@
-package commands
+package commands_test
 
 // TODO

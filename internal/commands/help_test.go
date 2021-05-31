@@ -1,9 +1,13 @@
-package commands
+package commands_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/serramatutu/z/internal/commands"
+)
 
 func TestHelpFileForNoCommand(t *testing.T) {
-	help := Help{
+	help := commands.Help{
 		CommandName: "",
 	}
 
@@ -13,7 +17,7 @@ func TestHelpFileForNoCommand(t *testing.T) {
 }
 
 func TestHelpFileForInvalidCommand(t *testing.T) {
-	help := Help{
+	help := commands.Help{
 		CommandName: "invalid",
 	}
 
@@ -23,29 +27,11 @@ func TestHelpFileForInvalidCommand(t *testing.T) {
 }
 
 func TestHelpFileForValidCommand(t *testing.T) {
-	help := Help{
+	help := commands.Help{
 		CommandName: "length",
 	}
 
 	if help.HelpFile() != "length" {
 		t.Errorf("Help command should display subcommand helpfile when it is valid")
-	}
-}
-
-func TestParseHelpNoSubcommand(t *testing.T) {
-	args := []string{}
-	help := ParseHelp(args)
-
-	if help.CommandName != "" {
-		t.Errorf("ParseHelp should return empty command name when no args are given. Got '%s'", help.CommandName)
-	}
-}
-
-func TestParseHelpSubcommand(t *testing.T) {
-	args := []string{"subcommand"}
-	help := ParseHelp(args)
-
-	if help.CommandName != "subcommand" {
-		t.Errorf("ParseHelp should return parse subcommand. Got '%s'", help.CommandName)
 	}
 }
