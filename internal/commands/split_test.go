@@ -8,7 +8,7 @@ import (
 	"github.com/serramatutu/z/internal/commands"
 )
 
-func TestNilSeparator(t *testing.T) {
+func TestSplitNilSeparator(t *testing.T) {
 	cmd := commands.Split{}
 	result, err := cmd.Execute([]byte("aaa:bbb-ccc\nddd_eee"))
 	if err != nil {
@@ -25,7 +25,7 @@ func TestNilSeparator(t *testing.T) {
 	}
 }
 
-func TestSplit(t *testing.T) {
+func TestSplitSeparator(t *testing.T) {
 	cmd := commands.Split{
 		Separator: regexp.MustCompile(":"),
 	}
