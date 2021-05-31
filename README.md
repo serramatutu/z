@@ -3,10 +3,10 @@
 pipes and streams made easy
 
 ## What is z?
-z is a unix stream processor written in [Go](https://golang.org/) that aims to be easy and intuitive to work with.
+z is a unix stream/pipe processor written in [Go](https://golang.org/) that aims to be easy and intuitive to work with.
 
 ## Why z?
-Whenever I worked with unix streams (especially string manipulation), I noticed I kept having to read extensive documentation about many different programs with unintuitive names and interfaces. Sometimes I also found myself reading through Stack Overflow posts that explain how to perform the most simple of tasks.
+Whenever I worked with unix streams/pipes, I noticed I kept having to read extensive documentation about many different programs with unintuitive names and interfaces. Sometimes I also found myself reading through Stack Overflow posts that explain how to perform the most simple of tasks.
 
 Here are just some examples about how convoluted some of these are:
 
@@ -110,14 +110,14 @@ z length < infile.txt > outfile.txt
 echo -n "a:b:c" | z hash md5
 
 # print the length of "one,two,three"
-echo -n "one,two,three" | z split , _ length
+echo -n "one,two,three" | z length
 ```
 
 The `match` command also returns an array of strings. Joining is done in exactly the same fashion as `split`:
 
 ```
-# finding all occurrences of "findme!" in file.txt and printing them, separated by commas
-z match findme! _ join , < file.txt
+# finding all occurrences of "findme" in file.txt and printing them, separated by commas
+z match findme _ join , < file.txt
 ```
 
 To better understand how `split`, `match` and `join` work, refer to our [help files](./help/) or run `z help <split,match,join>`.
@@ -127,14 +127,9 @@ By default, z reads from its input until it reaches the end (EOF). However, ther
 
 Here's an example:
 ```
-# follows the tail of a mylogfile.log, printing all occurrences of pattern "findme=[A-z]+ "
-tail -f mylogfile.log | z stream \n _ match /findme=[A-z]+ /
-```
-
-As the default delimiter for `stream` is `\n`, we can ommit it:
-```
-# follows the tail of a mylogfile.log, printing all occurrences of pattern "findme=[A-z]+ "
-tail -f mylogfile.log | z stream _ match /findme=[A-z]+ /
+# follows the tail of a mylogfile.log, printing all occurrences of pattern "findme=[A-z]+ ", joined by ","
+# (the default stream delimiter is "\n", so we can ommit the argument)
+tail -f mylogfile.log | z stream _ match "/findme=[A-z]+ /" _ join ,
 ```
 
 ### Command reference
