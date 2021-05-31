@@ -26,6 +26,30 @@ func TestNoTarget(t *testing.T) {
 	}
 }
 
+func TestNoMatch(t *testing.T) {
+	result, err := execReplace("aaa:bbb:ccc:ddd", "-", "_", 0, 0)
+	if err != nil {
+		t.Errorf("Unexpected error for Replace.Execute")
+	}
+
+	expected := "aaa:bbb:ccc:ddd"
+	if result != expected {
+		t.Errorf("Expected '%s' but got '%s'", expected, result)
+	}
+}
+
+func TestReplaceByEmpty(t *testing.T) {
+	result, err := execReplace("aaa:bbb:ccc:ddd", ":", "", 0, 0)
+	if err != nil {
+		t.Errorf("Unexpected error for Replace.Execute")
+	}
+
+	expected := "aaabbbcccddd"
+	if result != expected {
+		t.Errorf("Expected '%s' but got '%s'", expected, result)
+	}
+}
+
 func TestFullRange(t *testing.T) {
 	result, err := execReplace("aaa:bbb:ccc:ddd", ":", "-", 0, 0)
 	if err != nil {
