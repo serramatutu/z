@@ -30,11 +30,14 @@ func (Replace) HelpFile() string {
 
 // FIXME
 func (r Replace) Execute(in []byte) ([]byte, error) {
+	if r.RangeStart == 0 && r.RangeEnd == 0 {
+		return r.Target.ReplaceAll(in, r.Replacement), nil
+	}
+
+	out := make([]byte, len(in))
 	if r.RangeStart == r.RangeEnd {
-		if r.RangeStart == 0 {
-			return r.Target.ReplaceAll(in, r.Replacement), nil
-		}
-		return in, nil
+		copy(out, in)
+		return out, nil
 	}
 
 	// Replace manually
@@ -57,11 +60,11 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 	fmt.Printf("start: %v, end: %v, matches: %v\n", start, end, len(allLocations))
 
 	if start > end {
-		return in, nil
+		copy(out, in)
+		return out, nil
 	}
 
 	// TODO: optimize
-	out := make([]byte, len(in))
 	copy(out[:allLocations[start][0]], in[:allLocations[start][0]])
 	replacementBytes := []byte(r.Replacement)
 	for i := start; i < end; i++ {
