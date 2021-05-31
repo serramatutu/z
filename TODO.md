@@ -2,21 +2,12 @@
 - hash
 - replace
 - match
-- stream: consume in chunks until separator
-- usage section in readme 
-  - split
-  - join
-  - streams
+- stream
+- parenthesis for parallel execution
+  - `((length) (hash md5 _ length)) _ join ,` print `length,lengthofmd5`
+  - inner parenthesis are entrypoints from STDIN
 - parameter treatment
   - enclosing strings (":" = :)
-    - implementation
-    - tests
-    - docs
   - patterns (regex)
-    - split
-    - replace
-    - implementation
-    - tests
-    - docs
 - environment configuration (zfile)
   - implicit joins
