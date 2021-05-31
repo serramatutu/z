@@ -1,6 +1,6 @@
 
 # z
-streams made easy
+pipes and streams made easy
 
 ## What is z?
 z is a Linux stream processor written in Go that aims to be easy and intuitive to work with.
