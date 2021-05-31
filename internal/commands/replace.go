@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -9,7 +10,7 @@ import (
 type Replace struct {
 	err error
 
-	Target      string
+	Target      *regexp.Regexp
 	Replacement string
 	RangeStart  int
 	RangeEnd    int
@@ -33,13 +34,14 @@ func (Replace) Execute(in []byte) ([]byte, error) {
 
 func ParseReplace(args []string) Replace {
 	var err error
-	var target, replacement string
+	var target *regexp.Regexp
+	var replacement string
 	var rangeStart, rangeEnd int
 
 	switch len(args) {
 	case 0:
 		err = MissingPositionalArgumentsErr{
-			ArgumentNames: []string{"string-or-pattern", "replace-string"},
+			ArgumentNames: []string{"pattern", "replace-string"},
 		}
 	case 1:
 		err = MissingPositionalArgumentsErr{
@@ -74,7 +76,13 @@ func ParseReplace(args []string) Replace {
 
 		fallthrough
 	case 2:
-		target = args[0] // TODO: pattern
+		target, err = regexp.Compile(args[0])
+		if err != nil {
+			err = InvalidPositionalArgumentErr{
+				ArgumentName:  "pattern",
+				ArgumentValue: args[0],
+			}
+		}
 		replacement = args[1]
 	default:
 		err = ExtraPositionalArgumentErr{

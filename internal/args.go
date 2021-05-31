@@ -4,20 +4,25 @@ import (
 	"container/list"
 	"fmt"
 
-	"github.com/serramatutu/z/help"
 	"github.com/serramatutu/z/internal/commands"
 )
 
 type ArgumentErr struct {
-	ErrText  string
-	HelpText string
+	CommandName string
+	ErrText     string
 }
 
 func (err ArgumentErr) Error() string {
-	if err.ErrText != "" {
-		return fmt.Sprintf("error: %s\n\n%s", err.ErrText, err.HelpText)
+	switch err.CommandName {
+	case "help":
+		return err.ErrText
+	default:
+		runHelpText := fmt.Sprintf("run \"z help %s\" to learn more.\n", err.CommandName)
+		if err.ErrText != "" {
+			return fmt.Sprintf("error: %s\n%s", err.ErrText, runHelpText)
+		}
+		return runHelpText
 	}
-	return err.HelpText
 }
 
 func parseCommand(args []string) commands.Command {
@@ -65,8 +70,8 @@ func parseArgs(args []string) Config {
 			if cmd.Err() != nil {
 				return Config{
 					Err: ArgumentErr{
-						ErrText:  cmd.Err().Error(),
-						HelpText: help.Help[cmd.HelpFile()],
+						ErrText:     cmd.Err().Error(),
+						CommandName: cmd.Name(),
 					},
 				}
 			}
@@ -81,8 +86,8 @@ func parseArgs(args []string) Config {
 		if cmd.Err() != nil {
 			return Config{
 				Err: ArgumentErr{
-					ErrText:  cmd.Err().Error(),
-					HelpText: help.Help[cmd.HelpFile()],
+					ErrText:     cmd.Err().Error(),
+					CommandName: cmd.Name(),
 				},
 			}
 		}
@@ -93,8 +98,8 @@ func parseArgs(args []string) Config {
 	if commandsList.Len() == 0 {
 		return Config{
 			Err: ArgumentErr{
-				ErrText:  "no subcommand was given",
-				HelpText: help.Help["z"],
+				ErrText:     "no subcommand was given",
+				CommandName: "z",
 			},
 		}
 	}

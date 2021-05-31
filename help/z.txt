@@ -11,7 +11,7 @@ commands:
     join              join an array of strings into a string
     length            measure the length of a string
     split             split a string into an array of strings
-    replace           find occurrences of a pattern/substring and replace them with a string
+    replace           find occurrences of a pattern and replace them with a string
 
 examples:
     # removing all ":" from a string

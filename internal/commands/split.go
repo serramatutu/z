@@ -1,13 +1,13 @@
 package commands
 
 import (
-	"bytes"
+	"regexp"
 )
 
 type Split struct {
 	err error
 
-	Separator []byte
+	Separator *regexp.Regexp
 }
 
 func (s Split) Err() error {
@@ -23,18 +23,30 @@ func (Split) HelpFile() string {
 }
 
 func (s Split) Execute(in []byte) ([][]byte, error) {
-	return bytes.Split(in, s.Separator), nil
+	split := s.Separator.Split(string(in), -1)
+	out := make([][]byte, len(split))
+	for i, val := range split {
+		out[i] = []byte(val)
+	}
+
+	return out, nil
 }
 
 func ParseSplit(args []string) Split {
 	var err error
-	var sep []byte
+	var sep *regexp.Regexp
 
 	switch len(args) {
 	case 0:
-		sep = []byte("\n")
+		sep, _ = regexp.Compile("\n")
 	case 1:
-		sep = []byte(args[0])
+		sep, err = regexp.Compile(args[0])
+		if err != nil {
+			err = InvalidPositionalArgumentErr{
+				ArgumentName:  "pattern",
+				ArgumentValue: args[0],
+			}
+		}
 	default:
 		err = ExtraPositionalArgumentErr{
 			ArgumentValue: args[1],

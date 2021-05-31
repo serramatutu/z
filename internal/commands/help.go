@@ -10,8 +10,8 @@ type Help struct {
 	CommandName string
 }
 
-func (l Help) Err() error {
-	return errors.New("")
+func (h Help) Err() error {
+	return errors.New(help.Help[h.HelpFile()])
 }
 
 func (h Help) Name() string {

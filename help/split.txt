@@ -13,7 +13,7 @@ usage:
 
 parameters:
     <delimiter> optional. default is "\n"
-        the string or regular expression pattern to be used as delimiter. Patterns are enclosed with //.
+        the regular expression pattern to be used as delimiter.
 
 examples:
     # splitting by ":"

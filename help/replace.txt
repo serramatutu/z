@@ -1,14 +1,14 @@
 z replace
 
 summary:
-    find occurrences of a pattern/substring and replace them with a string
+    find occurrences of a pattern and replace them with a string
 
 usage:
-    z replace <string-or-pattern> <replace-string> [<occurrence-range>]
+    z replace <pattern> <replace-string> [<occurrence-range>]
 
 parameters:
-    <string-or-pattern> mandatory
-        the string or regular expression pattern to be matched. Patterns are enclosed with //.
+    <pattern> mandatory
+        the regular expression pattern to be matched.
 
     <replace-string> mandatory
         the string that will replace the matches

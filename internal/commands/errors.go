@@ -10,7 +10,7 @@ type MissingPositionalArgumentsErr struct {
 }
 
 func (err MissingPositionalArgumentsErr) Error() string {
-	return fmt.Sprintf("missing positional arguments %s", strings.Join(err.ArgumentNames, ", "))
+	return fmt.Sprintf("missing positional arguments: %s", strings.Join(err.ArgumentNames, ", "))
 }
 
 type ExtraPositionalArgumentErr struct {
@@ -27,7 +27,7 @@ type InvalidPositionalArgumentErr struct {
 }
 
 func (err InvalidPositionalArgumentErr) Error() string {
-	return fmt.Sprintf("invalid value '%s' for %s", err.ArgumentName, err.ArgumentValue)
+	return fmt.Sprintf("invalid value '%s' for %s", err.ArgumentValue, err.ArgumentName)
 }
 
 type InvalidPipeErr struct {

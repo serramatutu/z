@@ -3,6 +3,7 @@ package internal
 import (
 	"bytes"
 	"container/list"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -53,11 +54,13 @@ func TestExecuteSplitWithCommands(t *testing.T) {
 
 func TestExecuteSplitNested(t *testing.T) {
 	commandsList := list.New()
+	sep, _ := regexp.Compile(":")
 	commandsList.PushBack(commands.Split{
-		Separator: []byte(":"),
+		Separator: sep,
 	})
+	sep, _ = regexp.Compile("b")
 	commandsList.PushBack(commands.Split{
-		Separator: []byte("b"),
+		Separator: sep,
 	})
 	commandsList.PushBack(commands.Length{})
 	commandsList.PushBack(commands.Join{})
@@ -80,8 +83,9 @@ func TestExecuteSplitNested(t *testing.T) {
 
 func TestExecuteSplitImplicitJoin(t *testing.T) {
 	commandsList := list.New()
+	sep, _ := regexp.Compile(":")
 	commandsList.PushBack(commands.Split{
-		Separator: []byte(":"),
+		Separator: sep,
 	})
 	stop := commandsList.PushBack(commands.Length{})
 
@@ -160,8 +164,9 @@ func TestConfigExecuteOk(t *testing.T) {
 		Err:      nil,
 		Commands: list.New(),
 	}
+	sep, _ := regexp.Compile(":")
 	config.Commands.PushBack(commands.Split{
-		Separator: []byte(":"),
+		Separator: sep,
 	})
 	config.Commands.PushBack(commands.Length{})
 	config.Commands.PushBack(commands.Join{})
