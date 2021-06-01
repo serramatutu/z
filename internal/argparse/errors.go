@@ -10,7 +10,12 @@ type MissingPositionalArgumentsErr struct {
 }
 
 func (err MissingPositionalArgumentsErr) Error() string {
-	return fmt.Sprintf("missing positional arguments: %s", strings.Join(err.ArgumentNames, ", "))
+	argumentNames := make([]string, len(err.ArgumentNames))
+	for i, argName := range err.ArgumentNames {
+		argumentNames[i] = fmt.Sprintf("\"%s\"", argName)
+	}
+	joinedNames := strings.Join(argumentNames, ", ")
+	return fmt.Sprintf("missing positional arguments: %s", joinedNames)
 }
 
 type ExtraPositionalArgumentErr struct {
@@ -18,7 +23,7 @@ type ExtraPositionalArgumentErr struct {
 }
 
 func (err ExtraPositionalArgumentErr) Error() string {
-	return fmt.Sprintf("extra argument '%s'", err.ArgumentValue)
+	return fmt.Sprintf("unused argument \"%s\"", err.ArgumentValue)
 }
 
 type InvalidPositionalArgumentErr struct {
@@ -27,7 +32,7 @@ type InvalidPositionalArgumentErr struct {
 }
 
 func (err InvalidPositionalArgumentErr) Error() string {
-	return fmt.Sprintf("invalid value '%s' for %s", err.ArgumentValue, err.ArgumentName)
+	return fmt.Sprintf("invalid value \"%s\" for %s", err.ArgumentValue, err.ArgumentName)
 }
 
 type InvalidPipeErr struct {

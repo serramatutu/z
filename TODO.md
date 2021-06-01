@@ -14,3 +14,4 @@
   - implicit joins
 - version
 - benchmarks
+- CI

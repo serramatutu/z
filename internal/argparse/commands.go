@@ -1,114 +1,92 @@
 package argparse
 
 import (
-	"regexp"
-
 	"github.com/serramatutu/z/internal/commands"
 )
 
 func ParseHelp(args []string) commands.Help {
-	var commandName string
-	if len(args) > 0 {
-		commandName = args[0]
+	commandName := stringArgument{
+		name:     "command-name",
+		optional: true,
+	}
+	schema := []argument{
+		&commandName,
+	}
+	err := parseSchema(args, schema)
+	if err != nil {
+		return commands.Help{
+			CommandName: "z",
+		}
 	}
 
 	return commands.Help{
-		CommandName: commandName,
+		CommandName: commandName.Value(),
 	}
 }
 
 func ParseJoin(args []string) commands.Join {
-	var err error
-	var sep []byte
-
-	switch len(args) {
-	case 0:
-	case 1:
-		sep = []byte(args[0])
-	default:
-		err = ExtraPositionalArgumentErr{
-			ArgumentValue: args[1],
-		}
-		sep = nil
+	separator := stringArgument{
+		name:         "separator",
+		optional:     true,
+		defaultValue: "",
 	}
+	schema := []argument{
+		&separator,
+	}
+	err := parseSchema(args, schema)
 
+	var sep []byte
+	if separator.Value() != "" {
+		sep = []byte(separator.Value())
+	}
 	return commands.NewJoin(err, sep)
 }
 
 func ParseLength(args []string) commands.Length {
-	var err error
-	if len(args) > 0 {
-		err = ExtraPositionalArgumentErr{
-			ArgumentValue: args[0],
-		}
-	}
-
+	schema := []argument{}
+	err := parseSchema(args, schema)
 	return commands.NewLength(err)
 }
 
 func ParseReplace(args []string) commands.Replace {
-	var err error
-	var target *regexp.Regexp
-	var replacement []byte
-	var rangeStart, rangeEnd int
-
-	switch len(args) {
-	case 0:
-		err = MissingPositionalArgumentsErr{
-			ArgumentNames: []string{"pattern", "replace-string"},
-		}
-	case 1:
-		err = MissingPositionalArgumentsErr{
-			ArgumentNames: []string{"replace-string"},
-		}
-	case 3:
-		// rangeStart, rangeEnd, err = argparse.ParseRange(args[2])
-		if err != nil {
-			err = InvalidPositionalArgumentErr{
-				ArgumentName:  "occurrence-range",
-				ArgumentValue: args[2],
-			}
-			break
-		}
-		fallthrough
-	case 2:
-		target, err = regexp.Compile(args[0])
-		if err != nil {
-			err = InvalidPositionalArgumentErr{
-				ArgumentName:  "pattern",
-				ArgumentValue: args[0],
-			}
-		}
-		replacement = []byte(args[1])
-	default:
-		err = ExtraPositionalArgumentErr{
-			ArgumentValue: args[3],
-		}
+	pattern := patternArgument{
+		name:     "pattern",
+		optional: false,
 	}
+	replacement := stringArgument{
+		name:     "replace-string",
+		optional: false,
+	}
+	rangeArg := rangeArgument{
+		name:     "occurrence-range",
+		optional: true,
+	}
+	schema := []argument{
+		&pattern,
+		&replacement,
+		&rangeArg,
+	}
+	err := parseSchema(args, schema)
 
-	return commands.NewReplace(err, target, replacement, rangeStart, rangeEnd)
+	return commands.NewReplace(
+		err,
+		pattern.Value(),
+		[]byte(replacement.Value()),
+		rangeArg.Start(),
+		rangeArg.End(),
+	)
 }
 
 func ParseSplit(args []string) commands.Split {
-	var err error
-	var sep *regexp.Regexp
-
-	switch len(args) {
-	case 0:
-	case 1:
-		sep, err = regexp.Compile(args[0])
-		if err != nil {
-			err = InvalidPositionalArgumentErr{
-				ArgumentName:  "pattern",
-				ArgumentValue: args[0],
-			}
-		}
-	default:
-		err = ExtraPositionalArgumentErr{
-			ArgumentValue: args[1],
-		}
-		sep = nil
+	pattern := patternArgument{
+		name:         "pattern",
+		optional:     true,
+		defaultValue: nil,
 	}
+	schema := []argument{
+		&pattern,
+	}
+	err := parseSchema(args, schema)
 
-	return commands.NewSplit(err, sep)
+	return commands.NewSplit(err, pattern.Value())
 }
