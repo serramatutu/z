@@ -150,3 +150,34 @@ func TestParseReplaceRange(t *testing.T) {
 }
 
 // Range parsing tests are in "range_test.go"
+
+func TestParseSplitNoArgs(t *testing.T) {
+	args := []string{}
+
+	split := argparse.ParseSplit(args)
+	if split.Err() != nil {
+		t.Errorf("Unexpected error for ParseSplit with no args")
+	}
+
+	if split.Separator != nil {
+		t.Errorf("ParseSplit should produce nil separator if not provided")
+	}
+}
+
+func TestParseSplitSeparator(t *testing.T) {
+	args := []string{":"}
+
+	split := argparse.ParseSplit(args)
+	if split.Err() != nil {
+		t.Errorf("Unexpected error for ParseSplit with separator arg")
+	}
+
+	if split.Separator == nil {
+		t.Errorf("ParseSplit should produce separator when it is provided")
+	}
+
+	expected := regexp.MustCompile(":")
+	if !reflect.DeepEqual(*split.Separator, *expected) {
+		t.Errorf("Invalid regex separator for ParseSplit")
+	}
+}
