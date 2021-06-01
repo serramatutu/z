@@ -1,7 +1,7 @@
 # TODO
 - hash
-- replace
-- count
+- count (count split elements/count matches)
+- insert
 - match
 - sort
 - unique
