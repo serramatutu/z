@@ -1,7 +1,6 @@
 package argparse
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -110,14 +109,6 @@ func (a *patternArgument) Parse(in string) {
 	} else {
 		a.value = pattern
 	}
-}
-
-type InvalidRangeErr struct {
-	Input string
-}
-
-func (err InvalidRangeErr) Error() string {
-	return fmt.Sprintf("invalid range '%s'", err.Input)
 }
 
 type rangeArgument struct {

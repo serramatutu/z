@@ -35,6 +35,14 @@ func (err InvalidPositionalArgumentErr) Error() string {
 	return fmt.Sprintf("invalid value \"%s\" for %s", err.ArgumentValue, err.ArgumentName)
 }
 
+type InvalidRangeErr struct {
+	Input string
+}
+
+func (err InvalidRangeErr) Error() string {
+	return fmt.Sprintf("invalid range \"%s\"", err.Input)
+}
+
 type InvalidPipeErr struct {
 }
 

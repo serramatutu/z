@@ -20,7 +20,7 @@ examples:
     z split :
 
     # splitting by whitespace character groups
-    z split /(\s)+/
+    z split \s+
 
     # get the lengths of all strings between ":" and concatenate them
     z split : _ length

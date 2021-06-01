@@ -26,7 +26,7 @@ examples:
     z replace : ""
 
     # replacing all alphabetical characters with "0"
-    z replace /[A-z]/ 0
+    z replace [A-z] 0
 
     # replacing all but first "0" with "zero"
     z replace 0 "zero" 1:
