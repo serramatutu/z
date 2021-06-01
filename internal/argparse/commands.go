@@ -62,7 +62,7 @@ func ParseReplace(args []string) commands.Replace {
 			ArgumentNames: []string{"replace-string"},
 		}
 	case 3:
-		// rangeStart, rangeEnd, err = argparse.ParseRange(args[2])
+		rangeStart, rangeEnd, err = ParseRange(args[2])
 		if err != nil {
 			err = InvalidPositionalArgumentErr{
 				ArgumentName:  "occurrence-range",
