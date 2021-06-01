@@ -149,8 +149,6 @@ func TestParseReplaceRange(t *testing.T) {
 	}
 }
 
-// Range parsing tests are in "range_test.go"
-
 func TestParseSplitNoArgs(t *testing.T) {
 	args := []string{}
 
