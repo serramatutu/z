@@ -93,17 +93,16 @@ z split _ length _ join \n < infile.txt > outfile.txt
 # print the md5 hashes of "a", "b" and "c", separated by ","
 echo -n "a:b:c" | z split : _ hash md5 _ join ,
 
-# print the concatenated lengths of "one", "two" and "three" implicitly
+# print the implicitly concatenated lengths of "one", "two" and "three"
 echo -n "one,two,three" | z split , _ length
 
-# print the concatenated lengths of "one", "two" and "three" explicitly
+# print the explicitly concatenated lengths of "one", "two" and "three"
 echo -n "one,two,three" | z split , _ length _ join ""
 ```
 
-Without splits and joins, the operations would have very different results:
+Without splits and joins, the same operations would have very different results:
 ```
 # getting the length of infile.txt's content and writing that to outfile.txt
-# (split's default delimiter is "\n")
 z length < infile.txt > outfile.txt
 
 # print the md5 hash of "a:b:c"
@@ -120,15 +119,16 @@ The `match` command also returns an array of strings. Joining is done in exactly
 z match findme _ join , < file.txt
 ```
 
-To better understand how `split`, `match` and `join` work, refer to our [help files](./help/) or run `z help <split,match,join>`.
+To better understand how `split`, `match` and `join` work, refer to our [help files](./help/) or run `z help`.
 
 ### Consuming from ever growing, endless streams
 By default, z reads from its input until it reaches the end (EOF). However, there are some use cases where there's no expected end, such as tailing rotating log files. z approaches this by providing a `stream <delimiter>` command, which makes it consume in chunks separated by `<delimiter>`.
 
 Here's an example:
 ```
-# follows the tail of a mylogfile.log, printing all occurrences of pattern "findme=[A-z]+ ", joined by ","
-# (the default stream delimiter is "\n", so we can ommit the argument)
+# follows the tail of a mylogfile.log while printing all occurrences of 
+# pattern "findme=[A-z]+ " joined by ","
+# (the default stream delimiter is "\n", so we can omit the argument)
 tail -f mylogfile.log | z stream _ match "/findme=[A-z]+ /" _ join ,
 ```
 
@@ -142,7 +142,7 @@ If you already have z installed, avoid referring to this repo by running `z help
 z was designed with the following principles in mind
 1. **SIMPLE INTERFACE**. All z commands must have obvious names and perform clear, well-defined operations. Any user should be able to understand what their command chain does without referring to any documentation.
 2. **EASY INSTALLATION**. All z releases must export a single lightweight binary. Installing it should be as simple as downloading the binary and including it in the `$PATH`. Want to uninstall? Just delete it.
-3. **NO EXTERNAL DEPENDENCIES**. z must only depend on the Go core library functionality.
+3. **NO EXTERNAL DEPENDENCIES**. z must only depend on the Go core library functionality. This avoids the dependency hell and potential security vulnerabilities.
 
 
 ## NOTICE! Z IS STILL A WORK IN PROGRESS 

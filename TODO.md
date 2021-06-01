@@ -13,5 +13,6 @@
 - environment configuration (zfile)
   - implicit joins
 - version
+- changelog
 - benchmarks
 - CI
