@@ -12,7 +12,7 @@
   - inner parenthesis are entrypoints from STDIN
 - environment configuration (zfile)
   - implicit joins
-- version
+- version (missing tests)
 - changelog
 - benchmarks
 - CI
