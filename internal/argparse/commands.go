@@ -12,7 +12,7 @@ func ParseHelp(args []string) commands.Help {
 	schema := []argument{
 		&commandName,
 	}
-	err := parseArgsSchema(args, schema)
+	err := parseSchema(args, schema)
 	if err != nil {
 		return commands.Help{
 			CommandName: "z",
@@ -33,7 +33,7 @@ func ParseJoin(args []string) commands.Join {
 	schema := []argument{
 		&separator,
 	}
-	err := parseArgsSchema(args, schema)
+	err := parseSchema(args, schema)
 
 	var sep []byte
 	if separator.Value() != "" {
@@ -44,7 +44,7 @@ func ParseJoin(args []string) commands.Join {
 
 func ParseLength(args []string) commands.Length {
 	schema := []argument{}
-	err := parseArgsSchema(args, schema)
+	err := parseSchema(args, schema)
 	return commands.NewLength(err)
 }
 
@@ -66,7 +66,7 @@ func ParseReplace(args []string) commands.Replace {
 		&replacement,
 		&rangeArg,
 	}
-	err := parseArgsSchema(args, schema)
+	err := parseSchema(args, schema)
 
 	return commands.NewReplace(
 		err,
@@ -86,7 +86,7 @@ func ParseSplit(args []string) commands.Split {
 	schema := []argument{
 		&pattern,
 	}
-	err := parseArgsSchema(args, schema)
+	err := parseSchema(args, schema)
 
 	return commands.NewSplit(err, pattern.Value())
 }

@@ -137,3 +137,64 @@ func TestParseRangeEnd(t *testing.T) {
 		t.Errorf("Expected 0:5 but got %v:%v for ParseRange", arg.Start(), arg.End())
 	}
 }
+
+func TestParseSchemaTooFewArguments(t *testing.T) {
+	arg := stringArgument{
+		name:     "arg-name",
+		optional: false,
+	}
+	schema := []argument{
+		&arg,
+	}
+	values := []string{}
+
+	err := parseSchema(values, schema)
+	switch err.(type) {
+	case MissingPositionalArgumentsErr:
+	default:
+		t.Errorf("parseSchema should return MissingPositionalArgumentsErr when there are too few arguments")
+	}
+}
+
+func TestParseSchemaTooManyArguments(t *testing.T) {
+	schema := []argument{}
+	values := []string{"invalid"}
+
+	err := parseSchema(values, schema)
+	switch err.(type) {
+	case ExtraPositionalArgumentErr:
+	default:
+		t.Errorf("parseSchema should return ExtraPositionalArgumentErr when there are too many arguments")
+	}
+}
+
+func TestParseSchemaOk(t *testing.T) {
+	mandatory := stringArgument{
+		name:     "mandatory",
+		optional: false,
+	}
+	optional := stringArgument{
+		name:         "optional",
+		optional:     true,
+		defaultValue: "default-value",
+	}
+	schema := []argument{
+		&mandatory,
+		&optional,
+	}
+
+	values := []string{"val"}
+
+	err := parseSchema(values, schema)
+	if err != nil {
+		t.Errorf("Unexpected error for parseSchema with valid arguments")
+	}
+
+	if mandatory.Value() != "val" {
+		t.Errorf("parseSchema returned invalid parameter value")
+	}
+
+	if optional.Value() != "default-value" {
+		t.Errorf("parseSchema should call arg.BecomeDefault() for non-provided optional arguments")
+	}
+}

@@ -192,7 +192,7 @@ func (a *rangeArgument) Parse(in string) {
 	}
 }
 
-func parseArgsSchema(args []string, schema []argument) error {
+func parseSchema(args []string, schema []argument) error {
 	switch {
 	case len(args) > len(schema):
 		return ExtraPositionalArgumentErr{
