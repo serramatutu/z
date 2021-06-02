@@ -1,5 +1,6 @@
-
 # z
+[![test](https://github.com/serramatutu/z/actions/workflows/test.yml/badge.svg)](https://github.com/serramatutu/z/actions/workflows/test.yml)
+
 pipes and streams made easy
 
 ## What is z?
