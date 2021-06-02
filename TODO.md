@@ -16,3 +16,5 @@
 - changelog
 - benchmarks
 - CI
+- snapcraft (https://goreleaser.com/customization/snapcraft/)
+- brew (https://goreleaser.com/customization/homebrew/)

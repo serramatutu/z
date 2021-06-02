@@ -1,0 +1,34 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: ./cmd/z/main.go
+    ldflags:
+      - -s -w -X 'config.Version={{.Version}}' -X 'config.Commit={{.Commit}}' -X 'config.Date={{.Date}}' -X 'config.BuiltBy="GoReleaser on Github Actions"' -X 'config.Repository="https://github.com/serramatutu/z/"'
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      # TODO: windows
+      # - windows
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: "{{ .ProjectName }}_checksums.txt"
+signs:
+  - artifacts: checksum
+    args: ["--batch", "-u", "{{ .Env.GPG_FINGERPRINT }}", "--output", "${signature}", "--detach-sign", "${artifact}"]
+snapshot:
+  name_template: "{{ .Tag }}-SNAPSHOT-{{.ShortCommit}}"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
