@@ -17,6 +17,8 @@ func (err ArgumentErr) Error() string {
 	switch err.CommandName {
 	case "help":
 		return err.ErrText
+	case "version":
+		return err.ErrText
 	default:
 		runHelpText := fmt.Sprintf("run \"z help %s\" to learn more.\n", err.CommandName)
 		if err.ErrText != "" {
@@ -40,6 +42,8 @@ func parseCommand(args []string) commands.Command {
 		cmd = ParseSplit(args[1:])
 	case "replace":
 		cmd = ParseReplace(args[1:])
+	case "version":
+		cmd = ParseVersion(args[1:])
 	}
 
 	return cmd

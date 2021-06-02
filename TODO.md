@@ -1,7 +1,7 @@
 # TODO
 - hash
-- replace
-- count
+- count (count split elements/count matches)
+- insert
 - match
 - sort
 - unique
@@ -12,7 +12,9 @@
   - inner parenthesis are entrypoints from STDIN
 - environment configuration (zfile)
   - implicit joins
-- version
+- version (missing tests)
 - changelog
 - benchmarks
 - CI
+- snapcraft (https://goreleaser.com/customization/snapcraft/)
+- brew (https://goreleaser.com/customization/homebrew/)

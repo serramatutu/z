@@ -90,3 +90,10 @@ func ParseSplit(args []string) commands.Split {
 
 	return commands.NewSplit(err, pattern.Value())
 }
+
+func ParseVersion(args []string) commands.Version {
+	schema := []argument{}
+	// TODO: version schema
+	parseSchema(args, schema)
+	return commands.Version{}
+}

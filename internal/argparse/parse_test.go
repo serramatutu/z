@@ -16,6 +16,7 @@ var commandTypeMap = map[string]interface{}{
 	"split":   commands.Split{},
 	"join":    commands.Join{},
 	"replace": commands.Replace{},
+	"version": commands.Version{},
 }
 
 func TestParseCommandTypes(t *testing.T) {

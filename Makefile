@@ -6,3 +6,9 @@ build: test
 
 test:
 	go test ./...
+
+pr_ci_test:
+	act pull_request -s GITHUB_TOKEN=${GITHUB_TOKEN}
+
+release_test:
+	goreleaser --snapshot --skip-publish --rm-dist

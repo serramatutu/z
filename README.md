@@ -44,6 +44,8 @@ That's it! You're all set!
 
 You can also compile z from source by cloning this repository and running `make build`. This will produce a z binary file inside the `bin/` folder. If you're doing this, make sure you have [Go](https://golang.org/) installed.
 
+_* All builds are checksummed then signed with GPG. You can verify the signature using the [public key](./pubkey.asc)_
+
 ## Usage
 z is built to have an easy and intuitive interface without giving up on functionality.
 
