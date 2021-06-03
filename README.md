@@ -1,10 +1,10 @@
 # z
 [![test](https://github.com/serramatutu/z/actions/workflows/test.yml/badge.svg)](https://github.com/serramatutu/z/actions/workflows/test.yml)
 
-pipes and streams made easy
+pipes made easy
 
 ## What is z?
-z is a unix stream/pipe processor written in [Go](https://golang.org/) that aims to be easy and intuitive to work with.
+z is a pipe processor written in [Go](https://golang.org/) that aims to be easy and intuitive to work with.
 
 ## Why z?
 Whenever I worked with unix streams/pipes, I noticed I kept having to read extensive documentation about many different programs with unintuitive names and interfaces. Sometimes I also found myself reading through Stack Overflow posts that explain how to perform the most simple of tasks.
