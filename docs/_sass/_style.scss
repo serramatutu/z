@@ -42,6 +42,10 @@ body {
     border-top: 1px var(--hr-color) solid;
 }
 
+.sidebar li.current {
+    list-style: "> ";
+}
+
 a {
     color: var(--a-font-color);
     text-decoration: none;
@@ -55,7 +59,6 @@ hr {
     border: none;
     border-top: 1px var(--hr-color) solid;
 }
-
 
 .icon {
     a {
