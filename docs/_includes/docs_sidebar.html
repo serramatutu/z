@@ -1,4 +1,7 @@
 <div class="sidebar">
+    <div class="logo">
+        <img src="{{ 'img/logo.png' | relative_url }}"/>
+    </div>
     {% for section in site.data.docs_nav.sections -%}
     <h4>{{ section.title }}</h4>
     <ul>

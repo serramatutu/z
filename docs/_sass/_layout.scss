@@ -73,6 +73,16 @@ div.icon {
     }
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    max-width: 80px;
+
+    img {
+        height: 1em;
+    }
+}
+
 $nav-height: 80px;
 
 div.nav-wrap {
@@ -90,12 +100,6 @@ div.nav-wrap {
 
         .logo {
             display: none;
-            align-items: center;
-            max-width: 80px;
-
-            img {
-                height: 1em;
-            }
         }
 
         .icons {
@@ -170,26 +174,57 @@ div.nav-wrap {
     }
 }
 
+$sidebar-max-width: 200px;
+
 div.sidebar-container {
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
 
-    width: calc(50vw - #{$max-page-width}/2 - #{$padding-unit}*2);
-
     overflow-x: hidden;
     margin-top: $nav-height;
-    display: none;
+    display: flex;
+    visibility: hidden;
 
     justify-content: right;
 
+    width: auto;
+
+    left: -$sidebar-max-width;
+    transition: all 300ms ease;
+    &.active {
+        visibility: visible;
+        left: 0;
+    }
+
     @include big-desktop-up {
-        display: flex;
+        left: 0;
+        visibility: visible;
+        width: calc(50vw - #{$max-page-width}/2 - #{$padding-unit}*2);
     }
 
     div.sidebar {
-        max-width: 200px;
+        width: 100%;
+
+        min-height: 100vh;
+        max-width: $sidebar-max-width;
+
+        padding-left: $padding-unit;
+        padding-right: $padding-unit;
+
+        @include big-desktop-up {
+            .logo {
+                display: none;
+            }
+        }
+
+        .logo {
+            margin-bottom: $padding-unit;
+            @include big-desktop-up {
+                display: none;
+            }
+        }
 
         h4 {
             margin-top: 0;

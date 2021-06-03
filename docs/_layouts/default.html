@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <link rel="alternate" type="application/atom+xml" title="Recent commits to z's main branch"
     href="{{ site.repository }}/commits/main.atom">
   <link rel="preload" href="{{ 'fonts/FiraCode-Bold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
@@ -18,13 +19,16 @@
   <link rel="preload" href="{{ 'fonts/FiraCode-VF.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="{{ 'css/main.css' | relative_url }}" as="style">
   <link rel="stylesheet" href="{{ 'css/main.css' | relative_url }}">
-  <!-- <link rel="icon" type="image/x-icon" href="{{ 'favicon.ico' | relative_url }}"> -->
+  <link rel="icon" type="image/x-icon" href="{{ 'favicon.ico' | relative_url }}">
+
+  <script src=" {{ 'scripts/index.js' | relative_url }}"></script>
+
   {% seo %}
 </head>
 
 <body data-theme="dark">
   {%- include nav.html -%}
-  <div class="sidebar-container">
+  <div id="sidebar-container" class="sidebar-container">
     {% if page.collection == "docs" %}
       {%- include docs_sidebar.html -%}
     {% endif %}

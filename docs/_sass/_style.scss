@@ -42,8 +42,12 @@ body {
     border-top: 1px var(--hr-color) solid;
 }
 
-.sidebar li.current {
-    list-style: "> ";
+.sidebar {
+    background-color: var(--bg-color);
+    border-right: 1px var(--hr-color) solid;
+    li.current {
+        list-style: "> ";
+    }
 }
 
 a {
