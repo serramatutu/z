@@ -2,6 +2,9 @@
 
 body {
     font-family: 'FiraCode';
+
+    color: var(--font-color);
+    background-color: var(--bg-color);
 }
 
 .nav {
@@ -12,21 +15,21 @@ body {
         }
 
         &.primary {
-            background-color: $primary;
+            background-color: var(--primary);
             &:hover {
-                background-color: $primary-dimmed;
+                background-color: var(--primary-dimmed);
             }
         }
         &.secondary {
-            background-color: $secondary;
+            background-color: var(--secondary);
             &:hover {
-                background-color: $secondary-dimmed;
+                background-color: var(--secondary-dimmed);
             }
         }
         &.tertiary {
-            background-color: $tertiary;
+            background-color: var(--tertiary);
             &:hover {
-                background-color: $tertiary-dimmed;
+                background-color: var(--tertiary-dimmed);
             }
         }
     }
@@ -34,21 +37,21 @@ body {
 
 .footer {
     font-size: 0.6em;
-    border-top: 1px $light-gray solid;
+    border-top: 1px var(--hr-color) solid;
 }
 
 a {
-    color: $a-font-color;
+    color: var(--a-font-color);
     text-decoration: none;
 
     &:hover {
-        color: $a-hover-font-color;
+        color: var(--a-hover-font-color);
     }
 }
 
 hr {
     border: none;
-    border-top: 1px $hr-color solid;
+    border-top: 1px var(--hr-color) solid;
 }
 
 // markdown text stylings
@@ -61,8 +64,8 @@ hr {
 .highlighter-rouge {
     font-weight: bold;
 
-    color: $code-font-color;
-    background-color: $code-bg-color;
+    color: var(--code-font-color);
+    background-color: var(--code-bg-color);
 }
 
 div.highlighter-rouge {
@@ -82,11 +85,12 @@ code.highlighter-rouge {
 }
 
 blockquote {
-    // font-style: italic;
+    font-style: italic;
 
     margin-left: 20px;
     padding-left: 20px;
-    border-left: 4px $citation-nub-color solid;
+    border-left: 4px var(--citation-nub-color) solid;
 
-    background-color: $citation-bg-color;
+    color: var(--citation-font-color);
+    background-color: var(--citation-bg-color);
 }

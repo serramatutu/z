@@ -1,5 +1,6 @@
 // Raw colors
 $black: #000000;
+$darker-gray: #1b1b1b;
 $dark-gray: #3d3d3d;
 $gray: #727272;
 $light-gray: #c7c7c7;
@@ -16,29 +17,53 @@ $yellow: #ffff00;
 $yellow-dimmed: #ffffae;
 
 // THEME
+:root {
+    --primary: #{$magenta};
+    --primary-dimmed: #{$magenta-dimmed};
 
-$primary: $magenta;
-$primary-dimmed: $magenta-dimmed;
+    --secondary: #{$cyan};
+    --secondary-dimmed: #{$cyan-dimmed};
 
-$secondary: $cyan;
-$secondary-dimmed: $cyan-dimmed;
+    --tertiary: #{$yellow};
+    --tertiary-dimmed: #{$yellow-dimmed};
 
-$tertiary: $yellow;
-$tertiary-dimmed: $yellow-dimmed;
+    --bg-color: #{$white};
+    --font-color: #{$black};
 
-$bg-color: $white;
+    // links (a)
+    --a-font-color: #{$dark-gray};
+    --a-hover-font-color: #{$gray};
 
-// links (a)
-$a-font-color: $dark-gray;
-$a-hover-font-color: $gray;
+    // horizontal separator (hr)
+    --hr-color: #{$light-gray};
 
-// horizontal separator (hr)
-$hr-color: $light-gray;
+    // code
+    --code-font-color: #{$dark-gray};
+    --code-bg-color: #{$light-gray};
 
-// code
-$code-font-color: $dark-gray;
-$code-bg-color: $light-gray;
+    // citation (blockquote)
+    --citation-font-color: #{$black};
+    --citation-nub-color: #{$gray};
+    --citation-bg-color: #{$lighter-gray};
+}
 
-// citation (blockquote)
-$citation-nub-color: $gray;
-$citation-bg-color: $lighter-gray;
+:root, [data-theme="dark"] {
+    --bg-color: #{$black};
+    --font-color: #{$white};
+
+    // links (a)
+    --a-font-color: #{$light-gray};
+    --a-hover-font-color: #{$lighter-gray};
+
+    // horizontal separator (hr)
+    --hr-color: #{$light-gray};
+
+    // code
+    --code-font-color: #{$lighter-gray};
+    --code-bg-color: #{$darker-gray};
+
+    // citation (blockquote)
+    --citation-font-color: #{$light-gray};
+    --citation-nub-color: #{$darker-gray};
+    --citation-bg-color: #{$dark-gray};
+}
