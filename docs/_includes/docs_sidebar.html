@@ -1,5 +1,5 @@
-<div class="docs-sidebar">
-    {% for section in site.data.docs_nav -%}
+<div class="sidebar">
+    {% for section in site.data.docs_nav.sections -%}
     <h4>{{ section.title }}</h4>
     <ul>
         {%- for item in section.docs -%}

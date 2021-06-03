@@ -57,8 +57,14 @@ hr {
 }
 
 
-.icon path {
-    stroke: var(--font-color);
+.icon {
+    a {
+        cursor: pointer;
+    }
+
+    path, line {
+        stroke: var(--font-color);
+    }
 }
 
 

@@ -22,9 +22,12 @@ $padding-unit: 15px;
     @media (min-width: 56.25em) { @content; }
 }
 @mixin desktop-up {
-    @media (min-width: 75em) { @content; }
+    @media (min-width: 70em) { @content; }
 }
 @mixin big-desktop-up {
+    @media (min-width: 100em) { @content; }
+}
+@mixin large-desktop-up {
     @media (min-width: 112.5em) { @content; }
 }
 
@@ -48,6 +51,9 @@ body {
         font-size: $base-font-size*1.4;
     }
     @include big-desktop-up {
+        font-size: $base-font-size*1.4;
+    }
+    @include large-desktop-up {
         font-size: $base-font-size*1.5;
     }
 }
@@ -55,6 +61,16 @@ body {
 div.max-page-width {
     margin: 0 auto;
     max-width: $max-page-width;
+}
+
+div.icon {
+    height: 24px;
+    display: inline;
+
+    a {
+        height: 24px;
+        width: 24px;
+    }
 }
 
 $nav-height: 80px;
@@ -67,6 +83,9 @@ div.nav-wrap {
     div.nav {
         height: $nav-height;
 
+        padding-left: $padding-unit;
+        padding-right: $padding-unit;
+
         display: flex;
 
         .icons {
@@ -77,11 +96,13 @@ div.nav-wrap {
             flex-grow: 1;
 
             padding: 0 0 0 0;
+        }
 
-            .icon {
-                height: 24px;
-                line-height: 1em;
-                display: inline;
+        // rescale icons
+        @include phone-only {
+            svg {
+                height: 1.3em;
+                width: 1.3em;
             }
         }
 
@@ -94,12 +115,36 @@ div.nav-wrap {
 
             list-style: none;
 
+            // Hamburger
+            li:nth-child(1) {
+                padding-left: 0;
+            }
+            @include big-desktop-up {
+                .sidebar-toggle {
+                    display: none;
+                }
+
+                li:nth-child(1) {
+                    padding-left: $padding-unit;
+                }
+
+                li:nth-child(2) {
+                    padding-left: 0;
+                }
+            }
+
             li {
+                line-height: 100%;
                 float: left;
                 box-sizing: border-box;
 
-                &:first-of-type {
-                    padding-left: 0;
+                flex-shrink: 1;
+                flex-grow: 1;
+
+                @include phone-only {
+                    font-size: $base-font-size*0.9;
+                    padding-left: calc(#{$padding-unit}/2);
+                    padding-right: calc(#{$padding-unit}/2);
                 }
 
                 padding-left: $padding-unit;
@@ -111,13 +156,50 @@ div.nav-wrap {
     }
 }
 
-div.sidebar {
-    width: 160px;
+div.sidebar-container {
     position: fixed;
     z-index: 1;
     top: 0;
-    right: 0;
-    overflow-x: hidden; /* Disable horizontal scroll */
+    left: 0;
+
+    width: calc(50vw - #{$max-page-width}/2 - #{$padding-unit}*2);
+
+    overflow-x: hidden;
+    margin-top: $nav-height;
+    display: none;
+
+    justify-content: right;
+
+    @include big-desktop-up {
+        display: flex;
+    }
+
+    div.sidebar {
+        max-width: 200px;
+
+        h4 {
+            margin-top: 0;
+            margin-bottom: 0;
+
+            font-size: 0.9em;
+        }
+
+        ul {
+            margin-top: 0;
+            margin-bottom: 0;
+
+            list-style: none;
+            font-size: 0.75em;
+            li {
+                padding-top: calc(#{$padding-unit}/2);
+                padding-bottom: calc(#{$padding-unit}/2);
+
+                &.current {
+                    list-style: "> ";
+                }
+            }
+        }
+    }
 }
 
 div.main {
