@@ -31,6 +31,10 @@ $padding-unit: 15px;
     @media (min-width: 112.5em) { @content; }
 }
 
+.hidden {
+    display: none;
+    // visibility: hidden;
+}
 
 body {
     top: 0;
@@ -98,7 +102,7 @@ div.nav-wrap {
 
         display: flex;
 
-        .logo {
+        .logo.has-sidebar {
             display: none;
         }
 

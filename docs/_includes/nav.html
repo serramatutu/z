@@ -1,14 +1,14 @@
 <div class="nav-wrap">
     <div class="nav max-page-width">
         <ul>
-            <li class="sidebar-toggle {% if page.sidebar %} active {% endif %}">
+            <li class="sidebar-toggle {% unless page.sidebar %} hidden {% endunless %}">
                 <div class="icon menu">
                     <a id="sidebar-toggle-button">
                         {%- include icons/menu.svg -%}
                     </a>
                 </div>
             </li>
-            <li class="logo">
+            <li class="logo {% if page.sidebar %} has-sidebar {% endif %}">
                 <a href="/">
                     <img src="{{ 'img/logo.png' | relative_url }}"/>
                 </a>
