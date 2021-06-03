@@ -249,7 +249,7 @@ div.sidebar-container {
 
 div.main {
     margin-top: $nav-height;
-    min-height: calc(100vh - $nav-height);
+    min-height: calc(100vh - #{$nav-height});
 
     padding-left: $padding-unit;
     padding-right: $padding-unit;

@@ -9,6 +9,7 @@ collections:
   docs:
     permalink: "/:collection/:path/"
     output: true
+    sidebar: true
 defaults:
 - scope:
     path: _docs

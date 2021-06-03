@@ -1,6 +1,7 @@
 ---
 title: Sample
 permalink: /docs/sample/
+sidebar: docs_sidebar.html
 ---
 
 # Sample header

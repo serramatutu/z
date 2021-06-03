@@ -28,11 +28,13 @@
 
 <body data-theme="dark">
   {%- include nav.html -%}
-  <div id="sidebar-container" class="sidebar-container">
-    {% if page.collection == "docs" %}
-      {%- include docs_sidebar.html -%}
-    {% endif %}
-  </div>
+
+  {% if page.sidebar %}
+    <div id="sidebar-container" class="sidebar-container">
+      {%- include {{ page.sidebar }} -%}
+    </div>
+  {% endif %}
+
   <div class="main max-page-width">
     <div class="content">
       {{- content -}}
