@@ -5,8 +5,6 @@
 
 [![test](https://github.com/serramatutu/z/actions/workflows/test.yml/badge.svg)](https://github.com/serramatutu/z/actions/workflows/test.yml)
 
----
-
 ## What is z?
 z is a pipe processor written in [Go](https://golang.org/) that aims to be easy and intuitive to work with.
 
