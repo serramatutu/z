@@ -1,0 +1,44 @@
+// Raw colors
+$black: #000000;
+$dark-gray: #3d3d3d;
+$gray: #727272;
+$light-gray: #c7c7c7;
+$lighter-gray: #f0f0f0;
+$white: #ffffff;
+
+$magenta: #ff00ff;
+$magenta-dimmed: #ff70ff;
+
+$cyan: #00ffff;
+$cyan-dimmed: #a3ffff;
+
+$yellow: #ffff00;
+$yellow-dimmed: #ffffae;
+
+// THEME
+
+$primary: $magenta;
+$primary-dimmed: $magenta-dimmed;
+
+$secondary: $cyan;
+$secondary-dimmed: $cyan-dimmed;
+
+$tertiary: $yellow;
+$tertiary-dimmed: $yellow-dimmed;
+
+$bg-color: $white;
+
+// links (a)
+$a-font-color: $dark-gray;
+$a-hover-font-color: $gray;
+
+// horizontal separator (hr)
+$hr-color: $light-gray;
+
+// code
+$code-font-color: $dark-gray;
+$code-bg-color: $light-gray;
+
+// citation (blockquote)
+$citation-nub-color: $gray;
+$citation-bg-color: $lighter-gray;

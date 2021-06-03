@@ -1,3 +1,5 @@
+@import "theme";
+
 body {
     font-family: 'FiraCode';
 }
@@ -9,22 +11,22 @@ body {
             color: black;
         }
 
-        &.magenta {
-            background-color: $magenta-primary;
+        &.primary {
+            background-color: $primary;
             &:hover {
-                background-color: $magenta-secondary;
+                background-color: $primary-dimmed;
             }
         }
-        &.cyan {
-            background-color: $cyan-primary;
+        &.secondary {
+            background-color: $secondary;
             &:hover {
-                background-color: $cyan-secondary;
+                background-color: $secondary-dimmed;
             }
         }
-        &.yellow {
-            background-color: $yellow-primary;
+        &.tertiary {
+            background-color: $tertiary;
             &:hover {
-                background-color: $yellow-secondary;
+                background-color: $tertiary-dimmed;
             }
         }
     }
@@ -36,15 +38,55 @@ body {
 }
 
 a {
-    color: $dark-gray;
+    color: $a-font-color;
     text-decoration: none;
 
     &:hover {
-        color: $gray;
+        color: $a-hover-font-color;
     }
 }
 
-.divider {
-    height: 1px;
-    border-top: 1px $light-gray solid;
+hr {
+    border: none;
+    border-top: 1px $hr-color solid;
+}
+
+// markdown text stylings
+.language-terminal pre.highlight:before {
+    content: "$";
+    font-weight: bolder;
+    margin-right: $padding-unit;
+}
+
+.highlighter-rouge {
+    font-weight: bold;
+
+    color: $code-font-color;
+    background-color: $code-bg-color;
+}
+
+div.highlighter-rouge {
+    padding: $padding-unit $padding-unit*2 $padding-unit $padding-unit*2;
+    border-radius: 5px;
+    pre {
+        margin: 0 0 0 0;
+    }
+}
+
+code.highlighter-rouge {
+    padding: 2px 4px 2px 4px;
+    border-radius: 5px;
+    pre {
+        margin: 0 0 0 0;
+    }
+}
+
+blockquote {
+    // font-style: italic;
+
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 4px $citation-nub-color solid;
+
+    background-color: $citation-bg-color;
 }

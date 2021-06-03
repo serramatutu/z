@@ -9,7 +9,7 @@ Sample body
 
 ---
 
-```
+```terminal
 I'm code!!!
 ```
 

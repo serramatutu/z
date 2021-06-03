@@ -1,4 +1,33 @@
-@import "./variables";
+// Page width
+$max-page-width: 1200px;
+
+// Font-Size
+$base-font-size: 1em;
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+
+// Padding-unit
+$padding-unit: 15px;
+
+// Breakpoints
+@mixin phone-only {
+    @media (max-width: 37.4em) { @content; }
+}
+@mixin tablet-portrait-up {
+    @media (min-width: 37.5em) { @content; }
+}
+@mixin tablet-landscape-up {
+    @media (min-width: 56.25em) { @content; }
+}
+@mixin desktop-up {
+    @media (min-width: 75em) { @content; }
+}
+@mixin big-desktop-up {
+    @media (min-width: 112.5em) { @content; }
+}
+
 
 body {
     top: 0;
@@ -28,8 +57,8 @@ div.main {
     max-width: $max-page-width;
     min-height: 100vh;
 
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: $padding-unit;
+    padding-right: $padding-unit;
 
     display: flex;
     flex-direction: column;
@@ -56,8 +85,8 @@ div.main {
                     padding-left: 0;
                 }
 
-                padding-left: 15px;
-                padding-right: 15px;
+                padding-left: $padding-unit;
+                padding-right: $padding-unit;
 
                 font-weight: lighter;
             }
