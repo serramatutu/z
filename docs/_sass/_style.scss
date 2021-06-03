@@ -1,0 +1,50 @@
+body {
+    font-family: 'FiraCode';
+}
+
+.nav {
+    a {
+        color: black;
+        &:hover {
+            color: black;
+        }
+
+        &.magenta {
+            background-color: $magenta-primary;
+            &:hover {
+                background-color: $magenta-secondary;
+            }
+        }
+        &.cyan {
+            background-color: $cyan-primary;
+            &:hover {
+                background-color: $cyan-secondary;
+            }
+        }
+        &.yellow {
+            background-color: $yellow-primary;
+            &:hover {
+                background-color: $yellow-secondary;
+            }
+        }
+    }
+}
+
+.footer {
+    font-size: 0.6em;
+    border-top: 1px $light-gray solid;
+}
+
+a {
+    color: $dark-gray;
+    text-decoration: none;
+
+    &:hover {
+        color: $gray;
+    }
+}
+
+.divider {
+    height: 1px;
+    border-top: 1px $light-gray solid;
+}

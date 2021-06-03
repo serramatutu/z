@@ -24,7 +24,7 @@ defaults:
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
-  - jemoji
+  # - jemoji
   # - jekyll-redirect-from
 sass:
   style: compressed

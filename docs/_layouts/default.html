@@ -1,14 +1,20 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="alternate" type="application/atom+xml" title="Recent commits to z's main branch" href="{{ site.repository }}/commits/main.atom">
+  <link rel="alternate" type="application/atom+xml" title="Recent commits to z's main branch"
+    href="{{ site.repository }}/commits/main.atom">
   <link rel="preload" href="{{ 'fonts/FiraCode-Bold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="{{ 'fonts/FiraCode-Light.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="{{ 'fonts/FiraCode-Medium.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="{{ 'fonts/FiraCode-Regular.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="{{ 'fonts/FiraCode-SemiBold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="{{ 'fonts/FiraCode-Light.woff2' | relative_url }}" as="font" type="font/woff2"
+    crossorigin />
+  <link rel="preload" href="{{ 'fonts/FiraCode-Medium.woff2' | relative_url }}" as="font" type="font/woff2"
+    crossorigin />
+  <link rel="preload" href="{{ 'fonts/FiraCode-Regular.woff2' | relative_url }}" as="font" type="font/woff2"
+    crossorigin />
+  <link rel="preload" href="{{ 'fonts/FiraCode-SemiBold.woff2' | relative_url }}" as="font" type="font/woff2"
+    crossorigin />
   <link rel="preload" href="{{ 'fonts/FiraCode-VF.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="{{ 'css/main.css' | relative_url }}" as="style">
   <link rel="stylesheet" href="{{ 'css/main.css' | relative_url }}">
@@ -16,11 +22,14 @@
   {% seo %}
 </head>
 
-<body class="wrap">
-  {%- include header.html -%}
-
-  {{- content -}}
-
-  {%- include footer.html -%}
+<body>
+  <div class="main">
+    {%- include nav.html -%}
+    <div class="content">
+      {{- content -}}
+    </div>
+    {%- include footer.html -%}
+  </div>
 </body>
+
 </html>

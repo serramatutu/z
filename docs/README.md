@@ -6,5 +6,5 @@ This website is very much based o [Jekyll's own website](https://github.com/jeky
 ## Developing
 First, install all plugin dependencies:
 ```
-gem install jekyll jekyll-seo-tag jekyll-sitemap jemoji
+gem install jekyll jekyll-seo-tag jekyll-sitemap
 ```
