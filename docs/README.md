@@ -8,3 +8,8 @@ First, install all plugin dependencies:
 ```
 gem install jekyll jekyll-seo-tag jekyll-sitemap
 ```
+
+Then, serve it by running:
+```
+jekyll serve
+```

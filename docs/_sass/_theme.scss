@@ -17,7 +17,7 @@ $yellow: #ffff00;
 $yellow-dimmed: #ffffae;
 
 // THEME
-:root {
+body {
     --primary: #{$magenta};
     --primary-dimmed: #{$magenta-dimmed};
 
@@ -47,7 +47,7 @@ $yellow-dimmed: #ffffae;
     --citation-bg-color: #{$lighter-gray};
 }
 
-:root, [data-theme="dark"] {
+body[data-theme="dark"] {
     --bg-color: #{$black};
     --font-color: #{$white};
 
