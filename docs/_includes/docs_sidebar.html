@@ -1,7 +1,7 @@
 <div class="sidebar">
-    <div class="logo">
+    <div class="icon logo">
         <a href="/">
-            <img src="{{ 'img/logo.png' | relative_url }}"/>
+            {%- include icons/logo.svg -%}
         </a>
     </div>
     {% for section in site.data.docs_nav.sections -%}
