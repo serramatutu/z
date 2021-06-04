@@ -30,6 +30,9 @@ body {
     --bg-color: #{$white};
     --font-color: #{$black};
 
+    // nav
+    --nav-hover-font-color: #{$dark-gray};
+
     // links (a)
     --a-font-color: #{$dark-gray};
     --a-hover-font-color: #{$gray};
@@ -45,11 +48,17 @@ body {
     --citation-font-color: #{$black};
     --citation-nub-color: #{$gray};
     --citation-bg-color: #{$lighter-gray};
+
+    // toggle
+    --toggle-color:#{$gray};
 }
 
 body[data-theme="dark"] {
     --bg-color: #{$black};
     --font-color: #{$white};
+
+    // nav
+    --nav-hover-font-color: #{$light-gray};
 
     // links (a)
     --a-font-color: #{$light-gray};
@@ -66,4 +75,7 @@ body[data-theme="dark"] {
     --citation-font-color: #{$light-gray};
     --citation-nub-color: #{$gray};
     --citation-bg-color: #{$dark-gray};
+
+    // toggle
+    --toggle-color:#{$gray};
 }

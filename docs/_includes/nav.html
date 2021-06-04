@@ -3,7 +3,7 @@
         <ul>
             <li class="sidebar-toggle {% unless page.sidebar %} hidden {% endunless %}">
                 <div class="icon menu">
-                    <a id="sidebar-toggle-button">
+                    <a id="sidebar-toggle">
                         {%- include icons/menu.svg -%}
                     </a>
                 </div>
@@ -13,9 +13,9 @@
                     <img src="{{ 'img/logo.png' | relative_url }}"/>
                 </a>
             </li>
-            <li><a class="primary" href="/get-started/">get started</a></li>
-            <li><a class="secondary" href="/docs/">docs</a></li>
-            <li><a class="tertiary" href="/contribute/">contribute</a></li>
+            <li><a href="/get-started/">get started</a></li>
+            <li><a href="/docs/">docs</a></li>
+            <li><a href="/contribute/">contribute</a></li>
         </ul>
         <div class="icons">
             <div class="icon github">
@@ -23,6 +23,14 @@
                     {%- include icons/github.svg -%}
                 </a>
             </div>
+            <div class="separator"></div>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="toggle">
+                    {%- include icons/moon.svg -%}
+                    {%- include icons/sun.svg -%}
+                </span>
+           </label>
         </div>
     </div>
 </div>

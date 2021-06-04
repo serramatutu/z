@@ -70,10 +70,15 @@ div.max-page-width {
 div.icon {
     height: 24px;
     display: inline;
+    line-height: 1em;
 
     a {
         height: 24px;
         width: 24px;
+    }
+
+    svg {
+        position: relative
     }
 }
 
@@ -114,6 +119,14 @@ div.nav-wrap {
             flex-grow: 1;
 
             padding: 0 0 0 0;
+
+            .separator {
+                height: 1em;
+                margin-left: $padding-unit;
+                margin-right: $padding-unit;
+
+                border-right: 1px var(--hr-color) solid;
+            }
         }
 
         // rescale icons
