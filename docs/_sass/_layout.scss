@@ -302,11 +302,13 @@ div.main {
     }
 
     div.footer {
+        margin-top: $padding-unit;
+        padding-top: $padding-unit;
         flex-grow: 0;
     }
 }
 
 // code
 .highlighter-rouge {
-    overflow-x: scroll;
+    overflow-x: auto;
 }

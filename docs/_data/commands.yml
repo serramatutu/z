@@ -1,14 +1,18 @@
 - cmd: z
+  nousage: true
   link: /docs/commands/z/
-  description: z itself
+  description: z itself.
   arguments:
     - name: subcommand
       optional: false
-      description: which subcommand to run.
+      type: enum
+      enum:
+        - ...commands
+      description: Which subcommand to run.
 
 - cmd: hash
   link: /docs/commands/hash/
-  description: hash a string according to an algorithm
+  description: Hash a string according to an algorithm.
   arguments:
     - name: algorithm
       optional: false
@@ -17,23 +21,63 @@
         - md5
         - sha1
         - sha256
-      description: which algorithm to use for hashing.
+      description: Which algorithm to use for hashing.
 
 - cmd: join
   link: /docs/commands/join/
   description: |
-    join an array of strings into a string
+    Join an array of strings into a string.
 
     "join" commands are used anywhere after a "split" command.
       1. transform input contents into array with "split"
       2. map the array elements using other commands such as "hash", "replace" or "length"
       3. join the array back into a string by concatenating its entries implicitly or by using "join"
 
-    split arrays with no closing join have their elements implicitly concatenated
-
+    Split arrays with no closing join have their elements implicitly concatenated.
   arguments:
     - name: delimiter
       optional: true
       type: string
       default: ""
-      description: the string to be used as delimiter.
+      description: The string to be used as delimiter.
+
+- cmd: length
+  link: /docs/commands/length/
+  description: Measure the length of a string
+
+- cmd: replace
+  link: /docs/commands/replace/
+  description: Find occurrences of a pattern and replace them with a string.
+  arguments:
+    - name: pattern
+      optional: false
+      type: pattern
+      description: The regular expression pattern to be matched.
+    - name: replace-string
+      optional: false
+      type: string
+      description: The string that will replace the matches.
+    - name: replace-string
+      optional: false
+      type: string
+      default: "0:0"
+      description: >
+        The half-open match index range where replacement will occur.
+        Negative range end means counting in reverse order.
+        Zero range end means last match.
+
+- cmd: split
+  link: /docs/commands/split/
+  description: |
+    Split a string into an array of strings.
+
+    "split" is used together with other commands in the following order
+        1. transform input contents into array with "split"
+        2. map the array elements using other commands such as "hash", "replace" or "length"
+        3. join the array back into a string by concatenating its entries implicitly or by using "join"
+  arguments:
+    - name: delimiter
+      optional: true
+      default: "\n"
+      type: pattern
+      description: The regular expression pattern to be used as delimiter.

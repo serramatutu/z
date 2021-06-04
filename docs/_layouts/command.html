@@ -10,18 +10,29 @@ sidebar: docs_sidebar.html
     <span>
         {{ page.description | newline_to_br }}
     </span>
-    <h2>Arguments</h2>
-    {% for arg in page.arguments %}
-    <span class="command-argument">
-        {% assign optional_text = 'Mandatory' %}
-        {% if arg.optional %}
-            {% assign optional_text = 'Optional' %}
-        {% endif %}
-        <code class="language-plaintext highlighter-rouge">{{arg.name}}</code>
-        {{ optional_text }}. {{ arg.description | capitalize }}
-        <div class="indent">
-            Type: {{ arg.type }}{% if arg.type == "enum" %}({{ arg.enum | join: ", " }}){% endif %}.
+    {% unless page.nousage %}
+    <h2>Usage</h2>
+    <div class="language-terminal highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight"><code>z {{ page.cmd }} &lt;{{ page.arguments | map: "name" | join: "&gt; &lt;" }}&gt;</code></pre>
         </div>
-    </span>
-    {% endfor %}
+    </div>
+    {% endunless %}
+    {% if page.arguments %}
+        <h2>Arguments</h2>
+        {% for arg in page.arguments %}
+        <span class="command-argument">
+            <code class="language-plaintext highlighter-rouge">{{arg.name}}</code>
+            {% if arg.optional %}Optional{% else %}Mandatory{% endif %}. {{ arg.description | capitalize }}
+            <div class="indent">
+                Type: {{ arg.type }}{% if arg.type == "enum" %}({{ arg.enum | join: ", " }}){% endif %}.
+            </div>
+            {% if arg.optional %}
+            <div class="indent">
+                Default value: <code class="language-plaintext highlighter-rouge">"{{ arg.default }}"</code>.
+            </div>
+            {% endif %}
+        </span>
+        {% endfor %}
+    {% endif %}
 </div>
