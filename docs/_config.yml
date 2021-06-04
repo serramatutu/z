@@ -1,7 +1,7 @@
 
 ---
 version: 4.2.0
-name: z, pipes made easy
+title: z, pipes made easy
 description: z is a unix stream/pipe processor written in Go that aims to be easy and intuitive to work with.
 repository: https://github.com/serramatutu/z
 # logo: "/img/logo-2x.png"
