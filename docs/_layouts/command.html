@@ -35,4 +35,12 @@ sidebar: docs_sidebar.html
         </span>
         {% endfor %}
     {% endif %}
+    {% if page.examples %}
+    <h2>Examples</h2>
+    <div class="language-terminal highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight"><code>{{page.examples}}</code></pre>
+        </div>
+    </div>
+    {% endif %}
 </div>

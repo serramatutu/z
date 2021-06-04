@@ -10,6 +10,7 @@
         - ...commands
       description: Which subcommand to run.
 
+
 - cmd: hash
   link: /docs/commands/hash/
   description: Hash a string according to an algorithm.
@@ -22,6 +23,15 @@
         - sha1
         - sha256
       description: Which algorithm to use for hashing.
+  examples: |
+    # hash a string with md5
+    z hash md5
+
+    # hash a string with sha1
+    z hash sha1
+
+    # hash a string with sha256
+    z hash sha256
 
 - cmd: join
   link: /docs/commands/join/
@@ -40,6 +50,12 @@
       type: string
       default: ""
       description: The string to be used as delimiter.
+  examples: |
+    # get the lengths of all lines in a file and concatenate them (implicit join)
+    z split _ length
+
+    # get the lengths of all lines in a file and join them with ","
+    z split _ length _ join ,
 
 - cmd: length
   link: /docs/commands/length/
@@ -65,6 +81,24 @@
         The half-open match index range where replacement will occur.
         Negative range end means counting in reverse order.
         Zero range end means last match.
+  examples: |
+    # replacing ":" by "\n"
+    z replace : \n
+
+    # removing all ":"
+    z replace : ""
+
+    # replacing all alphabetical characters with "0"
+    z replace [A-z] 0
+
+    # replacing all but first "0" with "zero"
+    z replace 0 "zero" 1:
+
+    # replacing all but first and last "1" with "one"
+    z replace 1 "one" 1:-1
+
+    # removing the first "."
+    z replace . "" 0:1
 
 - cmd: split
   link: /docs/commands/split/
@@ -81,3 +115,21 @@
       default: "\n"
       type: pattern
       description: The regular expression pattern to be used as delimiter.
+  examples: |
+    # splitting by ":"
+    z split :
+
+    # splitting by whitespace character groups
+    z split \s+
+
+    # get the lengths of all strings between ":" and concatenate them
+    z split : _ length
+
+    # get the md5 of every line in a file and concatenate them
+    z split _ hash md5
+
+    # get the md5 the whole file (notice how the absence of "split" changes behavior)
+    z hash md5
+
+    # get the lengths of all lines in a file and join them with ","
+    z split _ length _ join ,
