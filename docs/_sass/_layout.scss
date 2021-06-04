@@ -99,7 +99,7 @@ div.nav-wrap {
 
         .logo.has-sidebar {
             display: none;
-            @include big-desktop-up {
+            @include large-desktop-up {
                 display: flex;
             }
         }
@@ -115,7 +115,7 @@ div.nav-wrap {
         .sidebar-toggle {
             padding-left: 0;
         }
-        @include big-desktop-up {
+        @include large-desktop-up {
             .sidebar-toggle {
                 display: none;
             }
@@ -189,7 +189,7 @@ div.nav-wrap {
     }
 }
 
-$sidebar-max-width: 200px;
+$sidebar-max-width: 350px;
 
 div.sidebar-container {
     position: fixed;
@@ -213,7 +213,7 @@ div.sidebar-container {
         left: 0;
     }
 
-    @include big-desktop-up {
+    @include large-desktop-up {
         left: 0;
         visibility: visible;
         width: calc(50vw - #{$max-page-width}/2 - #{$padding-unit}*2);
@@ -304,4 +304,9 @@ div.main {
     div.footer {
         flex-grow: 0;
     }
+}
+
+// code
+.highlighter-rouge {
+    overflow-x: scroll;
 }

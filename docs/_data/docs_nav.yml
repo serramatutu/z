@@ -1,5 +1,8 @@
-sections:
-  - title: "Sample Section"
-    docs:
-      - link: /docs/sample/
-      - link: /docs/asd/
+- title: "Usage"
+  docs:
+    - link: /docs/usage/basic/
+    - link: /docs/usage/chaining/
+    - link: /docs/usage/split-join/
+    - link: /docs/usage/stream/
+- title: Command reference
+  type: reference

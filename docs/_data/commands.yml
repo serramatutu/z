@@ -1,0 +1,39 @@
+- cmd: z
+  link: /docs/commands/z/
+  description: z itself
+  arguments:
+    - name: subcommand
+      optional: false
+      description: which subcommand to run.
+
+- cmd: hash
+  link: /docs/commands/hash/
+  description: hash a string according to an algorithm
+  arguments:
+    - name: algorithm
+      optional: false
+      type: enum
+      enum:
+        - md5
+        - sha1
+        - sha256
+      description: which algorithm to use for hashing.
+
+- cmd: join
+  link: /docs/commands/join/
+  description: |
+    join an array of strings into a string
+
+    "join" commands are used anywhere after a "split" command.
+      1. transform input contents into array with "split"
+      2. map the array elements using other commands such as "hash", "replace" or "length"
+      3. join the array back into a string by concatenating its entries implicitly or by using "join"
+
+    split arrays with no closing join have their elements implicitly concatenated
+
+  arguments:
+    - name: delimiter
+      optional: true
+      type: string
+      default: ""
+      description: the string to be used as delimiter.

@@ -9,7 +9,6 @@ collections:
   docs:
     permalink: "/:collection/:path/"
     output: true
-    sidebar: true
 defaults:
 - scope:
     path: _docs
@@ -25,8 +24,15 @@ defaults:
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-redirect-from
+  - jekyll-datapage-generator
   # - jemoji
-  # - jekyll-redirect-from
+page_gen:
+  - data: commands
+    template: command
+    dir: docs/commands
+    name: cmd
+    title: cmd
 sass:
   style: compressed
 strict_front_matter: true

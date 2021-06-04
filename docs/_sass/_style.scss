@@ -31,8 +31,18 @@ body {
     border-right: 1px var(--hr-color) solid;
 
     background-color: var(--global-bg-color);
-    li.current {
-        list-style: "> ";
+
+    ul {
+        li.current {
+            list-style: "> ";
+        }
+
+        hr {
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: $padding-unit*3;
+            margin-right: $padding-unit*3;
+        }
     }
 }
 
@@ -109,6 +119,10 @@ blockquote {
 
     color: var(--citation-font-color);
     background-color: var(--citation-bg-color);
+}
+
+.indent {
+    margin-left: 40px;
 }
 
 .separator {

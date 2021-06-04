@@ -6,7 +6,7 @@ This website is very much based o [Jekyll's own website](https://github.com/jeky
 ## Developing
 First, install all plugin dependencies:
 ```
-gem install jekyll jekyll-seo-tag jekyll-sitemap
+gem install jekyll jekyll-seo-tag jekyll-sitemap jekyll-redirect-from jekyll-datapage-gen
 ```
 
 Then, serve it by running:
