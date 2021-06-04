@@ -1,14 +1,14 @@
-@import "theme";
+@import "theme_default";
 
 body {
     font-family: 'FiraCode';
 
     color: var(--font-color);
-    background-color: var(--bg-color);
+    background-color: var(--global-bg-color);
 }
 
 .nav {
-    background-color: var(--bg-color);
+    background-color: var(--global-bg-color);
 
     a {
         color: var(--font-color);
@@ -18,14 +18,19 @@ body {
     }
 }
 
+.main {
+    background-color: var(--bg-color);
+}
+
 .footer {
     font-size: 0.6em;
     border-top: 1px var(--hr-color) solid;
 }
 
 .sidebar {
-    background-color: var(--bg-color);
     border-right: 1px var(--hr-color) solid;
+
+    background-color: var(--global-bg-color);
     li.current {
         list-style: "> ";
     }
@@ -97,12 +102,18 @@ blockquote {
     background-color: var(--citation-bg-color);
 }
 
+.separator {
+    border-right: 1px var(--font-color) solid;
+}
+
 // toggle button
 .switch {
     display: inline-block;
     width: 56px;
     height: 1.3em;
     position: relative;
+
+    padding-right: 4px;
 
     input {
         opacity: 0;

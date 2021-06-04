@@ -7,26 +7,10 @@ $light-gray: #c7c7c7;
 $lighter-gray: #f0f0f0;
 $white: #ffffff;
 
-$magenta: #ff00ff;
-$magenta-dimmed: #ff70ff;
-
-$cyan: #00ffff;
-$cyan-dimmed: #a3ffff;
-
-$yellow: #ffff00;
-$yellow-dimmed: #ffffae;
 
 // THEME
 body {
-    --primary: #{$magenta};
-    --primary-dimmed: #{$magenta-dimmed};
-
-    --secondary: #{$cyan};
-    --secondary-dimmed: #{$cyan-dimmed};
-
-    --tertiary: #{$yellow};
-    --tertiary-dimmed: #{$yellow-dimmed};
-
+    --global-bg-color: #{$white};
     --bg-color: #{$white};
     --font-color: #{$black};
 
@@ -54,6 +38,7 @@ body {
 }
 
 body[data-theme="dark"] {
+    --global-bg-color: #{$black};
     --bg-color: #{$black};
     --font-color: #{$white};
 
