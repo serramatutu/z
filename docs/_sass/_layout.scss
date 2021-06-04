@@ -82,16 +82,6 @@ div.icon {
     }
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    max-width: 80px;
-
-    img {
-        height: 1em;
-    }
-}
-
 $nav-height: 80px;
 
 div.nav-wrap {
@@ -109,21 +99,8 @@ div.nav-wrap {
 
         .logo.has-sidebar {
             display: none;
-        }
-
-        .icons {
-            display: flex;
-            justify-content: right;
-            align-items: center;
-
-            flex-grow: 1;
-
-            padding: 0 0 0 0;
-
-            .separator {
-                height: 1em;
-                margin-left: $padding-unit;
-                margin-right: $padding-unit;
+            @include big-desktop-up {
+                display: flex;
             }
         }
 
@@ -132,6 +109,19 @@ div.nav-wrap {
             svg {
                 height: 1.3em;
                 width: 1.3em;
+            }
+        }
+
+        .sidebar-toggle {
+            padding-left: 0;
+        }
+        @include big-desktop-up {
+            .sidebar-toggle {
+                display: none;
+            }
+
+            .logo {
+                display: flex;
             }
         }
 
@@ -144,26 +134,9 @@ div.nav-wrap {
 
             list-style: none;
 
-            // Hamburger
-            li:nth-child(1) {
-                padding-left: 0;
-            }
-            @include big-desktop-up {
-                .sidebar-toggle {
-                    display: none;
-                }
-
-                .logo {
-                    display: flex;
-                }
-
-                li:nth-child(1) {
-                    padding-left: $padding-unit;
-                }
-
-                li:nth-child(2) {
-                    padding-left: 0;
-                }
+            margin-right: $padding-unit*2;
+            @include phone-only {
+                margin-right: 0;
             }
 
             li {
@@ -184,6 +157,29 @@ div.nav-wrap {
                 padding-right: $padding-unit;
 
                 font-weight: lighter;
+            }
+        }
+
+        .separator {
+            height: 1em;
+            margin-left: $padding-unit;
+            margin-right: $padding-unit;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+
+            padding: 0 0 0 0;
+
+            &.left {
+                justify-content: left;
+                flex-grow: 1;
+            }
+
+            &.right {
+                justify-content: right;
+                flex-grow: 0;
             }
         }
     }

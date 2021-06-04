@@ -50,6 +50,15 @@ hr {
     border-top: 1px var(--hr-color) solid;
 }
 
+.logo svg {
+    height: 100%;
+    width: 100%;
+    path {
+        fill: var(--font-color);
+        stroke: var(--font-color);
+    }
+}
+
 .icon {
     a {
         cursor: pointer;
@@ -109,11 +118,9 @@ blockquote {
 // toggle button
 .switch {
     display: inline-block;
-    width: 56px;
+    width: calc(58em/24); // 58px / 24
     height: 1.3em;
     position: relative;
-
-    padding-right: 4px;
 
     input {
         opacity: 0;
@@ -134,7 +141,7 @@ blockquote {
     justify-content: space-between;
     align-items: center;
     border: 1px var(--font-color) solid;
-    border-radius: 40px;
+    border-radius: 100px;
     cursor: pointer;
 
     overflow: hidden;
@@ -144,20 +151,27 @@ blockquote {
         height: 1em;
         width: 1em;
         position: absolute;
-        left: 3px;
-        bottom: 3px;
+        left: 0.125em;
         border-radius: 50%;
         border: 1px var(--font-color) solid;
         transition: .4s all ease;
     }
 
     input:checked + & > svg, input:checked + &:before {
-        transform: translateX(26px);
+        transform: translateX(1em);
+    }
+
+    // toggle icon visibility
+    input:not(:checked) + & > svg:nth-child(1) {
+        visibility: hidden;
+    }
+    input:checked + & > svg:nth-child(2) {
+        visibility: hidden;
     }
 
     svg:nth-child(1) {
         position: relative;
-        left: -24px;
+        left: -1em;
     }
     svg {
         stroke: var(--font-color);

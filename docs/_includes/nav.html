@@ -1,23 +1,26 @@
 <div class="nav-wrap">
     <div class="nav max-page-width">
-        <ul>
-            <li class="sidebar-toggle {% unless page.sidebar %} hidden {% endunless %}">
+        <div class="icons left">
+            <div class="sidebar-toggle {% unless page.sidebar %} hidden {% endunless %}">
                 <div class="icon menu">
                     <a id="sidebar-toggle">
                         {%- include icons/menu.svg -%}
                     </a>
                 </div>
-            </li>
-            <li class="logo {% if page.sidebar %} has-sidebar {% endif %}">
+            </div>
+            <div class="icon logo {% if page.sidebar %} has-sidebar {% endif %}">
                 <a href="/">
-                    <img src="{{ 'img/logo.png' | relative_url }}"/>
+                    {%- include icons/logo.svg -%}
+                    <!-- <img src="{{ 'img/logo.png' | relative_url }}"/> -->
                 </a>
-            </li>
+            </div>
+        </div>
+        <ul>
             <li><a href="/get-started/">get started</a></li>
             <li><a href="/docs/">docs</a></li>
             <li><a href="/contribute/">contribute</a></li>
         </ul>
-        <div class="icons">
+        <div class="icons right">
             <div class="icon github">
                 <a href="https://github.com/serramatutu/z" target="_blank">
                     {%- include icons/github.svg -%}
