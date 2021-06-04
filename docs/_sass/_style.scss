@@ -162,6 +162,9 @@ blockquote {
 
     input:checked + & > svg, input:checked + &:before {
         transform: translateX(1em);
+        @include phone-only {
+            transform: translateX(0.9em);
+        }
     }
 
     // toggle icon visibility
@@ -173,10 +176,15 @@ blockquote {
     }
 
     svg:nth-child(1) {
-        position: relative;
-        left: -1em;
+        left: -0.8em;
+    }
+    svg:nth-child(2) {
+        left: -0.2em;
     }
     svg {
+        position: relative;
+        width: calc(13em/16); // 13px -> em
+        height: calc(13em/16); // 13px -> em
         stroke: var(--font-color);
         transition: .4s all ease;
     }
