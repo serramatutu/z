@@ -15,18 +15,17 @@ defaults:
     type: docs
   values:
     layout: docs
-# safe: true
-# whitelist:
-#   - jekyll-seo-tag
-#   - jekyll-sitemap
-#   - jemoji
-#   - jekyll-redirect-from
+safe: true
+whitelist:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+  - jekyll-datapage-generator
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-redirect-from
   - jekyll-datapage-generator
-  # - jemoji
 page_gen:
   - data: commands
     template: command
