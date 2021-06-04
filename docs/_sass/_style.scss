@@ -118,7 +118,9 @@ blockquote {
 // toggle button
 .switch {
     display: inline-block;
-    width: calc(58em/24); // 58px / 24
+    @include tablet-portrait-up {
+        width: calc(58em/24); // 58px / 24
+    }
     height: 1.3em;
     position: relative;
 
@@ -153,6 +155,7 @@ blockquote {
         position: absolute;
         left: 0.125em;
         border-radius: 50%;
+        background-color: var(--bg-color);
         border: 1px var(--font-color) solid;
         transition: .4s all ease;
     }

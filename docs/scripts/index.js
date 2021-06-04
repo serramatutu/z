@@ -1,26 +1,38 @@
 "use strict";
 
+let themeToggleBtns;
+
 function setTheme(theme) {
     localStorage.setItem("theme", theme);
 
     let isDark = theme === "dark";
-    document.getElementById("theme-toggle").setAttribute("checked", isDark);
+    for (let i = 0; i < themeToggleBtns.length; i++) {
+        const btn = themeToggleBtns.item(i);
+        if (isDark) {
+            btn.setAttribute("checked", "");
+        }
+        else {
+            btn.removeAttribute("checked");
+        }
+    }
 
     document.body.setAttribute("data-theme", theme)
 }
 
 window.addEventListener("load", (ev) => {
-    let theme = localStorage.getItem("theme") || "light";
-    setTheme(theme);
+    themeToggleBtns = document.getElementsByClassName("theme-toggle");
+    for (let i = 0; i < themeToggleBtns.length; i++) {
+        themeToggleBtns.item(i).addEventListener("click", (ev) => {
+            theme = ev.target.checked ? "dark" : "light";
+            setTheme(theme);
+        })
+    }
 
     let sidebarToggleBtn = document.getElementById("sidebar-toggle");
     sidebarToggleBtn.addEventListener("click", (ev) => {
         document.getElementById("sidebar-container").classList.toggle("active");
     });
 
-    let themeToggleBtn = document.getElementById("theme-toggle");
-    themeToggleBtn.addEventListener("click", (ev) => {
-        theme = ev.target.checked ? "dark" : "light";
-        setTheme(theme);
-    });
+    let theme = localStorage.getItem("theme") || "light";
+    setTheme(theme);
 });

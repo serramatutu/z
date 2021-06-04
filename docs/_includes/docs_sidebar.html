@@ -1,8 +1,12 @@
 <div class="sidebar">
-    <div class="icon logo">
-        <a href="/">
-            {%- include icons/logo.svg -%}
-        </a>
+    <div class="sidebar-header">
+        <div class="icon logo">
+            <a href="/">
+                {%- include icons/logo.svg -%}
+            </a>
+        </div>
+        {%- include github_link.html -%}
+        {%- include theme_toggle.html -%}
     </div>
     {% for section in site.data.docs_nav.sections -%}
     <h4>{{ section.title }}</h4>

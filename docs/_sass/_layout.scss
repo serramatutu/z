@@ -136,7 +136,7 @@ div.nav-wrap {
 
             margin-right: $padding-unit*2;
             @include phone-only {
-                margin-right: 0;
+                margin-right: $padding-unit;
             }
 
             li {
@@ -148,7 +148,7 @@ div.nav-wrap {
                 flex-grow: 1;
 
                 @include phone-only {
-                    font-size: $base-font-size*0.9;
+                    // font-size: $base-font-size*0.9;
                     padding-left: calc(#{$padding-unit}/2);
                     padding-right: calc(#{$padding-unit}/2);
                 }
@@ -180,6 +180,10 @@ div.nav-wrap {
             &.right {
                 justify-content: right;
                 flex-grow: 0;
+
+                @include phone-only {
+                    display: none;
+                }
             }
         }
     }
@@ -230,10 +234,34 @@ div.sidebar-container {
             }
         }
 
-        .logo {
+        .sidebar-header {
+            display: flex;
+            justify-content: space-evenly;
+
+            padding-bottom: $padding-unit;
             margin-bottom: $padding-unit;
+
+            border-bottom: 1px var(--hr-color) solid;
+
             @include big-desktop-up {
                 display: none;
+            }
+
+            & > * {
+                padding-left: $padding-unit/2;
+                padding-right: $padding-unit/2;
+            }
+
+            .icon.github, .switch {
+                @include tablet-portrait-up {
+                    visibility: hidden;
+                }
+            }
+
+            hr {
+                @include big-desktop-up {
+                    visibility: hidden;
+                }
             }
         }
 

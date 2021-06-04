@@ -21,19 +21,10 @@
             <li><a href="/contribute/">contribute</a></li>
         </ul>
         <div class="icons right">
-            <div class="icon github">
-                <a href="https://github.com/serramatutu/z" target="_blank">
-                    {%- include icons/github.svg -%}
-                </a>
-            </div>
+            {%- include github_link.html -%}
             <div class="separator"></div>
-            <label class="switch">
-                <input type="checkbox" id="theme-toggle">
-                <span class="toggle">
-                    {%- include icons/moon.svg -%}
-                    {%- include icons/sun.svg -%}
-                </span>
-           </label>
+            {%- include theme_toggle.html -%}
         </div>
+
     </div>
 </div>
