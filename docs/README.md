@@ -11,5 +11,5 @@ gem install jekyll jekyll-seo-tag jekyll-sitemap jekyll-redirect-from jekyll-dat
 
 Then, serve it by running:
 ```
-jekyll serve
+bundle exec jekyll serve
 ```
