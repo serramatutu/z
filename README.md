@@ -45,14 +45,20 @@ z makes it easy to perform lots of different types of operations on pipes.
 # replace ":" with "-"
 echo -n "replace:me" | z replace : -
 
-# get the length of an md5 hash
-echo -n "hashme" | z hash md5 _ length
-
 # hash a file
 z hash md5 < myfile.txt
 
+# get the length of an md5 hash
+echo -n "hashme" | z hash md5 _ length
+
 # get the length of a file
 z length < myfile.txt
+
+# encode to hex
+echo -n "hexme" | z encode hex
+
+# decode from hex 
+echo -n 6865786d65 | z decode hex
 
 # get the lengths of each line in a file
 z split \n _ length < myfile.txt
