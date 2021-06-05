@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Getting Started
+prev_page: /
 permalink: /get-started/
+redirect_from: /getting-started/
 ---
 
 ## Installation

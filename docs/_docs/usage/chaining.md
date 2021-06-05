@@ -1,5 +1,7 @@
 ---
 title: Command chaining
+prev_page: /docs/usage/basic/
+next_page: /docs/usage/split-join/
 permalink: /docs/usage/chaining/
 ---
 

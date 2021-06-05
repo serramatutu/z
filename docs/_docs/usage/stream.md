@@ -1,5 +1,6 @@
 ---
 title: Consuming from ever growing, endless streams
+prev_page: /docs/usage/split-join/
 permalink: /docs/usage/stream/
 ---
 

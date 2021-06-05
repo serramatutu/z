@@ -2,6 +2,7 @@
 layout: default
 title: z, pipes made easy
 permalink: /
+next_page: /get-started/
 redirect_from: 
 - /home
 ---

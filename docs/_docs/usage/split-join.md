@@ -1,5 +1,7 @@
 ---
 title: Splits and joins
+prev_page: /docs/usage/chaining/
+next_page: /docs/usage/stream/
 permalink: /docs/usage/split-join/
 ---
 

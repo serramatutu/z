@@ -39,6 +39,21 @@
     <div class="content">
       {{- content -}}
     </div>
+    <div class="pagination">
+      {% if page.prev_page %}
+      {% assign p = site.documents | where: "url", page.prev_page | first %}
+      <span class="prev">
+        <a href="{{ p.url }}">&lt; {{ p.title }}</a>
+      </span>
+      {% endif %}
+
+      {% if page.next_page %}
+      {% assign p = site.documents | where: "url", page.next_page | first %}
+      <span class="next">
+        <a href="{{ p.url }}">{{ p.title }} &gt;</a>
+      </span>
+      {% endif %}
+    </div>
     {%- include footer.html -%}
   </div>
 </body>

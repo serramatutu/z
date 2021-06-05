@@ -1,5 +1,6 @@
 ---
 title: Usage basics
+next_page: /docs/usage/chaining/
 permalink: /docs/usage/basic/
 redirect_from: 
 - /docs/
