@@ -37,6 +37,30 @@ I asked myself: what if we had an intuitive and consistent way of doing all that
 
 That's how z was born.
 
+## Basic usage
+
+z makes it easy to perform lots of different types of operations on pipes.
+
+```
+# replace ":" with "-"
+echo -n "replace:me" | z replace : -
+
+# get the length of an md5 hash
+echo -n "hashme" | z hash md5 _ length
+
+# hash a file
+z hash md5 < myfile.txt
+
+# get the length of a file
+z length < myfile.txt
+
+# get the lengths of each line in a file
+z split \n _ length < myfile.txt
+```
+
+Learn more about z with our [usage guide](https://serramatutu.github.io/z/docs/usage/).
+
+
 ## Installation
 z is pretty easy to install:
 1. Go to our [releases](https://github.com/serramatutu/z/releases) page.
@@ -49,7 +73,7 @@ You can also compile z from source by cloning this repository and running `make 
 
 _* All builds are checksummed then signed with GPG. You can verify the signature using the [public key](./pubkey.asc)_
 
-## Documentation
+## Documentation and command reference
 
 To learn how to use z, check out [the docs](https://serramatutu.github.io/z/docs/).
 
