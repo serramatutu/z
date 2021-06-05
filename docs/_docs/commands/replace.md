@@ -11,9 +11,9 @@ arguments:
     optional: false
     type: string
     description: The string that will replace the matches.
-  - name: replace-string
+  - name: occurrence-range
     optional: false
-    type: string
+    type: range
     default: "0:0"
     description: >
       The half-open match index range where replacement will occur.
