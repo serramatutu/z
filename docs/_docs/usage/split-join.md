@@ -1,7 +1,6 @@
 ---
 title: Splits and joins
 permalink: /docs/usage/split-join/
-sidebar: docs_sidebar.html
 ---
 
 z's input is always interpreted as a byte array or a string. However, there may be the need for splitting it into an array of strings and mapping operations onto the array elements. The z way of approaching this is via `split` and `join`:

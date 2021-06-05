@@ -1,7 +1,6 @@
 ---
 title: Command chaining
 permalink: /docs/usage/chaining/
-sidebar: docs_sidebar.html
 ---
 
 It is possible to chain z commands without having to use OS pipes:

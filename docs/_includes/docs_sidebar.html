@@ -11,25 +11,14 @@
     {% for section in site.data.docs_nav -%}
     <h4>{{ section.title }}</h4>
     <ul>
-        {% if section.type != "reference" %}
-            {%- for item in section.docs -%}
-            {%- assign p = site.docs | where: "url", item.link | first %}
-            <li {%- if page.url == p.url %} class="current" {%- endif -%}>
-                <a href="{{ p.url | relative_url }}">
-                    {{- p.title -}}
-                </a>
-            </li>
-            {%- endfor %}
-        {% else %}
-            {%- for item in site.data.commands -%}
-            <!-- {%- assign p = site.pages | where: "url", item.link | first %} -->
-            <li {%- if page.url == item.link %} class="current" {%- endif -%}>
-                <a href="{{ item.link | relative_url }}">
-                    {{- item.cmd -}}
-                </a>
-            </li>
-            {%- endfor %}
-        {% endif %}
+        {%- for item in section.docs -%}
+        {%- assign p = site.docs | where: "url", item.link | first %}
+        <li {%- if page.url == p.url %} class="current" {%- endif -%}>
+            <a href="{{ p.url | relative_url }}">
+                {{- p.title -}}
+            </a>
+        </li>
+        {%- endfor %}
     </ul>
     {% endfor -%}
 </div>

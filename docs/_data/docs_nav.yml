@@ -5,4 +5,10 @@
     - link: /docs/usage/split-join/
     - link: /docs/usage/stream/
 - title: Command reference
-  type: reference
+  docs:
+    - link: /docs/commands/z/
+    - link: /docs/commands/hash/
+    - link: /docs/commands/join/
+    - link: /docs/commands/length/
+    - link: /docs/commands/replace/
+    - link: /docs/commands/split/

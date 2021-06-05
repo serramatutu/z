@@ -4,7 +4,6 @@ permalink: /docs/usage/basic/
 redirect_from: 
 - /docs/
 - /docs/usage/
-sidebar: docs_sidebar.html
 ---
 
 z is built to have an easy and intuitive interface without giving up on functionality.

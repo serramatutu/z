@@ -15,23 +15,22 @@ defaults:
     type: docs
   values:
     layout: docs
+    sidebar: docs_sidebar.html
+- scope:
+    path: _docs/commands
+    # type: commands
+  values:
+    layout: command
+    sidebar: docs_sidebar.html
 safe: true
 whitelist:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-redirect-from
-  - jekyll-datapage-generator
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-redirect-from
-  - jekyll-datapage-generator
-page_gen:
-  - data: commands
-    template: command
-    dir: docs/commands
-    name: cmd
-    title: cmd
 sass:
   style: compressed
 strict_front_matter: true

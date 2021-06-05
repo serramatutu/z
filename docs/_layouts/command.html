@@ -10,14 +10,12 @@ sidebar: docs_sidebar.html
     <span>
         {{ page.description | newline_to_br }}
     </span>
-    {% unless page.nousage %}
     <h2>Usage</h2>
     <div class="language-terminal highlighter-rouge">
         <div class="highlight">
-            <pre class="highlight"><code>z {{ page.cmd }} &lt;{{ page.arguments | map: "name" | join: "&gt; &lt;" }}&gt;</code></pre>
+            <pre class="highlight"><code>{% if page.usage %}{{ page.usage | escape }}{% else %}z {{ page.title }} &lt;{{ page.arguments | map: "name" | join: "&gt; &lt;" }}&gt;{% endif %}</code></pre>
         </div>
     </div>
-    {% endunless %}
     {% if page.arguments %}
         <h2>Arguments</h2>
         {% for arg in page.arguments %}

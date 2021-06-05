@@ -1,7 +1,6 @@
 ---
 title: Consuming from ever growing, endless streams
 permalink: /docs/usage/stream/
-sidebar: docs_sidebar.html
 ---
 
 By default, z reads from its input until it reaches the end (EOF). However, there are some use cases where there's no expected end, such as tailing rotating log files. z approaches this by providing a `stream <delimiter>` command, which makes it consume in chunks separated by `<delimiter>`.

@@ -1,0 +1,35 @@
+---
+title: split
+permalink: /docs/commands/split/
+description: |
+  Split a string into an array of strings.
+
+  "split" is used together with other commands in the following order
+      1. transform input contents into array with "split"
+      2. map the array elements using other commands such as "hash", "replace" or "length"
+      3. join the array back into a string by concatenating its entries implicitly or by using "join"
+arguments:
+- name: delimiter
+  optional: true
+  default: "\n"
+  type: pattern
+  description: The regular expression pattern to be used as delimiter.
+examples: |
+  # splitting by ":"
+  z split :
+
+  # splitting by whitespace character groups
+  z split \s+
+
+  # get the lengths of all strings between ":" and concatenate them
+  z split : _ length
+
+  # get the md5 of every line in a file and concatenate them
+  z split _ hash md5
+
+  # get the md5 the whole file (notice how the absence of "split" changes behavior)
+  z hash md5
+
+  # get the lengths of all lines in a file and join them with ","
+  z split _ length _ join ,
+---
