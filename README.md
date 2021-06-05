@@ -49,106 +49,13 @@ You can also compile z from source by cloning this repository and running `make 
 
 _* All builds are checksummed then signed with GPG. You can verify the signature using the [public key](./pubkey.asc)_
 
-## Usage
-z is built to have an easy and intuitive interface without giving up on functionality.
+## Documentation
 
-### Basic usage
-z commands are executed on input given through the standard input stream (aka STDIN), and their outputs are written to the standard output stream (aka STDOUT)
-```
-# prints the length of STDIN contents
-z length
-```
+To learn how to use z, check out [the docs](https://serramatutu.github.io/z/docs/).
 
-For this reason, you can stream file contents or pipe program outputs into z:
-```
-# hashes the contents of "hashme.txt" and prints it
-z hash md5 < hashme.txt
+## Contributing
 
-# writes "bye world!" to "byeworld.txt"
-echo -n "hello world!" | z replace hello bye > byeworld.txt
-```
-
-### Command chaining
-It is possible to chain z commands without having to use OS pipes:
-```
-# with pipes
-echo -n "hashme" | z hash md5 | z length
-
-# with z command chaining
-echo -n "hashme" | z hash md5 _ length
-```
-
-Both approaches have the exact same behavior. However, there are some advantages to chaining commands instead of piping:
-1. `split` and `join` commands only work with command chaining
-2. Information stays inside z without having to travel to the OS and back. This should only make a difference for very large files or performance-sensitive applications though.
-3. Only having to type `_` instead of `| z`
-
-### Splits and joins
-z's input is always interpreted as a byte array or a string. However, there may be the need for splitting it into an array of strings and mapping operations onto the array elements. The z way of approaching this is via `split` and `join`:
-1. `split` the inputs by a delimiter
-2. map every split element using normal z commands such as `length`, `hash` or `replace`
-3. implicitly concatenate them back into a string or `join` them with a delimiter
-
-Here are some examples:
-```
-# getting the length of every line in infile.txt and writing that to outfile.txt's lines
-# (split's default delimiter is "\n")
-z split _ length _ join \n < infile.txt > outfile.txt
-
-# print the md5 hashes of "a", "b" and "c", separated by ","
-echo -n "a:b:c" | z split : _ hash md5 _ join ,
-
-# print the implicitly concatenated lengths of "one", "two" and "three"
-echo -n "one,two,three" | z split , _ length
-
-# print the explicitly concatenated lengths of "one", "two" and "three"
-echo -n "one,two,three" | z split , _ length _ join ""
-```
-
-Without splits and joins, the same operations would have very different results:
-```
-# getting the length of infile.txt's content and writing that to outfile.txt
-z length < infile.txt > outfile.txt
-
-# print the md5 hash of "a:b:c"
-echo -n "a:b:c" | z hash md5
-
-# print the length of "one,two,three"
-echo -n "one,two,three" | z length
-```
-
-The `match` command also returns an array of strings. Joining is done in exactly the same fashion as `split`:
-
-```
-# finding all occurrences of "findme" in file.txt and printing them, separated by commas
-z match findme _ join , < file.txt
-```
-
-To better understand how `split`, `match` and `join` work, refer to our [help files](./help/) or run `z help`.
-
-### Consuming from ever growing, endless streams
-By default, z reads from its input until it reaches the end (EOF). However, there are some use cases where there's no expected end, such as tailing rotating log files. z approaches this by providing a `stream <delimiter>` command, which makes it consume in chunks separated by `<delimiter>`.
-
-Here's an example:
-```
-# follows the tail of a mylogfile.log while printing all occurrences of 
-# pattern "findme=[A-z]+ " joined by ","
-# (the default stream delimiter is "\n", so we can omit the argument)
-tail -f mylogfile.log | z stream _ match "/findme=[A-z]+ /" _ join ,
-```
-
-### Command reference
-
-Check out our [help files](./help/).
-
-If you already have z installed, avoid referring to this repo by running `z help`.
-
-## Design principles
-z was designed with the following principles in mind
-1. **SIMPLE INTERFACE**. All z commands must have obvious names and perform clear, well-defined operations. Any user should be able to understand what their command chain does without referring to any documentation.
-2. **EASY INSTALLATION**. All z releases must export a single lightweight binary. Installing it should be as simple as downloading the binary and including it in the `$PATH`. Want to uninstall? Just delete it.
-3. **NO EXTERNAL DEPENDENCIES**. z must only depend on the Go core library functionality. This avoids the dependency hell and potential security vulnerabilities.
-
+Check out our [contributing guidelines](https://serramatutu.github.io/z/contribute/).
 
 ## NOTICE! Z IS STILL A WORK IN PROGRESS 
 z is still under development and many of its features are not implemented yet. Check out development progress [here](./TODO.md).
