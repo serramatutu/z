@@ -40,21 +40,22 @@
       {{- content -}}
     </div>
     <div class="pagination">
+      {% assign allpages = site.documents | concat: site.pages %}
+
       {% if page.prev_page %}
-      {% assign p = site.documents | where: "url", page.prev_page | first %}
+      {% assign p = allpages | where: "url", page.prev_page | first %}
       <span class="prev">
-        <a href="{{ p.url }}">&lt; {{ p.title }}</a>
+        <a href="{{ p.url | relative_url }}">&lt; {{ p.title }}</a>
       </span>
       {% endif %}
 
       {% if page.next_page %}
-      {% assign p = site.documents | where: "url", page.next_page | first %}
+      {% assign p = allpages | where: "url", page.next_page | first %}
       <span class="next">
-        <a href="{{ p.url }}">{{ p.title }} &gt;</a>
+        <a href="{{ p.url | relative_url }}">{{ p.title }} &gt;</a>
       </span>
       {% endif %}
     </div>
-    {%- include footer.html -%}
   </div>
 </body>
 
