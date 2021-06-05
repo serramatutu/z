@@ -1,0 +1,66 @@
+// Raw colors
+$black: #000000;
+$darker-gray: #1b1b1b;
+$dark-gray: #3d3d3d;
+$gray: #727272;
+$light-gray: #c7c7c7;
+$lighter-gray: #f0f0f0;
+$white: #ffffff;
+
+
+// THEME
+body {
+    --global-bg-color: #{$white};
+    --bg-color: #{$white};
+    --font-color: #{$black};
+
+    // nav
+    --nav-hover-font-color: #{$dark-gray};
+
+    // links (a)
+    --a-font-color: #{$dark-gray};
+    --a-hover-font-color: #{$gray};
+
+    // horizontal separator (hr)
+    --hr-color: #{$light-gray};
+
+    // code
+    --code-font-color: #{$dark-gray};
+    --code-bg-color: #{$light-gray};
+
+    // citation (blockquote)
+    --citation-font-color: #{$black};
+    --citation-nub-color: #{$gray};
+    --citation-bg-color: #{$lighter-gray};
+
+    // toggle
+    --toggle-color:#{$gray};
+}
+
+body[data-theme="dark"] {
+    --global-bg-color: #{$black};
+    --bg-color: #{$black};
+    --font-color: #{$white};
+
+    // nav
+    --nav-hover-font-color: #{$light-gray};
+
+    // links (a)
+    --a-font-color: #{$light-gray};
+    --a-hover-font-color: #{$lighter-gray};
+
+    // horizontal separator (hr)
+    --hr-color: #{$light-gray};
+
+    // code
+    --code-font-color: #{$lighter-gray};
+    --code-bg-color: #{$darker-gray};
+
+    // citation (blockquote)
+    --citation-font-color: #{$light-gray};
+    --citation-nub-color: #{$gray};
+    --citation-bg-color: #{$dark-gray};
+
+    // toggle
+    --toggle-color:#{$gray};
+}

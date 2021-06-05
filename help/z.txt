@@ -1,4 +1,4 @@
-z, pipes and streams made easy
+z, pipes made easy
 
 usage:
     z <command> <...args> [_ <command> ...]

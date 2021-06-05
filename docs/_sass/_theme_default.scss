@@ -1,0 +1,71 @@
+// Raw colors
+$p1-black: #000000;
+$p1-darker-gray: #1b1b1b;
+$p1-dark-gray: #3d3d3d;
+$p1-gray: #727272;
+$p1-light-gray: #c7c7c7;
+$p1-lighter-gray: #f0f0f0;
+$p1-white: #ffffff;
+
+// THEME
+body {
+    --global-bg-color: #{$p1-white};
+    --bg-color: #{$p1-white};
+    --font-color: #{$p1-black};
+
+    // nav
+    --nav-hover-font-color: #{$p1-dark-gray};
+
+    // links (a)
+    --a-font-color: #{$p1-dark-gray};
+    --a-hover-font-color: #{$p1-gray};
+
+    // horizontal separator (hr)
+    --hr-color: #{$p1-light-gray};
+
+    // code
+    --code-font-color: #{$p1-dark-gray};
+    --code-bg-color: #{$p1-light-gray};
+
+    // citation (blockquote)
+    --citation-font-color: #{$p1-black};
+    --citation-nub-color: #{$p1-gray};
+    --citation-bg-color: #{$p1-lighter-gray};
+
+    // toggle
+    --toggle-color:#{$p1-gray};
+}
+
+$p2-black: #272727;
+$p2-gray: #353535;
+$p2-mild-gray: #afafaf;
+$p2-white: #ffffff;
+$p2-dark-green: #3c6e71;
+
+body[data-theme="dark"] {
+    --global-bg-color: #{$p2-black};
+    --bg-color: #{$p2-black};
+    --font-color: #{$p2-white};
+
+    // nav
+    --nav-hover-font-color: #{$p2-mild-gray};
+
+    // links (a)
+    --a-font-color: #{$p2-mild-gray};
+    --a-hover-font-color: #{$p2-dark-green};
+
+    // horizontal separator (hr)
+    --hr-color: #{$p2-mild-gray};
+
+    // code
+    --code-font-color: #{$p2-mild-gray};
+    --code-bg-color: #{$p2-gray};
+
+    // citation (blockquote)
+    --citation-font-color: #{$p2-mild-gray};
+    --citation-nub-color: #{$p2-mild-gray};
+    --citation-bg-color: #{$p2-gray};
+
+    // toggle
+    --toggle-color:#{$p2-white};
+}

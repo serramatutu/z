@@ -1,0 +1,39 @@
+
+---
+version: 4.2.0
+title: z, pipes made easy
+description: z is a unix stream/pipe processor written in Go that aims to be easy and intuitive to work with.
+repository: https://github.com/serramatutu/z
+# logo: "/img/logo-2x.png"
+collections:
+  docs:
+    permalink: "/:collection/:path/"
+    output: true
+defaults:
+- scope:
+    path: _docs
+    type: docs
+  values:
+    layout: docs
+    sidebar: docs_sidebar.html
+- scope:
+    path: _docs/commands
+    # type: commands
+  values:
+    layout: command
+    sidebar: docs_sidebar.html
+safe: true
+whitelist:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+sass:
+  style: compressed
+strict_front_matter: true
+exclude:
+- README.md
+- .gitignore

@@ -1,0 +1,24 @@
+<div class="sidebar">
+    <div class="sidebar-header">
+        <div class="icon logo">
+            <a href="{{ '/' | relative_url }}">
+                {% include icons/logo.svg %}
+            </a>
+        </div>
+        {% include github_link.html %}
+        {% include theme_toggle.html %}
+    </div>
+    {% for section in site.data.docs_nav -%}
+    <h4>{{ section.title }}</h4>
+    <ul>
+        {% for item in section.docs %}
+        {% assign p = site.docs | where: "url", item.link | first %}
+        <li {%- if page.url == p.url %} class="current" {%- endif -%}>
+            <a href="{{ p.url | relative_url }}">
+                {{- p.title -}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor -%}
+</div>

@@ -1,0 +1,30 @@
+<div class="nav-wrap">
+    <div class="nav max-page-width">
+        <div class="icons left">
+            <div class="sidebar-toggle {% unless page.sidebar %} hidden {% endunless %}">
+                <div class="icon menu">
+                    <a id="sidebar-toggle">
+                        {%- include icons/menu.svg -%}
+                    </a>
+                </div>
+            </div>
+            <div class="icon logo {% if page.sidebar %} has-sidebar {% endif %}">
+                <a href="{{ '/' | relative_url }}">
+                    {%- include icons/logo.svg -%}
+                    <!-- <img src="{{ 'img/logo.png' | relative_url }}"/> -->
+                </a>
+            </div>
+        </div>
+        <ul>
+            <li><a href="{{ '/get-started' | relative_url }}">get started</a></li>
+            <li><a href="{{ '/docs' | relative_url }}">docs</a></li>
+            <li><a href="{{ '/contribute' | relative_url }}">contribute</a></li>
+        </ul>
+        <div class="icons right">
+            {%- include github_link.html -%}
+            <div class="separator"></div>
+            {%- include theme_toggle.html -%}
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,14 @@
+- title: "Usage"
+  docs:
+    - link: /docs/usage/basic/
+    - link: /docs/usage/chaining/
+    - link: /docs/usage/split-join/
+    - link: /docs/usage/stream/
+- title: Command reference
+  docs:
+    - link: /docs/commands/z/
+    - link: /docs/commands/hash/
+    - link: /docs/commands/join/
+    - link: /docs/commands/length/
+    - link: /docs/commands/replace/
+    - link: /docs/commands/split/
