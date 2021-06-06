@@ -1,8 +1,6 @@
 package commands
 
 import (
-	"errors"
-
 	"github.com/serramatutu/z/help"
 )
 
@@ -11,7 +9,7 @@ type Help struct {
 }
 
 func (h Help) Err() error {
-	return errors.New(help.Help[h.HelpFile()])
+	return nil
 }
 
 func (h Help) Name() string {
@@ -25,6 +23,6 @@ func (h Help) HelpFile() string {
 	return "z"
 }
 
-func (Help) Execute(in []byte) ([]byte, error) {
-	return nil, nil
+func (h Help) Execute() []byte {
+	return []byte(help.Help[h.HelpFile()])
 }

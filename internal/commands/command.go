@@ -6,6 +6,10 @@ type Command interface {
 	HelpFile() string
 }
 
+type SingleExecCommand interface {
+	Execute() []byte
+}
+
 type MapCommand interface {
 	Execute([]byte) ([]byte, error)
 }
