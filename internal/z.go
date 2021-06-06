@@ -117,6 +117,14 @@ func Z(zArgs []string, r io.Reader, w io.Writer) error {
 		return c.Err
 	}
 
+	// "help" and "version" commands need to exit before reading input
+	switch c.Commands.Front().Value.(type) {
+	case commands.SingleExecCommand:
+		cmd := c.Commands.Front().Value.(commands.SingleExecCommand)
+		w.Write(cmd.Execute())
+		return nil
+	}
+
 	contents, err := ioutil.ReadAll(r)
 	if err != nil {
 		return err

@@ -14,18 +14,7 @@ type ArgumentErr struct {
 }
 
 func (err ArgumentErr) Error() string {
-	switch err.CommandName {
-	case "help":
-		return err.ErrText
-	case "version":
-		return err.ErrText
-	default:
-		runHelpText := fmt.Sprintf("run \"z help %s\" to learn more.\n", err.CommandName)
-		if err.ErrText != "" {
-			return fmt.Sprintf("error: %s\n%s", err.ErrText, runHelpText)
-		}
-		return runHelpText
-	}
+	return fmt.Sprintf("error: %s\nrun \"z help %s\" to learn more.\n", err.ErrText, err.CommandName)
 }
 
 func parseCommand(args []string) commands.Command {
