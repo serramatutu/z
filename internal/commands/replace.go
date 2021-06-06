@@ -37,8 +37,8 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 		return r.Target.ReplaceAll(in, r.Replacement), nil
 	}
 
-	out := make([]byte, len(in))
 	if r.RangeStart == r.RangeEnd {
+		out := make([]byte, len(in))
 		copy(out, in)
 		return out, nil
 	}
@@ -64,14 +64,28 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 	}
 
 	if start > last {
+		out := make([]byte, len(in))
 		copy(out, in)
 		return out, nil
 	}
 
-	// TODO: optimize
+	// calculate the total resulting size and allocate it
+	// this ensures all append calls do not reallocate the
+	// underlying array, which would waste lots of time
+	totalRemovedSize := 0
+	for _, location := range allLocations[start : last+1] {
+		totalRemovedSize += location[1] - location[0]
+	}
+	totalSize := len(in) - totalRemovedSize + (last-start+1)*len(r.Replacement)
+	out := make([]byte, totalSize)
+
+	// copy everything until the replacement start
 	out = out[:allLocations[start][0]]
 	copy(out, in[:allLocations[start][0]])
 	replacementBytes := []byte(r.Replacement)
+
+	// for each replacement, append its bytes and copy everything
+	// until the next
 	for i := start; i < last; i++ {
 		out = append(out, replacementBytes...)
 
@@ -79,6 +93,7 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 		nextLocation := allLocations[i+1][0]
 		out = append(out, in[currLocation:nextLocation]...)
 	}
+	// append the last replacement and the final bytes
 	out = append(out, replacementBytes...)
 	out = append(out, in[allLocations[last][1]:]...)
 
