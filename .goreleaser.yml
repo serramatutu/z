@@ -4,7 +4,11 @@ before:
 builds:
   - main: ./cmd/z/main.go
     ldflags:
-      - -s -w -X 'config.Version={{.Version}}' -X 'config.Commit={{.Commit}}' -X 'config.Date={{.Date}}' -X 'config.BuiltBy="GoReleaser on Github Actions"' -X 'config.Repository="https://github.com/serramatutu/z/"'
+      - -X 'github.com/serramatutu/z/internal/config.Version={{.Version}}'
+      - -X 'github.com/serramatutu/z/internal/config.Commit={{.Commit}}'
+      - -X 'github.com/serramatutu/z/internal/config.Date={{.Date}}'
+      - -X 'github.com/serramatutu/z/internal/config.BuiltBy=GoReleaser on Github Actions'
+      - -X 'github.com/serramatutu/z/internal/config.Repository=https://github.com/serramatutu/z/'
     env:
       - CGO_ENABLED=0
     goos:
