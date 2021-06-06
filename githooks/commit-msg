@@ -1,0 +1,12 @@
+#!/bin/sh
+
+commitregex="^((docs)|(bug)|(feature)|(breaking)|(pipeline)|(refactor)|(test)|(chore)):"
+commitmessage=$1
+if ! grep -Pz "$commitregex" "$commitmessage"
+then
+    echo "Your commit message must start with a valid tag."
+    echo "It should match /$commitregex/"
+    exit 1
+fi
+
+exit 0

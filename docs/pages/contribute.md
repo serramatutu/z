@@ -80,7 +80,8 @@ The first line must have this specific format because that's used by our build p
 - `breaking`: for backwards-incompatible changes;
 - `pipeline`: for changes to our build/test pipelines;
 - `refactor`: for internal changes that will not affect the public API;
-- `test`: for adding tests.
+- `test`: for adding tests;
+- `chore`: for repository maintenance tasks such as editing git hooks.
 
 ### 3. Ensure you're in sync with the global project
 Before you file a pull request, make sure you've merged the most recent changes to the `main` branch of the global project. Do this by running:
