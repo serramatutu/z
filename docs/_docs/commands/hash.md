@@ -18,8 +18,8 @@ examples: |
 
   # hash a string with sha1
   z hash sha1
-	
-	# hash a string with sha224
+
+  # hash a string with sha224
   z hash sha224
 
   # hash a string with sha256
