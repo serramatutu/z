@@ -4,6 +4,24 @@ import (
 	"github.com/serramatutu/z/internal/commands"
 )
 
+func ParseHash(args []string) commands.Hash {
+	algorithm := enumArgument{
+		name:     "algorithm",
+		optional: false,
+		options: []string{
+			"md5",
+			"sha1",
+			"sha224",
+			"sha256",
+		},
+	}
+	schema := []argument{
+		&algorithm,
+	}
+	err := parseSchema(args, schema)
+	return commands.NewHash(err, commands.HashAlgorithm(algorithm.Value()))
+}
+
 func ParseHelp(args []string) commands.Help {
 	commandName := stringArgument{
 		name:     "command-name",

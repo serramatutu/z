@@ -52,6 +52,36 @@ func TestParseStringArgumentWithPatternNotWholeMatch(t *testing.T) {
 	}
 }
 
+func TestParseEnumArgumentValidOption(t *testing.T) {
+	arg := enumArgument{
+		name:     "arg-name",
+		optional: false,
+		options:  []string{"a", "b", "c"},
+	}
+	arg.Parse("a")
+
+	if arg.Err() != nil {
+		t.Errorf("enumArgument.Parse() with valid option should not return error")
+	}
+
+	if arg.Value() != "a" {
+		t.Errorf("Expected enumArgument to assume given value")
+	}
+}
+
+func TestParseEnumArgumentInvalidOption(t *testing.T) {
+	arg := enumArgument{
+		name:     "arg-name",
+		optional: false,
+		options:  []string{"a", "b", "c"},
+	}
+	arg.Parse("invalid")
+
+	if arg.Err() == nil {
+		t.Errorf("enumArgument.Parse() with invalid option should return error")
+	}
+}
+
 func TestParsePatternArgumentOk(t *testing.T) {
 	arg := patternArgument{
 		name:     "arg-name",
@@ -93,7 +123,7 @@ func TestRangeArgumentInvalid(t *testing.T) {
 	}
 }
 
-func TestParseRangeFull(t *testing.T) {
+func TestParseRangeArgumentFull(t *testing.T) {
 	arg := rangeArgument{
 		name:     "arg-name",
 		optional: false,
@@ -108,7 +138,7 @@ func TestParseRangeFull(t *testing.T) {
 	}
 }
 
-func TestParseRangeStart(t *testing.T) {
+func TestParseRangeArgumentStart(t *testing.T) {
 	arg := rangeArgument{
 		name:     "arg-name",
 		optional: false,
@@ -123,7 +153,7 @@ func TestParseRangeStart(t *testing.T) {
 	}
 }
 
-func TestParseRangeEnd(t *testing.T) {
+func TestParseRangeArgumentEnd(t *testing.T) {
 	arg := rangeArgument{
 		name:     "arg-name",
 		optional: false,
