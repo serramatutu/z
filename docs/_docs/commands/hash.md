@@ -10,7 +10,7 @@ arguments:
   - md5
   - sha1
   - sha256
-  description: Which algorithm to use for hashing.
+  description: Which algorithm to use for hashing. md5 and sha1 are not criptographically secure and should not be used for secure applications.
 examples: |
   # hash a string with md5
   z hash md5
