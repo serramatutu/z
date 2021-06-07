@@ -21,6 +21,8 @@ func parseCommand(args []string) commands.Command {
 	var cmd commands.Command = commands.Invalid{CommandName: args[0]}
 
 	switch args[0] {
+	case "hash":
+		cmd = ParseHash(args[1:])
 	case "help":
 		cmd = ParseHelp(args[1:])
 	case "join":

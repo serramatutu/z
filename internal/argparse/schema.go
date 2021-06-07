@@ -68,7 +68,49 @@ func (a *stringArgument) Parse(in string) {
 			a.value = in
 		}
 	}
+}
 
+type enumArgument struct {
+	name         string
+	optional     bool
+	defaultValue string
+	err          error
+	options      []string
+	value        string
+}
+
+func (a enumArgument) Optional() bool {
+	return a.optional
+}
+
+func (a enumArgument) Name() string {
+	return a.name
+}
+
+func (a enumArgument) Err() error {
+	return a.err
+}
+
+func (a enumArgument) Value() string {
+	return a.value
+}
+
+func (a *enumArgument) BecomeDefault() {
+	a.value = a.defaultValue
+}
+
+func (a *enumArgument) Parse(in string) {
+	for _, val := range a.options {
+		if in == val {
+			a.value = val
+			return
+		}
+	}
+
+	a.err = InvalidPositionalArgumentErr{
+		ArgumentName:  a.name,
+		ArgumentValue: in,
+	}
 }
 
 type patternArgument struct {

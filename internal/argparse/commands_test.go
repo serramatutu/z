@@ -10,6 +10,43 @@ import (
 	"github.com/serramatutu/z/internal/argparse"
 )
 
+func TestParseHashNoAlgorithm(t *testing.T) {
+	args := []string{}
+	hash := argparse.ParseHash(args)
+
+	if hash.Err() == nil {
+		t.Errorf("ParseHash should return error when no algorithm is specified")
+	}
+}
+
+func TestParseHashValidAlgorithm(t *testing.T) {
+	validArgs := []string{"md5", "sha1", "sha224", "sha256"}
+	for _, arg := range validArgs {
+		t.Run(arg, func(t *testing.T) {
+			hash := argparse.ParseHash([]string{arg})
+
+			if hash.Err() != nil {
+				t.Errorf("Unexpected error for ParseHash with valid arg")
+			}
+
+			if hash.Algorithm.Validate() != nil {
+				t.Errorf("ParseHash with valid arg produced invalid HashAlgorithm enum value")
+			}
+		})
+	}
+}
+
+func TestParseHashTooManyArgs(t *testing.T) {
+	args := []string{"md5", "invalid"}
+	hash := argparse.ParseHash(args)
+
+	switch hash.Err().(type) {
+	case argparse.ExtraPositionalArgumentErr:
+	default:
+		t.Errorf("ParseHash should return ExtraPositionalArgumentErr when there are invalid arguments")
+	}
+}
+
 func TestParseHelpNoSubcommand(t *testing.T) {
 	args := []string{}
 	help := argparse.ParseHelp(args)

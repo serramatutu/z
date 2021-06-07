@@ -11,6 +11,7 @@ import (
 var commandTypeMap = map[string]interface{}{
 	"invalid": commands.Invalid{},
 
+	"hash":    commands.Hash{},
 	"help":    commands.Help{},
 	"length":  commands.Length{},
 	"split":   commands.Split{},
