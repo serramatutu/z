@@ -20,7 +20,7 @@ parameters:
 
 examples:
     # replacing ":" by "\n"
-    z replace : \n
+    z replace : "\n"
 
     # removing all ":"
     z replace : ""

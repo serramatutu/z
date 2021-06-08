@@ -24,4 +24,4 @@ examples:
     z hash md5 _ length
 
     # calculating md5 hash of things between ":"
-    z split : _ hash md5 _ join \n
+    z split : _ hash md5 _ join "\n"

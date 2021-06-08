@@ -11,7 +11,7 @@ description: |
 arguments:
 - name: delimiter
   optional: true
-  default: "\n"
+  default: "\\n"
   type: pattern
   description: The regular expression pattern to be used as delimiter.
 examples: |

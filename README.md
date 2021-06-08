@@ -61,7 +61,7 @@ echo -n "hexme" | z encode hex
 echo -n 6865786d65 | z decode hex
 
 # get the lengths of each line in a file
-z split \n _ length < myfile.txt
+z split "\n" _ length < myfile.txt
 ```
 
 Learn more about z with our [usage guide](https://serramatutu.github.io/z/docs/usage/).
