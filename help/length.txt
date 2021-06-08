@@ -4,4 +4,15 @@ summary:
     measure the length of a string
 
 usage:
-    z length
+    z length [<mode>]
+
+parameters:
+    <mode> optional. must be one of (bytes, unicode). default is "bytes"
+        whether to measure the length in bytes or in unicode characters
+
+examples:
+    # get the length in bytes of "maçã", which equals 6
+    echo -n "maçã" | z length
+
+    # get the length in unicode characters of "maçã", which equals 4
+    echo -n "maçã" | z length unicode
