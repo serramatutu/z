@@ -183,6 +183,27 @@ func TestConfigExecuteOk(t *testing.T) {
 	}
 }
 
+func TestConfigExecuteImplicitJoin(t *testing.T) {
+	c := config.Config{
+		Err:      nil,
+		Commands: list.New(),
+	}
+	sep, _ := regexp.Compile(":")
+	c.Commands.PushBack(commands.Split{
+		Separator: sep,
+	})
+
+	result, err := executeConfig(c, []byte("a:aa:a"))
+	if err != nil {
+		t.Errorf("Unexpected error for config.Config.Execute")
+	}
+
+	expected := []byte("aaaa")
+	if !bytes.Equal(result, expected) {
+		t.Errorf("Expected '%s' as config.Config.Execute output but got '%s'", expected, result)
+	}
+}
+
 func TestWriteLength(t *testing.T) {
 	args := []string{"z", "length"}
 	in := strings.NewReader("1234\n\n")
