@@ -38,11 +38,22 @@ echo -n "a:b:c" | z hash md5
 echo -n "one,two,three" | z length
 ```
 
-The `match` command also returns an array of strings. Joining is done in exactly the same fashion as `split`:
+## Other split and join commands
+
+There are other commands which either split or join arrays using different algorithms.
+
+`match` splits input into an array of regex pattern matches.
 
 ```
-# finding all occurrences of "findme" in file.txt and printing them, separated by commas
-z match findme _ join , < file.txt
+# finding all words in file.txt and printing them, separated by commas
+z match "[A-z]+" _ join , < file.txt
 ```
 
-To better understand how `split`, `match` and `join` work, refer to the [command reference](../reference/) or run `z help`.
+`count` joins an array by counting how many elements are in it.
+
+```
+# counting words in file.txt
+z match "[A-z]+" _ count < file.txt
+```
+
+To better understand how split and join operations work, refer to the [command reference](../../commands/) or run `z help`.
