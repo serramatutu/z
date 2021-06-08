@@ -10,6 +10,24 @@ import (
 	"github.com/serramatutu/z/internal/argparse"
 )
 
+func TestParseCountNoArgs(t *testing.T) {
+	args := []string{}
+	count := argparse.ParseCount(args)
+
+	if count.Err() != nil {
+		t.Errorf("ParseCount should not return error when no args are given")
+	}
+}
+
+func TestParseCountWithArgs(t *testing.T) {
+	args := []string{"arg"}
+	count := argparse.ParseCount(args)
+
+	if count.Err() == nil {
+		t.Errorf("ParseCount should return error when args are given")
+	}
+}
+
 func TestParseHashNoAlgorithm(t *testing.T) {
 	args := []string{}
 	hash := argparse.ParseHash(args)

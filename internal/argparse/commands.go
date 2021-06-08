@@ -4,6 +4,12 @@ import (
 	"github.com/serramatutu/z/internal/commands"
 )
 
+func ParseCount(args []string) commands.Count {
+	schema := []argument{}
+	err := parseSchema(args, schema)
+	return commands.NewCount(err)
+}
+
 func ParseHash(args []string) commands.Hash {
 	algorithm := enumArgument{
 		name:     "algorithm",
