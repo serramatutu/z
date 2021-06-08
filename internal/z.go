@@ -37,13 +37,13 @@ var implicitJoin commands.JoinCommand = commands.Join{
 }
 
 func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, error) {
-	var lastRan *list.Element
-
 	command := start.Value.(commands.SplitCommand)
 	splitBytes, err := command.Execute(bytes)
 	if err != nil {
 		return nil, start, err
 	}
+
+	lastRan := start
 
 	for e := start.Next(); e != nil; e = e.Next() {
 		switch e.Value.(type) {
@@ -105,7 +105,6 @@ func executeConfig(c config.Config, bytes []byte) ([]byte, error) {
 				return nil, err
 			}
 		}
-
 	}
 
 	return bytes, nil
