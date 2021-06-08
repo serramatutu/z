@@ -35,7 +35,9 @@ func TestExecuteSplitWithoutCommands(t *testing.T) {
 func TestExecuteSplitWithCommands(t *testing.T) {
 	commandsList := list.New()
 	commandsList.PushBack(commands.Split{})
-	commandsList.PushBack(commands.Length{})
+	commandsList.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 	stop := commandsList.PushBack(commands.Join{})
 
 	result, lastRan, err := executeSplit([]byte("a\nb\nc\nd\ne"), commandsList.Front())
@@ -63,7 +65,9 @@ func TestExecuteSplitNested(t *testing.T) {
 	commandsList.PushBack(commands.Split{
 		Separator: sep,
 	})
-	commandsList.PushBack(commands.Length{})
+	commandsList.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 	commandsList.PushBack(commands.Join{})
 	stop := commandsList.PushBack(commands.Join{})
 
@@ -88,7 +92,9 @@ func TestExecuteSplitImplicitJoin(t *testing.T) {
 	commandsList.PushBack(commands.Split{
 		Separator: sep,
 	})
-	stop := commandsList.PushBack(commands.Length{})
+	stop := commandsList.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 
 	result, lastRan, err := executeSplit([]byte("a:a:a"), commandsList.Front())
 	if err != nil {
@@ -107,8 +113,12 @@ func TestExecuteSplitImplicitJoin(t *testing.T) {
 
 func TestExecuteMapOnlyMapCommands(t *testing.T) {
 	commandsList := list.New()
-	commandsList.PushBack(commands.Length{})
-	stop := commandsList.PushBack(commands.Length{})
+	commandsList.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
+	stop := commandsList.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 
 	result, lastRan, err := executeMap([]byte("abcde"), commandsList.Front())
 	if err != nil {
@@ -127,9 +137,13 @@ func TestExecuteMapOnlyMapCommands(t *testing.T) {
 
 func TestExecuteMapWithSplitCommand(t *testing.T) {
 	commandsList := list.New()
-	stop := commandsList.PushBack(commands.Length{})
+	stop := commandsList.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 	commandsList.PushBack(commands.Split{})
-	commandsList.PushBack(commands.Length{})
+	commandsList.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 
 	result, lastRan, err := executeMap([]byte("abcde"), commandsList.Front())
 	if err != nil {
@@ -151,7 +165,9 @@ func TestConfigExecuteExtraJoin(t *testing.T) {
 		Err:      nil,
 		Commands: list.New(),
 	}
-	c.Commands.PushBack(commands.Length{})
+	c.Commands.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 	c.Commands.PushBack(commands.Join{})
 
 	_, err := executeConfig(c, []byte("abcde"))
@@ -169,7 +185,9 @@ func TestConfigExecuteOk(t *testing.T) {
 	c.Commands.PushBack(commands.Split{
 		Separator: sep,
 	})
-	c.Commands.PushBack(commands.Length{})
+	c.Commands.PushBack(commands.Length{
+		Mode: commands.Bytes,
+	})
 	c.Commands.PushBack(commands.Join{})
 
 	result, err := executeConfig(c, []byte("a:aa:a"))

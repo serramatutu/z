@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/serramatutu/z/internal/argparse"
+	"github.com/serramatutu/z/internal/commands"
 )
 
 func TestParseCountNoArgs(t *testing.T) {
@@ -129,17 +130,27 @@ func TestParseLengthNoArgs(t *testing.T) {
 	args := []string{}
 	length := argparse.ParseLength(args)
 
-	if length.Err() != nil {
-		t.Errorf("ParseLength should not return error when no args are given")
+	switch length.Mode {
+	case commands.Bytes:
+	default:
+		t.Errorf("Length default mode should be bytes")
 	}
 }
 
-func TestParseLengthWithArgs(t *testing.T) {
-	args := []string{"arg"}
-	length := argparse.ParseLength(args)
+func TestParseLengthValidMode(t *testing.T) {
+	validArgs := []string{"unicode", "bytes"}
+	for _, arg := range validArgs {
+		t.Run(arg, func(t *testing.T) {
+			length := argparse.ParseLength([]string{arg})
 
-	if length.Err() == nil {
-		t.Errorf("ParseLength should return error when args are given")
+			if length.Err() != nil {
+				t.Errorf("Unexpected error for ParseLength with valid arg")
+			}
+
+			if length.Mode.Validate() != nil {
+				t.Errorf("ParseLength with valid arg produced invalid LengthMode enum value")
+			}
+		})
 	}
 }
 

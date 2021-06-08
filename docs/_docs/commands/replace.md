@@ -12,7 +12,7 @@ arguments:
     type: string
     description: The string that will replace the matches.
   - name: occurrence-range
-    optional: false
+    optional: true
     type: range
     default: "0:0"
     description: >

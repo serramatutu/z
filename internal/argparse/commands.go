@@ -67,9 +67,20 @@ func ParseJoin(args []string) commands.Join {
 }
 
 func ParseLength(args []string) commands.Length {
-	schema := []argument{}
+	mode := enumArgument{
+		name:         "mode",
+		optional:     true,
+		defaultValue: "bytes",
+		options: []string{
+			"unicode",
+			"bytes",
+		},
+	}
+	schema := []argument{
+		&mode,
+	}
 	err := parseSchema(args, schema)
-	return commands.NewLength(err)
+	return commands.NewLength(err, commands.LengthMode(mode.Value()))
 }
 
 func ParseMatch(args []string) commands.Match {
