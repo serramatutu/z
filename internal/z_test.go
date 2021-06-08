@@ -13,7 +13,9 @@ import (
 
 func TestExecuteSplitWithoutCommands(t *testing.T) {
 	commandsList := list.New()
-	commandsList.PushBack(commands.Split{})
+	commandsList.PushBack(commands.Split{
+		Separator: regexp.MustCompile("\n"),
+	})
 	stop := commandsList.PushBack(commands.Join{})
 	commandsList.PushBack(commands.Join{})
 
@@ -34,7 +36,9 @@ func TestExecuteSplitWithoutCommands(t *testing.T) {
 
 func TestExecuteSplitWithCommands(t *testing.T) {
 	commandsList := list.New()
-	commandsList.PushBack(commands.Split{})
+	commandsList.PushBack(commands.Split{
+		Separator: regexp.MustCompile("\n"),
+	})
 	commandsList.PushBack(commands.Length{
 		Mode: commands.Bytes,
 	})

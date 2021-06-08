@@ -92,8 +92,8 @@ func TestParseJoinNoArgs(t *testing.T) {
 		t.Errorf("Unexpected error for ParseJoin with no args")
 	}
 
-	if join.Separator != nil {
-		t.Errorf("ParseJoin should produce nil separator if not provided")
+	if !reflect.DeepEqual(join.Separator, []byte("")) {
+		t.Errorf("ParseJoin should produce \"\" separator if not provided")
 	}
 }
 
@@ -252,8 +252,8 @@ func TestParseSplitNoArgs(t *testing.T) {
 		t.Errorf("Unexpected error for ParseSplit with no args")
 	}
 
-	if split.Separator != nil {
-		t.Errorf("ParseSplit should produce nil separator if not provided")
+	if !reflect.DeepEqual(split.Separator, regexp.MustCompile("\n")) {
+		t.Errorf("ParseSplit should produce \\n separator if not provided")
 	}
 }
 

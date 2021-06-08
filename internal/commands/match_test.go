@@ -16,9 +16,7 @@ func TestNewMatchWithNilPattern(t *testing.T) {
 }
 
 func TestMatch(t *testing.T) {
-	cmd := commands.Match{
-		Pattern: regexp.MustCompile("[a-z]+"),
-	}
+	cmd := commands.NewMatch(nil, regexp.MustCompile("[a-z]+"))
 	result, err := cmd.Execute([]byte("aaa:bbb-ccc\nddd_eee"))
 	if err != nil {
 		t.Errorf("Unexpected error for Match.Execute")

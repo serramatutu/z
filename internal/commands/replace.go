@@ -29,8 +29,8 @@ func (Replace) HelpFile() string {
 
 // FIXME
 func (r Replace) Execute(in []byte) ([]byte, error) {
-	if r.Target == nil {
-		return nil, errors.New("Replace target cannot be nil")
+	if r.err != nil {
+		return nil, r.err
 	}
 
 	if r.RangeStart == 0 && r.RangeEnd == 0 {
@@ -101,6 +101,10 @@ func (r Replace) Execute(in []byte) ([]byte, error) {
 }
 
 func NewReplace(err error, target *regexp.Regexp, replacement []byte, rangeStart, rangeEnd int) Replace {
+	if err == nil && target == nil {
+		err = errors.New("Replace target cannot be nil")
+	}
+
 	return Replace{
 		err:         err,
 		Target:      target,

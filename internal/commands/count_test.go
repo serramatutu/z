@@ -8,7 +8,7 @@ import (
 )
 
 func TestCountExecute(t *testing.T) {
-	c := commands.Count{}
+	c := commands.NewCount(nil)
 	args := [][]byte{
 		[]byte("abcd"),
 		[]byte("efgh"),

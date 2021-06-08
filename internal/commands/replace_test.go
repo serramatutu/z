@@ -8,25 +8,26 @@ import (
 )
 
 func execReplace(data, target, repl string, start, end int) (string, error) {
-	cmd := commands.Replace{
-		Target:      regexp.MustCompile(target),
-		Replacement: []byte(repl),
-		RangeStart:  start,
-		RangeEnd:    end,
-	}
+	cmd := commands.NewReplace(
+		nil,
+		regexp.MustCompile(target),
+		[]byte(repl),
+		start,
+		end,
+	)
 	result, err := cmd.Execute([]byte(data))
 	return string(result), err
 }
 
-func TestNoTarget(t *testing.T) {
-	cmd := commands.Replace{}
+func TestReplaceNoTarget(t *testing.T) {
+	cmd := commands.NewReplace(nil, nil, nil, 0, 0)
 	_, err := cmd.Execute([]byte(""))
 	if err == nil {
 		t.Errorf("Expected Replace to return error when Target is nil")
 	}
 }
 
-func TestNoMatch(t *testing.T) {
+func TestReplaceNoMatch(t *testing.T) {
 	result, err := execReplace("aaa:bbb:ccc:ddd", "-", "_", 0, 0)
 	if err != nil {
 		t.Errorf("Unexpected error for Replace.Execute")

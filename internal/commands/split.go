@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"errors"
 	"regexp"
 )
 
@@ -23,12 +24,11 @@ func (Split) HelpFile() string {
 }
 
 func (s Split) Execute(in []byte) ([][]byte, error) {
-	sep := s.Separator
-	if sep == nil {
-		sep = regexp.MustCompile("\n")
+	if s.err != nil {
+		return nil, s.err
 	}
 
-	split := sep.Split(string(in), -1)
+	split := s.Separator.Split(string(in), -1)
 	out := make([][]byte, len(split))
 	for i, val := range split {
 		out[i] = []byte(val)
@@ -38,6 +38,10 @@ func (s Split) Execute(in []byte) ([][]byte, error) {
 }
 
 func NewSplit(err error, separator *regexp.Regexp) Split {
+	if err == nil && separator == nil {
+		err = errors.New("Split separator cannot be nil")
+	}
+
 	return Split{
 		err:       err,
 		Separator: separator,

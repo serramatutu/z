@@ -38,31 +38,26 @@ func (Length) HelpFile() string {
 	return "length"
 }
 
-type InvalidModeErr struct {
-	Mode string
-}
-
-func (err InvalidModeErr) Error() string {
-	return fmt.Sprintf("Invalid provided mode \"%s\"", err.Mode)
-}
-
 func (l Length) Execute(in []byte) ([]byte, error) {
+	if l.err != nil {
+		return nil, l.err
+	}
+
 	var length int
 	switch l.Mode {
 	case Bytes:
 		length = len(in)
 	case Unicode:
 		length = len([]rune(string(in)))
-	default:
-		// should never reach this
-		return nil, InvalidModeErr{
-			Mode: string(l.Mode),
-		}
 	}
 	return []byte(fmt.Sprint(length)), nil
 }
 
 func NewLength(err error, mode LengthMode) Length {
+	if err == nil {
+		err = mode.Validate()
+	}
+
 	return Length{
 		err:  err,
 		Mode: mode,

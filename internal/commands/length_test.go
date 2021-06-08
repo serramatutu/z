@@ -8,19 +8,15 @@ import (
 )
 
 func TestLengthExecuteNoMode(t *testing.T) {
-	l := commands.Length{}
+	l := commands.NewLength(nil, "")
 	_, err := l.Execute([]byte("1234"))
-	switch err.(type) {
-	case commands.InvalidModeErr:
-	default:
-		t.Errorf("Length.Execute should return InvalidModeErr when no mode supplied")
+	if err == nil {
+		t.Errorf("Length.Execute should return error when no mode supplied")
 	}
 }
 
 func TestLengthExecuteModeBytes(t *testing.T) {
-	l := commands.Length{
-		Mode: commands.Bytes,
-	}
+	l := commands.NewLength(nil, commands.Bytes)
 	result, err := l.Execute([]byte("ç"))
 	if err != nil {
 		t.Errorf("Unexpected error for Length.Execute with valid mode")
@@ -32,9 +28,7 @@ func TestLengthExecuteModeBytes(t *testing.T) {
 }
 
 func TestLengthExecuteModeUnicode(t *testing.T) {
-	l := commands.Length{
-		Mode: commands.Unicode,
-	}
+	l := commands.NewLength(nil, commands.Unicode)
 	result, err := l.Execute([]byte("ç"))
 	if err != nil {
 		t.Errorf("Unexpected error for Length.Execute with valid mode")

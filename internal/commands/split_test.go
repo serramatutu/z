@@ -9,26 +9,15 @@ import (
 )
 
 func TestSplitNilSeparator(t *testing.T) {
-	cmd := commands.Split{}
-	result, err := cmd.Execute([]byte("aaa:bbb-ccc\nddd_eee"))
-	if err != nil {
-		t.Errorf("Unexpected error for Split.Execute with nil separator")
-	}
-
-	expected := [][]byte{
-		[]byte("aaa:bbb-ccc"),
-		[]byte("ddd_eee"),
-	}
-
-	if !reflect.DeepEqual(result, expected) {
-		t.Errorf("Split should use '\\n' as default separator")
+	cmd := commands.NewSplit(nil, nil)
+	_, err := cmd.Execute([]byte("aaa:bbb-ccc\nddd_eee"))
+	if err == nil {
+		t.Errorf("Split.Execute with nil separator should return error")
 	}
 }
 
 func TestSplitSeparator(t *testing.T) {
-	cmd := commands.Split{
-		Separator: regexp.MustCompile(":"),
-	}
+	cmd := commands.NewSplit(nil, regexp.MustCompile(":"))
 	result, err := cmd.Execute([]byte("aaa:bbb-ccc\nddd_eee"))
 	if err != nil {
 		t.Errorf("Unexpected error for Split.Execute")

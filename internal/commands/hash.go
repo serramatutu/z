@@ -5,7 +5,6 @@ import (
 	"crypto/sha1"
 	"crypto/sha256"
 	"errors"
-	"fmt"
 )
 
 type HashAlgorithm string
@@ -42,15 +41,11 @@ func (Hash) HelpFile() string {
 	return "hash"
 }
 
-type InvalidAlgorithmErr struct {
-	Algorithm string
-}
-
-func (err InvalidAlgorithmErr) Error() string {
-	return fmt.Sprintf("Invalid provided algorithm \"%s\"", err.Algorithm)
-}
-
 func (h Hash) Execute(in []byte) ([]byte, error) {
+	if h.err != nil {
+		return nil, h.err
+	}
+
 	switch h.Algorithm {
 	case Md5:
 		sum := md5.Sum(in)
@@ -66,12 +61,15 @@ func (h Hash) Execute(in []byte) ([]byte, error) {
 		return sum[:], nil
 	}
 
-	return nil, InvalidAlgorithmErr{
-		Algorithm: string(h.Algorithm),
-	}
+	// should never reach this
+	return nil, nil
 }
 
 func NewHash(err error, algorithm HashAlgorithm) Hash {
+	if err == nil {
+		err = algorithm.Validate()
+	}
+
 	return Hash{
 		err:       err,
 		Algorithm: algorithm,

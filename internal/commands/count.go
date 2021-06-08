@@ -19,6 +19,10 @@ func (Count) HelpFile() string {
 }
 
 func (c Count) Execute(in [][]byte) ([]byte, error) {
+	if c.err != nil {
+		return nil, c.err
+	}
+
 	return []byte(fmt.Sprint(len(in))), nil
 }
 

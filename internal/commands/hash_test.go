@@ -11,9 +11,7 @@ import (
 )
 
 func TestHashInvalidAlgorithm(t *testing.T) {
-	cmd := commands.Hash{
-		Algorithm: "invalid",
-	}
+	cmd := commands.NewHash(nil, "invalid")
 	data := []byte("abcdefghijklmnopqrstuvwxyz")
 	_, err := cmd.Execute(data)
 
@@ -40,9 +38,7 @@ func TestHashMd5(t *testing.T) {
 }
 
 func TestHashSha1(t *testing.T) {
-	cmd := commands.Hash{
-		Algorithm: commands.Sha1,
-	}
+	cmd := commands.NewHash(nil, commands.Sha1)
 	data := []byte("abcdefghijklmnopqrstuvwxyz")
 	result, err := cmd.Execute(data)
 
@@ -57,9 +53,7 @@ func TestHashSha1(t *testing.T) {
 }
 
 func TestHashSha224(t *testing.T) {
-	cmd := commands.Hash{
-		Algorithm: commands.Sha224,
-	}
+	cmd := commands.NewHash(nil, commands.Sha224)
 	data := []byte("abcdefghijklmnopqrstuvwxyz")
 	result, err := cmd.Execute(data)
 
@@ -74,9 +68,7 @@ func TestHashSha224(t *testing.T) {
 }
 
 func TestHashSha256(t *testing.T) {
-	cmd := commands.Hash{
-		Algorithm: commands.Sha256,
-	}
+	cmd := commands.NewHash(nil, commands.Sha256)
 	data := []byte("abcdefghijklmnopqrstuvwxyz")
 	result, err := cmd.Execute(data)
 

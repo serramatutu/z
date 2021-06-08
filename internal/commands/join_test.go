@@ -8,26 +8,19 @@ import (
 )
 
 func TestJoinNilSeparator(t *testing.T) {
-	cmd := commands.Join{}
-	result, err := cmd.Execute([][]byte{
+	cmd := commands.NewJoin(nil, nil)
+	_, err := cmd.Execute([][]byte{
 		[]byte("aaa"),
 		[]byte("bbb"),
 	})
 
-	if err != nil {
-		t.Errorf("Unexpected error for Join.Execute with nil separator")
-	}
-
-	expected := []byte("aaabbb")
-	if !bytes.Equal(result, expected) {
-		t.Errorf("Join with nil separator should concatenate (implicit join)")
+	if err == nil {
+		t.Errorf("Join.Execute with nil separator should return error")
 	}
 }
 
 func TestJoinSeparator(t *testing.T) {
-	cmd := commands.Join{
-		Separator: []byte(":"),
-	}
+	cmd := commands.NewJoin(nil, []byte(":"))
 	result, err := cmd.Execute([][]byte{
 		[]byte("aaa"),
 		[]byte("bbb"),

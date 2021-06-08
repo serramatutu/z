@@ -24,12 +24,16 @@ func (Match) HelpFile() string {
 }
 
 func (m Match) Execute(in []byte) ([][]byte, error) {
+	if m.err != nil {
+		return nil, m.err
+	}
+
 	return m.Pattern.FindAll(in, -1), nil
 }
 
 func NewMatch(err error, pattern *regexp.Regexp) Match {
 	if err == nil && pattern == nil {
-		err = errors.New("Match command must not have nil pattern")
+		err = errors.New("cannot execute Match with nil pattern")
 	}
 
 	return Match{

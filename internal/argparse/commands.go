@@ -1,6 +1,8 @@
 package argparse
 
 import (
+	"regexp"
+
 	"github.com/serramatutu/z/internal/commands"
 )
 
@@ -60,7 +62,7 @@ func ParseJoin(args []string) commands.Join {
 	err := parseSchema(args, schema)
 
 	var sep []byte
-	if separator.Value() != "" {
+	if err == nil {
 		sep = []byte(separator.Value())
 	}
 	return commands.NewJoin(err, sep)
@@ -129,7 +131,7 @@ func ParseSplit(args []string) commands.Split {
 	pattern := patternArgument{
 		name:         "pattern",
 		optional:     true,
-		defaultValue: nil,
+		defaultValue: regexp.MustCompile("\n"),
 	}
 	schema := []argument{
 		&pattern,
