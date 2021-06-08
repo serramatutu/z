@@ -31,6 +31,8 @@ func parseCommand(args []string) commands.Command {
 		cmd = ParseJoin(args[1:])
 	case "length":
 		cmd = ParseLength(args[1:])
+	case "match":
+		cmd = ParseMatch(args[1:])
 	case "split":
 		cmd = ParseSplit(args[1:])
 	case "replace":

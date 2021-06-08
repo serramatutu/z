@@ -7,9 +7,11 @@ commands:
     help:             the instructions you're reading at the moment
     help <command>    get help about a specific z command
 
+    count             join a split array by counting how many elements are in it
     hash              hash a string according to an algorithm
     join              join an array of strings into a string
     length            measure the length of a string
+    match             split a string into an array of regex matches
     split             split a string into an array of strings
     replace           find occurrences of a pattern and replace them with a string
     version           get the current z version

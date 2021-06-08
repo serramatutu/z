@@ -143,6 +143,35 @@ func TestParseLengthWithArgs(t *testing.T) {
 	}
 }
 
+func TestParseMatchMissingArgs(t *testing.T) {
+	args := []string{}
+
+	match := argparse.ParseMatch(args)
+	switch match.Err().(type) {
+	case argparse.MissingPositionalArgumentsErr:
+	default:
+		t.Errorf("ParseMatch should fail when there are missing arguments.")
+	}
+}
+
+func TestParseMatchOk(t *testing.T) {
+	args := []string{":"}
+
+	match := argparse.ParseMatch(args)
+	if match.Err() != nil {
+		t.Errorf("Unexpected error for ParseMatch with pattern arg")
+	}
+
+	if match.Pattern == nil {
+		t.Errorf("ParseMatch should produce pattern when it is provided")
+	}
+
+	expected := regexp.MustCompile(":")
+	if !reflect.DeepEqual(*match.Pattern, *expected) {
+		t.Errorf("Invalid regex pattern for ParseMatch")
+	}
+}
+
 func TestParseReplaceMissingArgs(t *testing.T) {
 	argsList := [][]string{
 		{},

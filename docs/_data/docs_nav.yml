@@ -11,5 +11,6 @@
     - link: /docs/commands/hash/
     - link: /docs/commands/join/
     - link: /docs/commands/length/
+    - link: /docs/commands/match/
     - link: /docs/commands/replace/
     - link: /docs/commands/split/

@@ -15,6 +15,7 @@ var commandTypeMap = map[string]interface{}{
 	"hash":    commands.Hash{},
 	"help":    commands.Help{},
 	"length":  commands.Length{},
+	"match":   commands.Match{},
 	"split":   commands.Split{},
 	"join":    commands.Join{},
 	"replace": commands.Replace{},
