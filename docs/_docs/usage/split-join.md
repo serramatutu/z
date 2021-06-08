@@ -14,7 +14,7 @@ Here are some examples:
 ```
 # getting the length of every line in infile.txt and writing that to outfile.txt's lines
 # (split's default delimiter is "\n")
-z split _ length _ join \n < infile.txt > outfile.txt
+z split _ length _ join "\n" < infile.txt > outfile.txt
 
 # print the md5 hashes of "a", "b" and "c", separated by ","
 echo -n "a:b:c" | z split : _ hash md5 _ join ,

@@ -21,7 +21,7 @@ arguments:
       Zero range end means last match.
 examples: |
   # replacing ":" by "\n"
-  z replace : \n
+  z replace : "\n"
 
   # removing all ":"
   z replace : ""
