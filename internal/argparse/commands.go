@@ -72,6 +72,19 @@ func ParseLength(args []string) commands.Length {
 	return commands.NewLength(err)
 }
 
+func ParseMatch(args []string) commands.Match {
+	pattern := patternArgument{
+		name:     "pattern",
+		optional: false,
+	}
+	schema := []argument{
+		&pattern,
+	}
+	err := parseSchema(args, schema)
+
+	return commands.NewMatch(err, pattern.Value())
+}
+
 func ParseReplace(args []string) commands.Replace {
 	pattern := patternArgument{
 		name:     "pattern",

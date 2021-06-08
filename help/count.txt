@@ -1,7 +1,7 @@
 z count
 
 summary:
-    join a split array by counting how many elements are in it.
+    join a split array by counting how many elements are in it
 
 usage:
     z count
