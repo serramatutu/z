@@ -64,6 +64,13 @@ func executeSplit(bytes []byte, start *list.Element) ([]byte, *list.Element, err
 			}
 			e = lastRan
 
+		case commands.ArrayMapCommand:
+			command := e.Value.(commands.ArrayMapCommand)
+			splitBytes, err = command.Execute(splitBytes)
+			if err != nil {
+				return nil, e, err
+			}
+
 		case commands.MapCommand:
 			for i := 0; i < len(splitBytes); i++ {
 				splitBytes[i], lastRan, err = executeMap(splitBytes[i], e)

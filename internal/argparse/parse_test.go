@@ -19,6 +19,7 @@ var commandTypeMap = map[string]interface{}{
 	"split":   commands.Split{},
 	"join":    commands.Join{},
 	"replace": commands.Replace{},
+	"unique":  commands.Unique{},
 	"version": commands.Version{},
 }
 

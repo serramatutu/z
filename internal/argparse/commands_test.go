@@ -274,3 +274,56 @@ func TestParseSplitSeparator(t *testing.T) {
 		t.Errorf("Invalid regex separator for ParseSplit")
 	}
 }
+
+func TestParseUniqueNoArgs(t *testing.T) {
+	args := []string{}
+
+	unique := argparse.ParseUnique(args)
+	if unique.Err() != nil {
+		t.Errorf("Unexpected error for ParseUnique with no arguments")
+	}
+
+	if unique.FieldSeparator != nil {
+		t.Errorf("Invalid regex separator for ParseUnique with no arguments")
+	}
+
+	if unique.Index != 0 {
+		t.Errorf("Invalid index for ParseUnique with no arguments")
+	}
+}
+
+func TestParseUniqueWithSeparator(t *testing.T) {
+	args := []string{","}
+
+	unique := argparse.ParseUnique(args)
+	if unique.Err() != nil {
+		t.Errorf("Unexpected error for ParseUnique with separator argument")
+	}
+
+	expected := regexp.MustCompile(",")
+	if !reflect.DeepEqual(*unique.FieldSeparator, *expected) {
+		t.Errorf("Invalid regex separator for ParseUnique with separator argument")
+	}
+
+	if unique.Index != 0 {
+		t.Errorf("Invalid index for ParseUnique with separator argument")
+	}
+}
+
+func TestParseUniqueWithSeparatorAndIndex(t *testing.T) {
+	args := []string{",", "10"}
+
+	unique := argparse.ParseUnique(args)
+	if unique.Err() != nil {
+		t.Errorf("Unexpected error for ParseUnique with separator and index arguments")
+	}
+
+	expected := regexp.MustCompile(",")
+	if !reflect.DeepEqual(*unique.FieldSeparator, *expected) {
+		t.Errorf("Invalid regex separator for ParseUnique with separator and index arguments")
+	}
+
+	if unique.Index != 10 {
+		t.Errorf("Invalid index for ParseUnique with separator and index arguments")
+	}
+}

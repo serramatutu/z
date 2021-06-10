@@ -15,14 +15,46 @@ type argument interface {
 	BecomeDefault()
 }
 
-func isWholeRegexMatch(regex *regexp.Regexp, val string) bool {
-	matches := regex.FindAllString(val, -1)
-	if len(matches) != 1 {
-		return false
-	}
+type numberArgument struct {
+	name         string
+	optional     bool
+	defaultValue int
+	err          error
+	value        int
+}
 
-	match := matches[0]
-	return len(match) == len(val)
+func (a numberArgument) Optional() bool {
+	return a.optional
+}
+
+func (a numberArgument) Name() string {
+	return a.name
+}
+
+func (a numberArgument) Err() error {
+	return a.err
+}
+
+func (a numberArgument) Value() int {
+	return a.value
+}
+
+func (a *numberArgument) BecomeDefault() {
+	a.value = a.defaultValue
+}
+
+var numberPattern *regexp.Regexp = regexp.MustCompile("^[0-9]+$")
+
+func (a *numberArgument) Parse(in string) {
+	if !numberPattern.MatchString(in) {
+		a.err = InvalidPositionalArgumentErr{
+			ArgumentName:  a.name,
+			ArgumentValue: in,
+		}
+	} else {
+		val, _ := strconv.ParseInt(in, 10, 8)
+		a.value = int(val)
+	}
 }
 
 type stringArgument struct {
@@ -59,7 +91,7 @@ func (a *stringArgument) Parse(in string) {
 		a.value = in
 	} else {
 		regex := regexp.MustCompile(a.pattern)
-		if !isWholeRegexMatch(regex, in) {
+		if !regex.MatchString(in) {
 			a.err = InvalidPositionalArgumentErr{
 				ArgumentName:  a.name,
 				ArgumentValue: in,
@@ -186,10 +218,10 @@ func (a *rangeArgument) BecomeDefault() {
 	a.end = 0
 }
 
-var rangeExpr *regexp.Regexp = regexp.MustCompile("[0-9]?:(-?[0-9]+)?")
+var rangeExpr *regexp.Regexp = regexp.MustCompile("^[0-9]?:(-?[0-9]+)?$")
 
 func (a *rangeArgument) Parse(in string) {
-	if !isWholeRegexMatch(rangeExpr, in) {
+	if !rangeExpr.MatchString(in) {
 		a.err = InvalidPositionalArgumentErr{
 			ArgumentName:  a.name,
 			ArgumentValue: in,

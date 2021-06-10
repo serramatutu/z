@@ -37,6 +37,8 @@ func parseCommand(args []string) commands.Command {
 		cmd = ParseSplit(args[1:])
 	case "replace":
 		cmd = ParseReplace(args[1:])
+	case "unique":
+		cmd = ParseUnique(args[1:])
 	case "version":
 		cmd = ParseVersion(args[1:])
 	}

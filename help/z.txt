@@ -4,17 +4,26 @@ usage:
     z <command> <...args> [_ <command> ...]
 
 commands:
-    help:             the instructions you're reading at the moment
+    > [general purpose commands]
+    help              the instructions you're reading at the moment
     help <command>    get help about a specific z command
+    version           get the current z version
 
-    count             join a split array by counting how many elements are in it
+    > [map strings into strings]
     hash              hash a string according to an algorithm
-    join              join an array of strings into a string
     length            measure the length of a string
+    replace           find occurrences of a pattern and replace them with a string
+
+    > [map string arrays into string arrays]
+    unique            get unique elements of an array of strings based on an key extracted from each string
+
+    > [split a string into an array of strings]
     match             split a string into an array of regex matches
     split             split a string into an array of strings
-    replace           find occurrences of a pattern and replace them with a string
-    version           get the current z version
+
+    > [join an array of strings back into a string]
+    count             join a split array by counting how many elements are in it
+    join              join an array of strings into a string
 
 examples:
     # removing all ":" from a string
@@ -25,3 +34,6 @@ examples:
 
     # calculating md5 hash of things between ":"
     z split : _ hash md5 _ join "\n"
+
+    # getting unique rows of a csv file based on its first column
+    z split "\n" _ unique "," 0 _ join "\n" < data.csv

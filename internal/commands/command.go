@@ -14,6 +14,10 @@ type MapCommand interface {
 	Execute([]byte) ([]byte, error)
 }
 
+type ArrayMapCommand interface {
+	Execute([][]byte) ([][]byte, error)
+}
+
 type SplitCommand interface {
 	Execute([]byte) ([][]byte, error)
 }
