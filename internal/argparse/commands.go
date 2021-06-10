@@ -141,6 +141,26 @@ func ParseSplit(args []string) commands.Split {
 	return commands.NewSplit(err, pattern.Value())
 }
 
+func ParseUnique(args []string) commands.Unique {
+	pattern := patternArgument{
+		name:         "separator",
+		optional:     true,
+		defaultValue: nil,
+	}
+	index := numberArgument{
+		name:         "key-index",
+		optional:     true,
+		defaultValue: 0,
+	}
+	schema := []argument{
+		&pattern,
+		&index,
+	}
+	err := parseSchema(args, schema)
+
+	return commands.NewUnique(err, pattern.Value(), index.Value())
+}
+
 func ParseVersion(args []string) commands.Version {
 	return commands.Version{}
 }

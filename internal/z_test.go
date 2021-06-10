@@ -39,12 +39,13 @@ func TestExecuteSplitWithCommands(t *testing.T) {
 	commandsList.PushBack(commands.Split{
 		Separator: regexp.MustCompile("\n"),
 	})
+	commandsList.PushBack(commands.Unique{})
 	commandsList.PushBack(commands.Length{
 		Mode: commands.Bytes,
 	})
 	stop := commandsList.PushBack(commands.Join{})
 
-	result, lastRan, err := executeSplit([]byte("a\nb\nc\nd\ne"), commandsList.Front())
+	result, lastRan, err := executeSplit([]byte("a\nb\nc\nd\ne\ne\ne"), commandsList.Front())
 	if err != nil {
 		t.Errorf("Unexpected error for executeSplit")
 	}

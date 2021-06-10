@@ -1,0 +1,30 @@
+z unique
+
+summary:
+    get unique elements of an array of strings based on an key extracted from each string
+
+    "unique" must come before a splitting command such as "split" or "match"
+
+    if it finds repeated values, the first to be found is kept
+
+usage:
+    z unique [<separator>] [<key-index>]
+
+parameters:
+    <separator> optional. default is null
+        the regular expression pattern to be used as a field delimiter.
+        if not provided, z assumes the whole string is the key.
+
+    <key-index> optional. default is 0
+        the index of the field that should be used as the key for determining uniqueness.
+        if some string has less fields than the index, "" is assumed as its uniqueness key.
+
+examples:
+    # getting the unique lines of a file
+    z split "\n" _ unique _ join "\n" < file.txt
+
+    # getting unique rows of a csv file based on its first column
+    z split "\n" _ unique "," 0 _ join "\n" < data.csv
+
+    # getting unique rows of a tsv file based on its third column
+    z split "\n" _ unique "\t" 3 _ join "\n" < data.tsv

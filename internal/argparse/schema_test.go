@@ -6,6 +6,34 @@ import (
 	"testing"
 )
 
+func TestParseNumberArgumentValidArg(t *testing.T) {
+	arg := numberArgument{
+		name:     "arg-name",
+		optional: false,
+	}
+	arg.Parse("10")
+
+	if arg.Err() != nil {
+		t.Errorf("numberArgument.Parse() with valid input should not return error")
+	}
+
+	if arg.Value() != 10 {
+		t.Errorf("Expected numberArgument parsed wrong value")
+	}
+}
+
+func TestParseNumberArgumentInvalidArg(t *testing.T) {
+	arg := numberArgument{
+		name:     "arg-name",
+		optional: false,
+	}
+	arg.Parse("invalid")
+
+	if arg.Err() == nil {
+		t.Errorf("numberArgument.Parse() with invalid input should return error")
+	}
+}
+
 func TestParseStringArgumentNoPattern(t *testing.T) {
 	arg := stringArgument{
 		name:     "arg-name",
@@ -26,7 +54,7 @@ func TestParseStringArgumentWithPatternOk(t *testing.T) {
 	arg := stringArgument{
 		name:     "arg-name",
 		optional: false,
-		pattern:  "[A-z]+",
+		pattern:  "^[A-z]+$",
 	}
 	arg.Parse("Value")
 
@@ -39,16 +67,16 @@ func TestParseStringArgumentWithPatternOk(t *testing.T) {
 	}
 }
 
-func TestParseStringArgumentWithPatternNotWholeMatch(t *testing.T) {
+func TestParseStringArgumentWithPatternNoMatch(t *testing.T) {
 	arg := stringArgument{
 		name:     "arg-name",
 		optional: false,
-		pattern:  "[A-z]+",
+		pattern:  "^[A-z]+$",
 	}
-	arg.Parse("Value1234")
+	arg.Parse("1234567NoMatch")
 
 	if arg.Err() == nil {
-		t.Errorf("stringArgument.Parse() with partially matching pattern should return error")
+		t.Errorf("stringArgument.Parse() with no matching pattern should return error")
 	}
 }
 
