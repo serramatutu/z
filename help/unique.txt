@@ -1,7 +1,7 @@
 z unique
 
 summary:
-    get unique elements of an array of strings based on an key extracted from each string
+    get unique elements of an array of strings based on keys extracted from each string
 
     "unique" must come before a splitting command such as "split" or "match"
 

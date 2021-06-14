@@ -8,7 +8,7 @@ import (
 	"github.com/serramatutu/z/internal/commands"
 )
 
-var input = [][]byte{
+var uniqueInput = [][]byte{
 	[]byte("a,1,6"),
 	[]byte("a,2,6"),
 	[]byte("b,1,6"),
@@ -17,36 +17,36 @@ var input = [][]byte{
 	[]byte("d,3,6"),
 }
 
-var expectedWholeKey [][]byte = input
+var uniqueExpectedWholeKey [][]byte = uniqueInput
 
-var expectedEmpty = [][]byte{}
+var uniqueExpectedEmpty = [][]byte{}
 
-var expectedIndex0 = [][]byte{
+var uniqueExpectedIndex0 = [][]byte{
 	[]byte("a,1,6"),
 	[]byte("b,1,6"),
 	[]byte("c,2,6"),
 	[]byte("d,3,6"),
 }
 
-var expectedIndex1 = [][]byte{
+var uniqueExpectedIndex1 = [][]byte{
 	[]byte("a,1,6"),
 	[]byte("a,2,6"),
 	[]byte("c,3,6"),
 }
 
-var expectedIndexAllEqual = [][]byte{
+var uniqueExpectedIndexAllEqual = [][]byte{
 	[]byte("a,1,6"),
 }
 
 func TestUniqueNilSeparator(t *testing.T) {
 	cmd := commands.NewUnique(nil, nil, 0)
 
-	result, err := cmd.Execute(input)
+	result, err := cmd.Execute(uniqueInput)
 	if err != nil {
 		t.Errorf("Unexpected error for Unique.Execute with nil separator")
 	}
 
-	if !reflect.DeepEqual(result, expectedWholeKey) {
+	if !reflect.DeepEqual(result, uniqueExpectedWholeKey) {
 		t.Errorf("Wrong result for Unique.Execute with nil separator")
 	}
 }
@@ -54,12 +54,12 @@ func TestUniqueNilSeparator(t *testing.T) {
 func TestUniqueNotFoundSeparator(t *testing.T) {
 	cmd := commands.NewUnique(nil, regexp.MustCompile(":"), 0)
 
-	result, err := cmd.Execute(input)
+	result, err := cmd.Execute(uniqueInput)
 	if err != nil {
 		t.Errorf("Unexpected error for Unique.Execute with separator")
 	}
 
-	if !reflect.DeepEqual(result, expectedWholeKey) {
+	if !reflect.DeepEqual(result, uniqueExpectedWholeKey) {
 		t.Errorf("Wrong result for Unique.Execute with not found separator")
 	}
 }
@@ -67,12 +67,12 @@ func TestUniqueNotFoundSeparator(t *testing.T) {
 func TestUniqueSeparatorIndex0(t *testing.T) {
 	cmd := commands.NewUnique(nil, regexp.MustCompile(","), 0)
 
-	result, err := cmd.Execute(input)
+	result, err := cmd.Execute(uniqueInput)
 	if err != nil {
 		t.Errorf("Unexpected error for Unique.Execute with separator")
 	}
 
-	if !reflect.DeepEqual(result, expectedIndex0) {
+	if !reflect.DeepEqual(result, uniqueExpectedIndex0) {
 		t.Errorf("Wrong result for Unique.Execute with separator")
 	}
 }
@@ -80,12 +80,12 @@ func TestUniqueSeparatorIndex0(t *testing.T) {
 func TestUniqueSeparatorIndex1(t *testing.T) {
 	cmd := commands.NewUnique(nil, regexp.MustCompile(","), 1)
 
-	result, err := cmd.Execute(input)
+	result, err := cmd.Execute(uniqueInput)
 	if err != nil {
 		t.Errorf("Unexpected error for Unique.Execute with separator")
 	}
 
-	if !reflect.DeepEqual(result, expectedIndex1) {
+	if !reflect.DeepEqual(result, uniqueExpectedIndex1) {
 		t.Errorf("Wrong result for Unique.Execute with separator")
 	}
 }
@@ -93,12 +93,12 @@ func TestUniqueSeparatorIndex1(t *testing.T) {
 func TestUniqueSeparatorIndexAllEqual(t *testing.T) {
 	cmd := commands.NewUnique(nil, regexp.MustCompile(","), 2)
 
-	result, err := cmd.Execute(input)
+	result, err := cmd.Execute(uniqueInput)
 	if err != nil {
 		t.Errorf("Unexpected error for Unique.Execute with separator")
 	}
 
-	if !reflect.DeepEqual(result, expectedIndexAllEqual) {
+	if !reflect.DeepEqual(result, uniqueExpectedIndexAllEqual) {
 		t.Errorf("Wrong result for Unique.Execute with separator")
 	}
 }
@@ -106,12 +106,12 @@ func TestUniqueSeparatorIndexAllEqual(t *testing.T) {
 func TestUniqueSeparatorIndexOutOfRange(t *testing.T) {
 	cmd := commands.NewUnique(nil, regexp.MustCompile(","), 3)
 
-	result, err := cmd.Execute(input)
+	result, err := cmd.Execute(uniqueInput)
 	if err != nil {
 		t.Errorf("Unexpected error for Unique.Execute with separator")
 	}
 
-	if !reflect.DeepEqual(result, expectedIndexAllEqual) {
+	if !reflect.DeepEqual(result, uniqueExpectedIndexAllEqual) {
 		t.Errorf("Wrong result for Unique.Execute with separator")
 	}
 }
