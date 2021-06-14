@@ -33,10 +33,12 @@ func parseCommand(args []string) commands.Command {
 		cmd = ParseLength(args[1:])
 	case "match":
 		cmd = ParseMatch(args[1:])
-	case "split":
-		cmd = ParseSplit(args[1:])
 	case "replace":
 		cmd = ParseReplace(args[1:])
+	case "sort":
+		cmd = ParseSort(args[1:])
+	case "split":
+		cmd = ParseSplit(args[1:])
 	case "unique":
 		cmd = ParseUnique(args[1:])
 	case "version":

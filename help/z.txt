@@ -15,7 +15,8 @@ commands:
     replace           find occurrences of a pattern and replace them with a string
 
     > [map string arrays into string arrays]
-    unique            get unique elements of an array of strings based on an key extracted from each string
+    unique            get unique elements of an array of strings based on keys extracted from each string
+    sort              sort an array of strings based on keys extracted from each string
 
     > [split a string into an array of strings]
     match             split a string into an array of regex matches

@@ -2,7 +2,7 @@
 title: unique
 permalink: /docs/commands/unique/
 description: | 
-  Get unique elements of an array of strings based on an key extracted from each string. 
+  Get unique elements of an array of strings based on keys extracted from each string. 
 
   "unique" must come before a splitting such as "split" or "match".	
   

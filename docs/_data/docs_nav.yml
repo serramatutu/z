@@ -13,5 +13,6 @@
     - link: /docs/commands/length/
     - link: /docs/commands/match/
     - link: /docs/commands/replace/
+    - link: /docs/commands/sort/
     - link: /docs/commands/split/
     - link: /docs/commands/unique/

@@ -127,6 +127,26 @@ func ParseReplace(args []string) commands.Replace {
 	)
 }
 
+func ParseSort(args []string) commands.Sort {
+	pattern := patternArgument{
+		name:         "separator",
+		optional:     true,
+		defaultValue: nil,
+	}
+	index := numberArgument{
+		name:         "key-index",
+		optional:     true,
+		defaultValue: 0,
+	}
+	schema := []argument{
+		&pattern,
+		&index,
+	}
+	err := parseSchema(args, schema)
+
+	return commands.NewSort(err, pattern.Value(), index.Value())
+}
+
 func ParseSplit(args []string) commands.Split {
 	pattern := patternArgument{
 		name:         "pattern",
