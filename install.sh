@@ -44,5 +44,5 @@ mv z /usr/local/bin/z
 echo "Cleaning up"
 rm /tmp/$TARBALL_FILENAME
 
-echo "Done! z $VERSION was installed! Run \"z\" to get started."
+echo "Done! z $VERSION was installed! Run \"z help\" to get started."
 exit 0

@@ -80,7 +80,7 @@ curl -s https://raw.githubusercontent.com/serramatutu/z/main/install.sh | sudo s
 
 You can also specify a version:
 ```
-curl -s https://raw.githubusercontent.com/serramatutu/z/main/install.sh | sudo sh - v0.1.0
+curl -s https://raw.githubusercontent.com/serramatutu/z/main/install.sh | sudo sh -s - v0.1.0
 ```
 
 ### Manual installation
