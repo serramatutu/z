@@ -68,16 +68,32 @@ Learn more about z with our [usage guide](https://serramatutu.github.io/z/docs/u
 
 
 ## Installation
-z is pretty easy to install:
+
+All z builds are checksummed then signed with GPG. You can verify the signature using the [public key](./pubkey.asc).
+
+### Using the install script
+
+This will download the latest z binary into `/usr/local/bin`:
+```
+curl -s https://raw.githubusercontent.com/serramatutu/z/main/install.sh | sudo sh -
+```
+
+You can also specify a version:
+```
+curl -s https://raw.githubusercontent.com/serramatutu/z/main/install.sh | sudo sh - v0.1.0
+```
+
+### Manual installation
 1. Go to our [releases](https://github.com/serramatutu/z/releases) page.
 2. Download the latest release binary.
 3. Include it in your `$PATH` by adding `export PATH=$PATH:/path/to/z` to your shell's rc file.
 
-That's it! You're all set!
+### Building from source
+1. Make sure you have [Go](https://golang.org/) installed
+2. Clone this repository
+3. Run `make build`. 
 
-You can also compile z from source by cloning this repository and running `make build`. This will produce a z binary file inside the `bin/` folder. If you're doing this, make sure you have [Go](https://golang.org/) installed.
-
-_* All builds are checksummed then signed with GPG. You can verify the signature using the [public key](./pubkey.asc)_
+This will produce a z binary file inside the `bin/` folder.
 
 ## Documentation and command reference
 
